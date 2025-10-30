@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/** This is a REST controller for UCSBDiningCommonsMenuItems */
+// ** This is a REST controller for UCSBDiningCommonsMenuItems */
 @Tag(name = "UCSBDiningCommonsMenuItems")
 @RequestMapping("/api/UCSBDiningCommonsMenuItems")
 @RestController
