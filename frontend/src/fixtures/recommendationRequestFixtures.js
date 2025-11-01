@@ -32,7 +32,7 @@ const recommendationRequestFixtures = {
     },
     {
       id: 3,
-      code: "Dennis Kim",
+      code: "denniskimrr",
       requesterEmail: "djensen@ucsb.edu@ucsb.edu",
       professorEmail: "pconrad@cs.ucsb.edu",
       explanation: "Recommendation for Master's program",
