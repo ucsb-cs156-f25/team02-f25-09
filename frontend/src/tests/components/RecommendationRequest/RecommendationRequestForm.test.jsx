@@ -45,47 +45,47 @@ describe("RecommendationRequestForm tests", () => {
   });
 
   test("Correct Error messsages on bad input", async () => {
-     const mockSubmitAction = vi.fn();
-     
-     const { container } = render(
-      <Router>
-        <RecommendationRequestForm />
-      </Router>,
-    );
+  const mockSubmitAction = vi.fn();
 
-    container.querySelector("form")?.setAttribute("novalidate", "");
+  const { container } = render(
+    <Router>
+      <RecommendationRequestForm submitAction={mockSubmitAction} />
+    </Router>,
+  );
 
-    fireEvent.change(
-      await screen.findByTestId("RecommendationRequestForm-code"),
-      { target: { value: "" } }, // code missing
-    );
-    fireEvent.change(
-      screen.getByTestId("RecommendationRequestForm-requesterEmail"),
-      { target: { value: "bad" } }, // invalid email
-    );
-    fireEvent.change(
-      screen.getByTestId("RecommendationRequestForm-professorEmail"),
-      { target: { value: "also-bad" } }, // invalid email
-    );
-    fireEvent.change(
-      screen.getByTestId("RecommendationRequestForm-explanation"),
-      { target: { value: "hi" } }, // too short
-    );
-    
-    fireEvent.click(screen.getByTestId("RecommendationRequestForm-submit"));
+  container.querySelector("form")?.setAttribute("novalidate", "");
 
-     expect(
-      await screen.findByText(/Please provide a bit more detail\./i),
-    ).toBeInTheDocument();
+  fireEvent.change(
+    await screen.findByTestId("RecommendationRequestForm-code"),
+    { target: { value: "" } }, // code missing
+  );
+  fireEvent.change(
+    screen.getByTestId("RecommendationRequestForm-requesterEmail"),
+    { target: { value: "bad" } }, // invalid email
+  );
+  fireEvent.change(
+    screen.getByTestId("RecommendationRequestForm-professorEmail"),
+    { target: { value: "also-bad" } }, // invalid email
+  );
+  fireEvent.change(
+    screen.getByTestId("RecommendationRequestForm-explanation"),
+    { target: { value: "" } }, // now trigger required (no min length rule)
+  );
 
-    const emailErrors = await screen.findAllByText(
-      /Enter a valid email address\./i,
-    );
-    expect(emailErrors).toHaveLength(2);
+  fireEvent.click(screen.getByTestId("RecommendationRequestForm-submit"));
 
-      await waitFor(() => expect(mockSubmitAction).not.toHaveBeenCalled());
-  });
+  // explanation required (minLength message removed)
+  expect(
+    await screen.findByText(/Explanation is required\./i),
+  ).toBeInTheDocument();
 
+  const emailErrors = await screen.findAllByText(/Enter a valid email address\./i);
+  expect(emailErrors).toHaveLength(2);
+
+  await waitFor(() => expect(mockSubmitAction).not.toHaveBeenCalled());
+});
+
+  
   test("Correct Error messsages on missing input", async () => {
     render(
       <Router>

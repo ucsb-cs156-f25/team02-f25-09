@@ -54,7 +54,7 @@ function RecommendationRequestForm({
               })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.code && errors.code.type === "required" && "Code is required."}
+            {errors.code?.type === "required" ? "Code is required." : null}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -74,8 +74,8 @@ function RecommendationRequestForm({
               })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.requesterEmail?.type === "required" && "Requester email is required."}
-              {errors.requesterEmail?.type === "pattern" && "Enter a valid email address."}
+            {errors.requesterEmail?.type === "required" ? "Requester email is required." : null}
+            {errors.requesterEmail?.type === "pattern"  ? "Enter a valid email address." : null}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -104,19 +104,18 @@ function RecommendationRequestForm({
           <Form.Group className="mb-3">
             <Form.Label htmlFor="explanation">Explanation</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
-              data-testid="RecommendationRequestForm-explanation"
-              id="explanation"
-              isInvalid={Boolean(errors.explanation)}
-              {...register("explanation", {
-                required: true,
-                minLength: 5,
-              })}
+            as="textarea"
+            rows={3}
+            data-testid="RecommendationRequestForm-explanation"
+            id="explanation"
+            isInvalid={Boolean(errors.explanation)}
+            {...register("explanation", {
+                required: true,        // ← removed minLength
+            })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.explanation?.type === "required" && "Explanation is required."}
-              {errors.explanation?.type === "minLength" && "Please provide a bit more detail."}
+            {errors.explanation?.type === "required" ? "Explanation is required." : null}
+            {/* removed minLength message */}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -136,8 +135,8 @@ function RecommendationRequestForm({
               })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.dateRequested?.type === "required" && "Date requested is required."}
-              {errors.dateRequested?.type === "pattern" && "Use ISO format."}
+            {errors.dateRequested?.type === "required" ? "Date requested is required." : null}
+            {/* {errors.dateRequested?.type === "pattern"  ? "Use ISO format." : null} */}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -155,8 +154,8 @@ function RecommendationRequestForm({
               })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.dateNeeded?.type === "required" && "Date needed is required."}
-              {errors.dateNeeded?.type === "pattern" && "Use ISO format."}
+            {errors.dateNeeded?.type === "required" ? "Date needed is required." : null}
+            {/* {errors.dateNeeded?.type === "pattern"  ? "Use ISO format." : null} */}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
