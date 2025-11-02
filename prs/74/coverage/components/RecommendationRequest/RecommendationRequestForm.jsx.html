@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>148/148</span>
+                <span class='fraction'>144/144</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>23/25</span>
+                <span class='fraction'>25/25</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>148/148</span>
+                <span class='fraction'>144/144</span>
             </div>
         
             
@@ -254,8 +254,7 @@
 <a name='L189'></a><a href='#L189'>189</a>
 <a name='L190'></a><a href='#L190'>190</a>
 <a name='L191'></a><a href='#L191'>191</a>
-<a name='L192'></a><a href='#L192'>192</a>
-<a name='L193'></a><a href='#L193'>193</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L192'></a><a href='#L192'>192</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -369,32 +368,11 @@
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -410,10 +388,30 @@
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -503,7 +501,7 @@ function RecommendationRequestForm({
               })}
             /&gt;
             &lt;Form.Control.Feedback type="invalid"&gt;
-              {errors.code &amp;&amp; errors.code.type === "required" &amp;&amp; "Code is required."}
+            {errors.code?.type === "required" ? "Code is required." : null}
             &lt;/Form.Control.Feedback&gt;
           &lt;/Form.Group&gt;
         &lt;/Col&gt;
@@ -523,8 +521,8 @@ function RecommendationRequestForm({
               })}
             /&gt;
             &lt;Form.Control.Feedback type="invalid"&gt;
-              {errors.requesterEmail?.type === "required" &amp;&amp; "Requester email is required."}
-              {errors.requesterEmail?.type === "pattern" &amp;&amp; "Enter a valid email address."}
+            {errors.requesterEmail?.type === "required" ? "Requester email is required." : null}
+            {errors.requesterEmail?.type === "pattern"  ? "Enter a valid email address." : null}
             &lt;/Form.Control.Feedback&gt;
           &lt;/Form.Group&gt;
         &lt;/Col&gt;
@@ -553,19 +551,18 @@ function RecommendationRequestForm({
           &lt;Form.Group className="mb-3"&gt;
             &lt;Form.Label htmlFor="explanation"&gt;Explanation&lt;/Form.Label&gt;
             &lt;Form.Control
-              as="textarea"
-              rows={3}
-              data-testid="RecommendationRequestForm-explanation"
-              id="explanation"
-              isInvalid={Boolean(errors.explanation)}
-              {...register("explanation", {
-                required: true,
-                minLength: 5,
-              })}
+            as="textarea"
+            rows={3}
+            data-testid="RecommendationRequestForm-explanation"
+            id="explanation"
+            isInvalid={Boolean(errors.explanation)}
+            {...register("explanation", {
+                required: true,        // ← removed minLength
+            })}
             /&gt;
             &lt;Form.Control.Feedback type="invalid"&gt;
-              {errors.explanation?.type === "required" &amp;&amp; "Explanation is required."}
-              {errors.explanation?.type === "minLength" &amp;&amp; "Please provide a bit more detail."}
+            {errors.explanation?.type === "required" ? "Explanation is required." : null}
+            {/* removed minLength message */}
             &lt;/Form.Control.Feedback&gt;
           &lt;/Form.Group&gt;
         &lt;/Col&gt;
@@ -585,8 +582,8 @@ function RecommendationRequestForm({
               })}
             /&gt;
             &lt;Form.Control.Feedback type="invalid"&gt;
-              {errors.dateRequested?.type === "required" &amp;&amp; "Date requested is required."}
-              {errors.dateRequested?.type === <span class="branch-0 cbranch-no" title="branch not covered" >"pattern" &amp;&amp; "Use ISO format."}</span>
+            {errors.dateRequested?.type === "required" ? "Date requested is required." : null}
+            {/* {errors.dateRequested?.type === "pattern"  ? "Use ISO format." : null} */}
             &lt;/Form.Control.Feedback&gt;
           &lt;/Form.Group&gt;
         &lt;/Col&gt;
@@ -604,8 +601,8 @@ function RecommendationRequestForm({
               })}
             /&gt;
             &lt;Form.Control.Feedback type="invalid"&gt;
-              {errors.dateNeeded?.type === "required" &amp;&amp; "Date needed is required."}
-              {errors.dateNeeded?.type === <span class="branch-0 cbranch-no" title="branch not covered" >"pattern" &amp;&amp; "Use ISO format."}</span>
+            {errors.dateNeeded?.type === "required" ? "Date needed is required." : null}
+            {/* {errors.dateNeeded?.type === "pattern"  ? "Use ISO format." : null} */}
             &lt;/Form.Control.Feedback&gt;
           &lt;/Form.Group&gt;
         &lt;/Col&gt;
@@ -646,7 +643,7 @@ export default RecommendationRequestForm;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-02T06:20:44.202Z
+                at 2025-11-02T06:44:06.313Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
