@@ -1,4 +1,5 @@
 import { render, waitFor, fireEvent, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import RecommendationRequestForm from "main/components/RecommendationRequest/RecommendationRequestForm";
 import { recommendationRequestFixtures } from "fixtures/recommendationRequestFixtures";
 import { BrowserRouter as Router } from "react-router";
@@ -44,7 +45,9 @@ describe("RecommendationRequestForm tests", () => {
   });
 
   test("Correct Error messsages on bad input", async () => {
-    const { container } = render(
+     const mockSubmitAction = vi.fn();
+     
+     const { container } = render(
       <Router>
         <RecommendationRequestForm />
       </Router>,
@@ -54,46 +57,33 @@ describe("RecommendationRequestForm tests", () => {
 
     fireEvent.change(
       await screen.findByTestId("RecommendationRequestForm-code"),
-      {
-        target: { value: "INT-2025" },
-      },
+      { target: { value: "" } }, // code missing
     );
     fireEvent.change(
       screen.getByTestId("RecommendationRequestForm-requesterEmail"),
-      {
-        target: { value: "alice@ucsb.edu" },
-      },
+      { target: { value: "bad" } }, // invalid email
     );
     fireEvent.change(
       screen.getByTestId("RecommendationRequestForm-professorEmail"),
-      {
-        target: { value: "prof@ucsb.edu" },
-      },
+      { target: { value: "also-bad" } }, // invalid email
     );
     fireEvent.change(
       screen.getByTestId("RecommendationRequestForm-explanation"),
-      {
-        target: { value: "hi" },
-      },
+      { target: { value: "hi" } }, // too short
     );
-    fireEvent.change(
-      screen.getByTestId("RecommendationRequestForm-dateRequested"),
-      {
-        target: { value: "2025-11-01T12:00" },
-      },
-    );
-    fireEvent.change(
-      screen.getByTestId("RecommendationRequestForm-dateNeeded"),
-      {
-        target: { value: "2025-11-15T17:00" },
-      },
-    );
-
+    
     fireEvent.click(screen.getByTestId("RecommendationRequestForm-submit"));
 
-    expect(
+     expect(
       await screen.findByText(/Please provide a bit more detail\./i),
     ).toBeInTheDocument();
+
+    const emailErrors = await screen.findAllByText(
+      /Enter a valid email address\./i,
+    );
+    expect(emailErrors).toHaveLength(2);
+
+      await waitFor(() => expect(mockSubmitAction).not.toHaveBeenCalled());
   });
 
   test("Correct Error messsages on missing input", async () => {
@@ -126,12 +116,15 @@ describe("RecommendationRequestForm tests", () => {
   test("No Error messsages on good input", async () => {
     const mockSubmitAction = vi.fn();
 
-    render(
+   const { container } = render(
       <Router>
         <RecommendationRequestForm submitAction={mockSubmitAction} />
       </Router>,
     );
 
+    container.querySelector("form")?.setAttribute("novalidate", "");
+
+    const user = userEvent.setup();
     const codeField = await screen.findByTestId(
       "RecommendationRequestForm-code",
     );
@@ -168,7 +161,17 @@ describe("RecommendationRequestForm tests", () => {
     fireEvent.change(dateNeededField, {
       target: { value: "2025-11-15T17:00" },
     });
-    fireEvent.click(submitButton);
+
+    fireEvent.change(requesterEmailField, {
+      target: { value: "prefix alice@ucsb.edu" }, //should fail
+    });
+    fireEvent.change(requesterEmailField, {
+      target: { value: "alice@ucsb.edu garbage" },
+    });
+    await user.clear(requesterEmailField);
+    await user.type(requesterEmailField, "alice@ucsb.edu");
+  
+    await user.click(submitButton);
 
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
