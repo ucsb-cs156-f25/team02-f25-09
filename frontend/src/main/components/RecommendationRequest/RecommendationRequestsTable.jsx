@@ -9,7 +9,10 @@ import {
 import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
 
-export default function recommendationRequestsTable({ recommendationRequests, currentUser }) {
+export default function RecommendationRequestsTable({
+  recommendationRequests,
+  currentUser,
+}) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
@@ -43,12 +46,28 @@ export default function recommendationRequestsTable({ recommendationRequests, cu
 
   if (hasRole(currentUser, "ROLE_ADMIN")) {
     columns.push(
-      ButtonColumn("Edit", "primary", editCallback, "recommendationRequestsTable"),
+      ButtonColumn(
+        "Edit",
+        "primary",
+        editCallback,
+        "RecommendationRequestsTable",
+      ),
     );
     columns.push(
-      ButtonColumn("Delete", "danger", deleteCallback, "recommendationRequestsTable"),
+      ButtonColumn(
+        "Delete",
+        "danger",
+        deleteCallback,
+        "RecommendationRequestsTable",
+      ),
     );
   }
 
-  return <OurTable data={recommendationRequests} columns={columns} testid={"recommendationRequestsTable"} />;
+  return (
+    <OurTable
+      data={recommendationRequests}
+      columns={columns}
+      testid={"RecommendationRequestsTable"}
+    />
+  );
 }

@@ -1,11 +1,11 @@
 import React from "react";
-import RecommendationRequestsTable from "main/components/RecommendationRequests/RecommendationRequestsTable";
+import RecommendationRequestsTable from "main/components/RecommendationRequest/RecommendationRequestsTable";
 import { recommendationRequestFixtures } from "fixtures/recommendationRequestFixtures";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import { http, HttpResponse } from "msw";
 
 export default {
-  title: "components/recommendationRequests/recommendationRequestsTable",
+  title: "components/RecommendationRequest/RecommendationRequestsTable",
   component: RecommendationRequestsTable,
 };
 
@@ -22,13 +22,15 @@ Empty.args = {
 export const ThreeItemsOrdinaryUser = Template.bind({});
 
 ThreeItemsOrdinaryUser.args = {
-  recommendationRequests: recommendationRequestFixtures.threeRecommendationRequests,
+  recommendationRequests:
+    recommendationRequestFixtures.threeRecommendationRequests,
   currentUser: currentUserFixtures.userOnly,
 };
 
 export const ThreeItemsAdminUser = Template.bind({});
 ThreeItemsAdminUser.args = {
-  recommendationRequests: recommendationRequestFixtures.threeRecommendationRequests,
+  recommendationRequests:
+    recommendationRequestFixtures.threeRecommendationRequests,
   currentUser: currentUserFixtures.adminUser,
 };
 

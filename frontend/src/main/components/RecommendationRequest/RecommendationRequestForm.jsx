@@ -2,7 +2,11 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
-function RecommendationRequestForm({ initialContents, submitAction, buttonLabel = "Create" }) {
+function RecommendationRequestForm({
+  initialContents,
+  submitAction,
+  buttonLabel = "Create",
+}) {
   // Stryker disable all
   const {
     register,
@@ -20,9 +24,6 @@ function RecommendationRequestForm({ initialContents, submitAction, buttonLabel 
   const isodate_regex =
     /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
   // Stryker restore Regex
-
-  // Stryker disable next-line all
-  const yyyyq_regex = /((19)|(20))\d{2}[1-4]/i; // Accepts from 1900-2099 followed by 1-4.  Close enough.
 
   return (
     <Form onSubmit={handleSubmit(submitAction)}>
@@ -50,10 +51,8 @@ function RecommendationRequestForm({ initialContents, submitAction, buttonLabel 
               data-testid="RecommendationRequestForm-code"
               id="code"
               type="text"
-              isInvalid={Boolean(errors.code)}
-              {...register("code", {
-                required: "Code is required.",
-              })}
+              isInvalid={!!errors.code}
+              {...register("code", { required: "Code is required." })}
             />
             <Form.Control.Feedback type="invalid">
               {errors.code?.message}
@@ -70,7 +69,7 @@ function RecommendationRequestForm({ initialContents, submitAction, buttonLabel 
               data-testid="RecommendationRequestForm-requesterEmail"
               id="requesterEmail"
               type="email"
-              isInvalid={Boolean(errors.requesterEmail)}
+              isInvalid={!!errors.requesterEmail}
               {...register("requesterEmail", {
                 required: "Requester email is required.",
                 pattern: {
@@ -117,7 +116,7 @@ function RecommendationRequestForm({ initialContents, submitAction, buttonLabel 
               rows={3}
               data-testid="RecommendationRequestForm-explanation"
               id="explanation"
-              isInvalid={Boolean(errors.explanation)}
+              isInvalid={!!errors.explanation}
               {...register("explanation", {
                 required: "Explanation is required.",
                 minLength: {
@@ -136,12 +135,14 @@ function RecommendationRequestForm({ initialContents, submitAction, buttonLabel 
       <Row>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="dateRequested">Date Requested (ISO)</Form.Label>
+            <Form.Label htmlFor="dateRequested">
+              Date Requested (ISO)
+            </Form.Label>
             <Form.Control
               data-testid="RecommendationRequestForm-dateRequested"
               id="dateRequested"
               type="datetime-local"
-              isInvalid={Boolean(errors.dateRequested)}
+              isInvalid={!!errors.dateRequested}
               {...register("dateRequested", {
                 required: "Date requested is required.",
                 pattern: { value: isodate_regex, message: "Use ISO format." },
@@ -160,7 +161,7 @@ function RecommendationRequestForm({ initialContents, submitAction, buttonLabel 
               data-testid="RecommendationRequestForm-dateNeeded"
               id="dateNeeded"
               type="datetime-local"
-              isInvalid={Boolean(errors.dateNeeded)}
+              isInvalid={!!errors.dateNeeded}
               {...register("dateNeeded", {
                 required: "Date needed is required.",
                 pattern: { value: isodate_regex, message: "Use ISO format." },

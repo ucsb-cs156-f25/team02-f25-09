@@ -1,6 +1,6 @@
 const recommendationRequestFixtures = {
-  oneRecommendationRequest:{
-    id: 3,
+  oneRecommendationRequest: {
+    id: 1,
     code: "laurenchorr",
     requesterEmail: "lauren.cho@ucsb.edu",
     professorEmail: "pconrad@cs.ucsb.edu",
@@ -11,7 +11,7 @@ const recommendationRequestFixtures = {
   },
   threeRecommendationRequests: [
     {
-      id: 8,
+      id: 1,
       code: "laurenchonewrr",
       requesterEmail: "lauren.cho@umail.ucsb.edu",
       professorEmail: "pconrad@cs.ucsb.edu",
@@ -21,7 +21,7 @@ const recommendationRequestFixtures = {
       done: false,
     },
     {
-     id: 9,
+      id: 2,
       code: "davidbazanrr",
       requesterEmail: "davidbazan@ucsb.edu",
       professorEmail: "pconrad@cs.ucsb.edu",
@@ -31,7 +31,7 @@ const recommendationRequestFixtures = {
       done: false,
     },
     {
-      id: 10,
+      id: 3,
       code: "denniskimrr",
       requesterEmail: "djensen@ucsb.edu",
       professorEmail: "pconrad@cs.ucsb.edu",
