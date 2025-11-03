@@ -280,7 +280,10 @@ test("fields do not show error styling when valid", async () => {
   fireEvent.change(diningCommonsCodeField, { target: { value: "ortega" } });
   fireEvent.change(nameField, { target: { value: "pasta" } });
   fireEvent.change(stationField, { target: { value: "italian" } });
+  fireEvent.click(submitButton);
 
+  await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
+  
   expect(diningCommonsCodeField).not.toHaveClass("is-invalid");
   expect(nameField).not.toHaveClass("is-invalid");
   expect(stationField).not.toHaveClass("is-invalid");
