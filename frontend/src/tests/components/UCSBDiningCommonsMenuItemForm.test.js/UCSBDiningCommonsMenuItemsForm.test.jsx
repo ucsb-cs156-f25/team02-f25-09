@@ -78,7 +78,6 @@ describe("UCSBDiningCommonsMenuItemsForm tests", () => {
     const diningCommonsCodeField = await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
     const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-name");
     const stationField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-station");
-    const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
 
     fireEvent.change(diningCommonsCodeField, { target: { value: "ortega" } });
     fireEvent.change(nameField, { target: { value: "pasta" } });
