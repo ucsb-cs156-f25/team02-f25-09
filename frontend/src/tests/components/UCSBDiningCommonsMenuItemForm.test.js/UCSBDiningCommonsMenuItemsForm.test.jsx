@@ -43,11 +43,11 @@ describe("UCSBDiningCommonsMenuItemsForm tests", () => {
     );
     const diningCommonsCodeField = await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
     const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-name");
-    const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
+    const submit = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
 
     fireEvent.change(diningCommonsCodeField, { target: { value: "bad-input" } });
     fireEvent.change(nameField, { target: { value: "bad-input" } });
-    fireEvent.click(submitButton);
+    fireEvent.click(submit);
 
     await screen.findByText(/diningCommonsCode must be in the format String/);
     expect(screen.getByText(/diningCommonsCode must be in the format String/)).toBeInTheDocument();
@@ -78,6 +78,7 @@ describe("UCSBDiningCommonsMenuItemsForm tests", () => {
     const diningCommonsCodeField = await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
     const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-name");
     const stationField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-station");
+    const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
 
     fireEvent.change(diningCommonsCodeField, { target: { value: "ortega" } });
     fireEvent.change(nameField, { target: { value: "pasta" } });
