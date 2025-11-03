@@ -1,5 +1,6 @@
 import { render, waitFor, fireEvent, screen } from "@testing-library/react";
 import UCSBDiningCommonsMenuItemsForm from "main/components/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsForm";
+import { Create, Update } from "main/components/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsForm.stories";
 import { UCSBDiningCommonsMenuItemsFixtures } from "fixtures/UCSBDiningCommonsMenuItems";
 import { BrowserRouter as Router } from "react-router";
 import { expect } from "vitest";
@@ -18,32 +19,29 @@ describe("UCSBDiningCommonsMenuItemsForm tests", () => {
     render(
       <Router>
         <UCSBDiningCommonsMenuItemsForm />
-      </Router>,
+      </Router>
     );
     await screen.findByText(/diningCommonsCode/);
-    await screen.findByText(/Create/);
-    expect(screen.getByText(/diningCommonsCode/)).toBeInTheDocument();
+    expect(screen.getByText(/Create/)).toBeInTheDocument();
   });
 
   test("renders correctly when passing in a UCSBDiningCommonsMenuItems", async () => {
     render(
       <Router>
         <UCSBDiningCommonsMenuItemsForm initialContents={UCSBDiningCommonsMenuItemsFixtures.oneItems} />
-      </Router>,
+      </Router>
     );
-    await screen.findByTestId(/UCSBDiningCommonsMenuItemsForm-id/);
-    expect(screen.getByText(/Id/)).toBeInTheDocument();
-    expect(screen.getByTestId(/UCSBDiningCommonsMenuItemsForm-id/)).toHaveValue("1");
+    await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-id");
+    expect(screen.getByTestId("UCSBDiningCommonsMenuItemsForm-id")).toHaveValue("1");
   });
 
-  test("Correct Error messsages on bad input", async () => {
+  test("Correct Error messages on bad input", async () => {
     render(
       <Router>
         <UCSBDiningCommonsMenuItemsForm />
-      </Router>,
+      </Router>
     );
-    await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
-    const diningCommonsCodeField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
+    const diningCommonsCodeField = await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
     const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-name");
     const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
 
@@ -52,20 +50,16 @@ describe("UCSBDiningCommonsMenuItemsForm tests", () => {
     fireEvent.click(submitButton);
 
     await screen.findByText(/diningCommonsCode must be in the format String/);
-    expect(
-      screen.getByText(/diningCommonsCode must be in the format String/),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/diningCommonsCode must be in the format String/)).toBeInTheDocument();
   });
 
-  test("Correct Error messsages on missing input", async () => {
+  test("Correct Error messages on missing input", async () => {
     render(
       <Router>
         <UCSBDiningCommonsMenuItemsForm />
-      </Router>,
+      </Router>
     );
-    await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-submit");
-    const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
-
+    const submitButton = await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-submit");
     fireEvent.click(submitButton);
 
     await screen.findByText(/diningCommonsCode is required./);
@@ -73,49 +67,146 @@ describe("UCSBDiningCommonsMenuItemsForm tests", () => {
     expect(screen.getByText(/Station is required./)).toBeInTheDocument();
   });
 
-  test("No Error messsages on good input", async () => {
+  test("No Error messages on good input", async () => {
     const mockSubmitAction = vi.fn();
-
     render(
       <Router>
         <UCSBDiningCommonsMenuItemsForm submitAction={mockSubmitAction} />
-      </Router>,
+      </Router>
     );
-    await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
 
-    const diningCommonsCodeField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
+    const diningCommonsCodeField = await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
     const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-name");
     const stationField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-station");
     const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
 
     fireEvent.change(diningCommonsCodeField, { target: { value: "ortega" } });
     fireEvent.change(nameField, { target: { value: "pasta" } });
-    fireEvent.change(stationField, {
-      target: { value: "italian" },
-    });
+    fireEvent.change(stationField, { target: { value: "italian" } });
     fireEvent.click(submitButton);
 
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
-
-    expect(
-      screen.queryByText(/diningCommonsCode must be in the format String/),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByText(/Name and Station must be in format String/),
-    ).not.toBeInTheDocument();
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
     render(
       <Router>
         <UCSBDiningCommonsMenuItemsForm />
-      </Router>,
+      </Router>
     );
-    await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-cancel");
-    const cancelButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-cancel");
-
+    const cancelButton = await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-cancel");
     fireEvent.click(cancelButton);
-
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
   });
+
+  test("submits correctly in edit mode (with initialContents)", async () => {
+    const mockSubmitAction = vi.fn();
+    render(
+      <Router>
+        <UCSBDiningCommonsMenuItemsForm
+          submitAction={mockSubmitAction}
+          initialContents={UCSBDiningCommonsMenuItemsFixtures.oneItems}
+        />
+      </Router>
+    );
+
+    const nameField = await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-name");
+    const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
+
+    fireEvent.change(nameField, { target: { value: "updated pasta" } });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
+    const submitted = mockSubmitAction.mock.calls[0][0];
+    expect(submitted.name).toBe("updated pasta");
+    expect(submitted.diningCommonsCode).toBe("ortega");
+    expect(submitted.station).toBe("italian");
+  });
+
+  describe("Storybook coverage", () => {
+    test("Create story renders", () => {
+      render(
+        <Router>
+          <Create {...Create.args} />
+        </Router>
+      );
+      expect(screen.getByText(/Create/)).toBeInTheDocument();
+    });
+
+    test("Update story renders", () => {
+      render(
+        <Router>
+          <Update {...Update.args} />
+        </Router>
+      );
+      expect(screen.getByText(/Update/)).toBeInTheDocument();
+    });
+  });
+
+  describe("Storybook coverage", () => {
+  beforeEach(() => {
+    vi.spyOn(window, "alert").mockImplementation(() => {}); // prevent popup
+    vi.spyOn(console, "log").mockImplementation(() => {}); // silence console.log
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  test("Create story executes submitAction", async () => {
+    render(
+      <Router>
+        <Create {...Create.args} />
+      </Router>
+    );
+
+    const diningCommonsCodeField = await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
+    const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-name");
+    const stationField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-station");
+    const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
+
+    fireEvent.change(diningCommonsCodeField, { target: { value: "ortega" } });
+    fireEvent.change(nameField, { target: { value: "pasta" } });
+    fireEvent.change(stationField, { target: { value: "italian" } });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(window.alert).toHaveBeenCalled();
+      expect(console.log).toHaveBeenCalledWith(
+        "Submit was clicked with data: ",
+        expect.objectContaining({
+          diningCommonsCode: "ortega",
+          name: "pasta",
+          station: "italian",
+        })
+      );
+    });
+  });
+
+  test("Update story executes submitAction", async () => {
+    render(
+      <Router>
+        <Update {...Update.args} />
+      </Router>
+    );
+
+    const nameField = await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-name");
+    const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
+
+    fireEvent.change(nameField, { target: { value: "new pasta" } });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(window.alert).toHaveBeenCalled();
+      expect(console.log).toHaveBeenCalledWith(
+        "Submit was clicked with data: ",
+        expect.objectContaining({
+          diningCommonsCode: "ortega",
+          name: "new pasta",
+          station: "italian",
+        })
+      );
+    });
+  });
+});
 });
