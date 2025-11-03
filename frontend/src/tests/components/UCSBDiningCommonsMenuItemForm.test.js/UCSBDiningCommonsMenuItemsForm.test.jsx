@@ -143,7 +143,7 @@ describe("UCSBDiningCommonsMenuItemsForm tests", () => {
     });
   });
 
-  describe("Storybook coverage", () => {
+  describe("Storybook coverage - submit", () => {
   beforeEach(() => {
     vi.spyOn(window, "alert").mockImplementation(() => {}); // prevent popup
     vi.spyOn(console, "log").mockImplementation(() => {}); // silence console.log
@@ -152,61 +152,138 @@ describe("UCSBDiningCommonsMenuItemsForm tests", () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });
+test("Create story executes submitAction", async () => {
+  render(
+    <Router>
+      <Create {...Create.args} />
+    </Router>
+  );
 
-  test("Create story executes submitAction", async () => {
-    render(
-      <Router>
-        <Create {...Create.args} />
-      </Router>
+  const diningCommonsCodeField = await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
+  const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-name");
+  const stationField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-station");
+  const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
+
+  fireEvent.change(diningCommonsCodeField, { target: { value: "ortega" } });
+  fireEvent.change(nameField, { target: { value: "pasta" } });
+  fireEvent.change(stationField, { target: { value: "italian" } });
+  fireEvent.click(submitButton);
+
+  await waitFor(() => {
+    expect(window.alert).toHaveBeenCalledTimes(1);
+    const alertCall = window.alert.mock.calls[0][0];
+    expect(alertCall).toContain("Submit was clicked with data: ");  
+    expect(alertCall).toContain('"diningCommonsCode":"ortega"');
+    expect(console.log).toHaveBeenCalledWith(
+      "Submit was clicked with data: ",
+      expect.objectContaining({
+        diningCommonsCode: "ortega",
+        name: "pasta",
+        station: "italian",
+      })
     );
-
-    const diningCommonsCodeField = await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
-    const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-name");
-    const stationField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-station");
-    const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
-
-    fireEvent.change(diningCommonsCodeField, { target: { value: "ortega" } });
-    fireEvent.change(nameField, { target: { value: "pasta" } });
-    fireEvent.change(stationField, { target: { value: "italian" } });
-    fireEvent.click(submitButton);
-
-    await waitFor(() => {
-      expect(window.alert).toHaveBeenCalled();
-      expect(console.log).toHaveBeenCalledWith(
-        "Submit was clicked with data: ",
-        expect.objectContaining({
-          diningCommonsCode: "ortega",
-          name: "pasta",
-          station: "italian",
-        })
-      );
-    });
-  });
-
-  test("Update story executes submitAction", async () => {
-    render(
-      <Router>
-        <Update {...Update.args} />
-      </Router>
-    );
-
-    const nameField = await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-name");
-    const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
-
-    fireEvent.change(nameField, { target: { value: "new pasta" } });
-    fireEvent.click(submitButton);
-
-    await waitFor(() => {
-      expect(window.alert).toHaveBeenCalled();
-      expect(console.log).toHaveBeenCalledWith(
-        "Submit was clicked with data: ",
-        expect.objectContaining({
-          diningCommonsCode: "ortega",
-          name: "new pasta",
-          station: "italian",
-        })
-      );
-    });
   });
 });
+
+test("Update story executes submitAction", async () => {
+  render(
+    <Router>
+      <Update {...Update.args} />
+    </Router>
+  );
+
+  const nameField = await screen.findByTestId("UCSBDiningCommonsMenuItemsForm-name");
+  const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
+
+  fireEvent.change(nameField, { target: { value: "new pasta" } });
+  fireEvent.click(submitButton);
+
+  await waitFor(() => {
+    expect(window.alert).toHaveBeenCalledTimes(1);
+    const alertCall = window.alert.mock.calls[0][0];
+    expect(alertCall).toContain("Submit was clicked with data: ");  // Add this line
+    expect(alertCall).toContain('"name":"new pasta"');
+    expect(console.log).toHaveBeenCalledWith(
+      "Submit was clicked with data: ",
+      expect.objectContaining({
+        diningCommonsCode: "ortega",
+        name: "new pasta",
+        station: "italian",
+        })
+        );
+    });
+    });
+  });
+
+test("diningCommonsCode field shows error styling when there's an error", async () => {
+  render(
+    <Router>
+      <UCSBDiningCommonsMenuItemsForm />
+    </Router>,
+  );
+  
+  const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
+  fireEvent.click(submitButton);
+  
+  await screen.findByText(/diningCommonsCode is required./);
+  const diningCommonsCodeField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
+  
+  expect(diningCommonsCodeField).toHaveClass("is-invalid");
+});
+
+test("name field shows error styling when there's an error", async () => {
+  render(
+    <Router>
+      <UCSBDiningCommonsMenuItemsForm />
+    </Router>,
+  );
+  
+  const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
+  fireEvent.click(submitButton);
+  
+  await screen.findByText(/Name is required./);
+  const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-name");
+  
+  expect(nameField).toHaveClass("is-invalid");
+});
+
+test("station field shows error styling when there's an error", async () => {
+  render(
+    <Router>
+      <UCSBDiningCommonsMenuItemsForm />
+    </Router>,
+  );
+  
+  const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
+  fireEvent.click(submitButton);
+  
+  await screen.findByText(/Station is required./);
+  const stationField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-station");
+  
+  expect(stationField).toHaveClass("is-invalid");
+});
+
+test("fields do not show error styling when valid", async () => {
+  const mockSubmitAction = vi.fn();
+
+  render(
+    <Router>
+      <UCSBDiningCommonsMenuItemsForm submitAction={mockSubmitAction} />
+    </Router>,
+  );
+
+  const diningCommonsCodeField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
+  const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-name");
+  const stationField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-station");
+  const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
+
+  fireEvent.change(diningCommonsCodeField, { target: { value: "ortega" } });
+  fireEvent.change(nameField, { target: { value: "pasta" } });
+  fireEvent.change(stationField, { target: { value: "italian" } });
+
+  expect(diningCommonsCodeField).not.toHaveClass("is-invalid");
+  expect(nameField).not.toHaveClass("is-invalid");
+  expect(stationField).not.toHaveClass("is-invalid");
+});
+
 });
