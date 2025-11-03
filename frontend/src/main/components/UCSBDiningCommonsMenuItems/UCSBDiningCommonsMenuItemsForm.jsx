@@ -49,7 +49,11 @@ function UCSBDiningCommonsMenuItemsForm({
               placeholder="ortega"
               isInvalid={!!errors.diningCommonsCode}
               {...register("diningCommonsCode", {
-                required: "Dining Commons Code Required.",
+                required: "diningCommonsCode is required.",
+                pattern: {
+                  value: /^[A-Za-z]+$/,
+                  message: "diningCommonsCode must be in the format String",
+                },
               })}
             />
             <Form.Control.Feedback type="invalid">
@@ -67,7 +71,6 @@ function UCSBDiningCommonsMenuItemsForm({
               placeholder="pasta"
               isInvalid={!!errors.name}
               {...register("name", {
-                required: true,
                 required: "Name is required.",
               })}
             />
@@ -89,7 +92,7 @@ function UCSBDiningCommonsMenuItemsForm({
               placeholder="italian"
               isInvalid={!!errors.station}
               {...register("station", {
-                required: "station is required.",
+                required: "Station is required.",
               })}
             />
             <Form.Control.Feedback type="invalid">
