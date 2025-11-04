@@ -49,10 +49,6 @@ function ArticleForm({
                     isInvalid={Boolean(errors.title)}
                     {...register("title", {
                         required: "Title is required.",
-                        maxLength: {
-                            value: 255,
-                            message: "Max length 255 characters",
-                        },
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -83,10 +79,6 @@ function ArticleForm({
                     isInvalid={Boolean(errors.name)}
                     {...register("explanation", {
                         required: "Explanation is required.",
-                        maxLength: {
-                            value: 255,
-                            message: "Max length 255 characters",
-                        },
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -132,7 +124,7 @@ function ArticleForm({
 
 
 
-            <Button type="submit" data-testid={testIdPrefix + "-submit"}>
+            <Button type="submit">
                 {buttonLabel}
             </Button>
             <Button
