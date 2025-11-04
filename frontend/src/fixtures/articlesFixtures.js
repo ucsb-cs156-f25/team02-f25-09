@@ -1,4 +1,4 @@
-const commitFixtures = {
+const articlesFixtures = {
   oneArticle: {
     id: 8,
     title: "All the right notes: the ENO’s ‘Dead Man Walking’",
