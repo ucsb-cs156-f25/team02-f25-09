@@ -6,7 +6,7 @@ const helpRequestFixtures = {
     tableOrBreakoutRoom: "table01",
     requestTime: "2025-11-02T10:12:00",
     explanation: "This is a test.",
-    solved: true,
+    solved: false,
   },
   threeRequests: [
     {
@@ -20,7 +20,7 @@ const helpRequestFixtures = {
     },
     {
       id: 3,
-      requesterEmail: "dkim877@ucsb.edu",
+      requesterEmail: "dkim876@ucsb.edu",
       teamId: "two",
       tableOrBreakoutRoom: "table02",
       requestTime: "2025-11-02T11:12:00",
@@ -29,7 +29,7 @@ const helpRequestFixtures = {
     },
     {
       id: 4,
-      requesterEmail: "dkim878@ucsb.edu",
+      requesterEmail: "dkim876@ucsb.edu",
       teamId: "three",
       tableOrBreakoutRoom: "table03",
       requestTime: "2025-11-02T12:12:00",
