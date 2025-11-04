@@ -120,14 +120,14 @@ function ArticleForm({
                     data-testid={testIdPrefix + "-dateAdded"}
                     id="dateAdded"
                     type="datetime-local"
-                    isInvalid={Boolean(errors.localDateTime)}
+                    isInvalid={Boolean(errors.dateAdded)}
                     {...register("dateAdded", {
-                        required: true,
+                        required: "Date added is required.",
                         pattern: isodate_regex,
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.localDateTime && "Date added is required. "}
+                    {errors.dateAdded?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 

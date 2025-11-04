@@ -5,6 +5,7 @@ import ArticleForm from "main/components/Articles/ArticleForm";
 import { articleFixtures } from "fixtures/articleFixtures";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { articleFixtures } from "fixtures/articleFixtures";
+import { expect } from "vitest";
 
 const mockedNavigate = vi.fn();
 vi.mock("react-router", async () => {
@@ -86,10 +87,13 @@ describe("ArticleForm tests", () => {
     const submitButton = screen.getByText(/Create/);
     fireEvent.click(submitButton);
 
-    await screen.findByText(/Name is required/);
-    expect(screen.getByText(/Description is required/)).toBeInTheDocument();
+    await screen.findByText(/Title is required/);
+    expect(screen.getByText(/Explanation is required/)).toBeInTheDocument();
+    expect(screen.getByText(/URL is required/)).toBeInTheDocument();
+    expect(screen.getByText(/Email is required/)).toBeInTheDocument();
+    expect(screen.getByText(/Date added is required/)).toBeInTheDocument();
 
-    const nameInput = screen.getByTestId(`${testId}-name`);
+    const nameInput = screen.getByTestId(`${testId}-title`);
     fireEvent.change(nameInput, { target: { value: "a".repeat(31) } });
     fireEvent.click(submitButton);
 
