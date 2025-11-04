@@ -1,7 +1,7 @@
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { removeZ } from "HelpRequests/RemoveZ.jsx"
+import { removeZ } from "main/components/HelpRequests/RemoveZ.jsx"
 
 function HelpRequestForm({
   initialContents,
