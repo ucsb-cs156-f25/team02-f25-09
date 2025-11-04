@@ -10,7 +10,7 @@ function ArticleForm({
     // Stryker disable all
     const {
         register,
-        formState: { errors }, 
+        formState: { errors },
         handleSubmit,
     } = useForm({ defaultValues: initialContents || {} });
     // Stryker restore all
@@ -19,8 +19,10 @@ function ArticleForm({
 
     const testIdPrefix = "ArticleForm";
 
+    // Stryker disable Regex
     const isodate_regex =
         /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
+    // Stryker restore Regex. 
 
     return (
         <Form onSubmit={handleSubmit(submitAction)}>
@@ -61,10 +63,9 @@ function ArticleForm({
             <Form.Group className="mb-3">
                 <Form.Label htmlFor="url">URL</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-url"}
                     id="url"
                     type="text"
-                    isInvalid={Boolean(errors.description)}
+                    isInvalid={Boolean(errors.url)}
                     {...register("url", {
                         required: "URL is required.",
                     })}
@@ -77,7 +78,6 @@ function ArticleForm({
             <Form.Group className="mb-3">
                 <Form.Label htmlFor="explanation">Explanation</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-explanation"}
                     id="explanation"
                     type="text"
                     isInvalid={Boolean(errors.name)}
@@ -97,10 +97,9 @@ function ArticleForm({
             <Form.Group className="mb-3">
                 <Form.Label htmlFor="email">Email</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-explanation"}
-                    id="email" 
+                    id="email"
                     type="text"
-                    isInvalid={Boolean(errors.name)}
+                    isInvalid={Boolean(errors.email)}
                     {...register("email", {
                         required: "Email is required.",
                         maxLength: {
@@ -117,7 +116,6 @@ function ArticleForm({
             <Form.Group className="mb-3">
                 <Form.Label htmlFor="dateAdded">Date Added (iso format)</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-dateAdded"}
                     id="dateAdded"
                     type="datetime-local"
                     isInvalid={Boolean(errors.dateAdded)}
