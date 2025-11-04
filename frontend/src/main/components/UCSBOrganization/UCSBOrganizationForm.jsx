@@ -21,27 +21,21 @@ function UCSBOrganizationForm({
 
   return (
     <Form onSubmit={handleSubmit(submitAction)}>
-      
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="orgCode">
-          Org Code
-        </Form.Label>
+        <Form.Label htmlFor="orgCode">Org Code</Form.Label>
         <Form.Control
           data-testid={testIdPrefix + "-orgCode"}
           id="orgCode"
           type="text"
-          isInvalid={Boolean(errors.orgTranslationShort)}
+          isInvalid={Boolean(errors.orgCode)}
           {...register("orgCode", {
             required: "OrgCode is required.",
           })}
         />
         <Form.Control.Feedback type="invalid">
-          {errors.orgTranslationShort?.message}
+          {errors.orgCode?.message}
         </Form.Control.Feedback>
       </Form.Group>
-
-      
-      
 
       <Form.Group className="mb-3">
         <Form.Label htmlFor="orgTranslationShort">
@@ -99,9 +93,7 @@ function UCSBOrganizationForm({
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Button type="submit">
-        {buttonLabel}
-      </Button>
+      <Button type="submit">{buttonLabel}</Button>
       <Button
         variant="Secondary"
         onClick={() => navigate(-1)}
