@@ -1,17 +1,45 @@
-import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+import React from "react";
+import { useBackend } from "main/utils/useBackend";
 
-export default function PlaceholderIndexPage() {
-  // Stryker disable all : placeholder for future implementation
+import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+import UCSBDiningCommonsMenuItemsTable from "main/components/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsTable";
+import { Button } from "react-bootstrap";
+import { useCurrentUser, hasRole } from "main/utils/useCurrentUser";
+
+export default function UCSBDiningCommonsMenuItemsIndexPage() {
+  const currentUser = useCurrentUser();
+
+  const createButton = () => {
+    if (hasRole(currentUser, "ROLE_ADMIN")) {
+      return (
+        <Button
+          variant="primary"
+          href="/ucsbdiningcommons/create"
+          style={{ float: "right" }}
+        >
+          Create UCSBDiningCommonsMenuItems
+        </Button>
+      );
+    }
+  };
+
+  const {
+    data: items,
+    error: _error,
+    status: _status,
+  } = useBackend(
+    // Stryker disable next-line all : don't test internal caching of React Query
+    ["/api/ucsbdiningcommons/all"],
+    { method: "GET", url: "/api/ucsbdiningcommons/all" },
+    [],
+  );
+
   return (
     <BasicLayout>
       <div className="pt-2">
-        <h1>Index page not yet implemented</h1>
-        <p>
-          <a href="/placeholder/create">Create</a>
-        </p>
-        <p>
-          <a href="/placeholder/edit/1">Edit</a>
-        </p>
+        {createButton()}
+        <h1>UCSBDiningCommonsMenuItems</h1>
+        <UCSBDiningCommonsMenuItemsTable items={items} currentUser={currentUser} />
       </div>
     </BasicLayout>
   );
