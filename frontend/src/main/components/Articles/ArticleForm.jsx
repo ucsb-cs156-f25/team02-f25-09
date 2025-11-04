@@ -49,6 +49,10 @@ function ArticleForm({
                     isInvalid={Boolean(errors.title)}
                     {...register("title", {
                         required: "Title is required.",
+                        maxLength: {
+                            value: 255,
+                            message: "Max length 255 characters",
+                        },
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -94,10 +98,6 @@ function ArticleForm({
                     isInvalid={Boolean(errors.email)}
                     {...register("email", {
                         required: "Email is required.",
-                        maxLength: {
-                            value: 255,
-                            message: "Max length 255 characters",
-                        },
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
