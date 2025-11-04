@@ -142,6 +142,7 @@ describe("UCSBDiningCommonsMenuItemsEditPage tests", () => {
       const stationField = screen.getByTestId(
         "UCSBDiningCommonsMenuItemsForm-station",
       );
+
       const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
 
       expect(idField).toHaveValue("17");
@@ -168,6 +169,7 @@ describe("UCSBDiningCommonsMenuItemsEditPage tests", () => {
       const stationField = screen.getByTestId(
         "UCSBDiningCommonsMenuItemsForm-station",
       );
+      
       const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
 
       expect(idField).toHaveValue("17");
