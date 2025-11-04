@@ -6,7 +6,7 @@ import { helpRequestFixtures } from "fixtures/helpRequestFixtures";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { removeZ } from "HelpRequests/RemoveZ.jsx"
+import { removeZ } from "main/components/HelpRequests/RemoveZ.jsx"
 
 const mockedNavigate = vi.fn();
 vi.mock("react-router", async () => {
