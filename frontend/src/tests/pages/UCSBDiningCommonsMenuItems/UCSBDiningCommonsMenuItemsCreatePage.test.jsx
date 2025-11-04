@@ -43,7 +43,6 @@ describe("UCSBDiningCommonsMenuItemsCreatePage tests", () => {
       .reply(200, systemInfoFixtures.showingNeither);
   });
 
-  const queryClient = new QueryClient();
   test("renders without crashing", async () => {
     const queryClient = new QueryClient();
     render(
