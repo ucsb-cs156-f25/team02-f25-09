@@ -120,7 +120,7 @@ function ArticleForm({
                     type="datetime-local"
                     isInvalid={Boolean(errors.dateAdded)}
                     {...register("dateAdded", {
-                        required: "Date added is required.",
+                        required: "Date Added is required.",
                         pattern: isodate_regex,
                     })}
                 />

@@ -55,6 +55,11 @@ describe("ArticleForm tests", () => {
 
     expect(await screen.findByTestId(`${testId}-id`)).toBeInTheDocument();
     expect(screen.getByText(`Id`)).toBeInTheDocument();
+    expect(screen.getByText(`Title`)).toBeInTheDocument();
+    expect(screen.getByText(`URL`)).toBeInTheDocument();
+    expect(screen.getByText(`Explanation`)).toBeInTheDocument();
+    expect(screen.getByText(`Email`)).toBeInTheDocument();
+    expect(screen.getByText(`Date Added (iso format)`)).toBeInTheDocument();
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
@@ -90,7 +95,7 @@ describe("ArticleForm tests", () => {
     expect(screen.getByText(/Explanation is required/)).toBeInTheDocument();
     expect(screen.getByText(/URL is required/)).toBeInTheDocument();
     expect(screen.getByText(/Email is required/)).toBeInTheDocument();
-    expect(screen.getByText(/Date added is required/)).toBeInTheDocument();
+    expect(screen.getByText(/Date Added is required/)).toBeInTheDocument();
 
     const titleInput = screen.getByTestId(`${testId}-title`);
     fireEvent.change(titleInput, { target: { value: "a".repeat(256) } });
