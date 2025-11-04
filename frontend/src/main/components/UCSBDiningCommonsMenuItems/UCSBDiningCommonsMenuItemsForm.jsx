@@ -1,9 +1,8 @@
-
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
-function UCSBDateForm({
+function UCSBDiningCommonsMenuItemsForm({
   initialContents,
   submitAction,
   buttonLabel = "Create",
@@ -21,14 +20,6 @@ function UCSBDateForm({
   // For explanation, see: https://stackoverflow.com/questions/3143070/javascript-regex-iso-datetime
   // Note that even this complex regex may still need some tweaks
 
-  // Stryker disable Regex
-  const isodate_regex =
-    /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
-  // Stryker restore Regex
-
-  // Stryker disable next-line all
-  const yyyyq_regex = /((19)|(20))\d{2}[1-4]/i; // Accepts from 1900-2099 followed by 1-4.  Close enough.
-
   return (
     <Form onSubmit={handleSubmit(submitAction)}>
       <Row>
@@ -37,7 +28,7 @@ function UCSBDateForm({
             <Form.Group className="mb-3">
               <Form.Label htmlFor="id">Id</Form.Label>
               <Form.Control
-                data-testid="UCSBDateForm-id"
+                data-testid="UCSBDiningCommonsMenuItemsForm-id"
                 id="id"
                 type="text"
                 {...register("id")}
@@ -50,53 +41,35 @@ function UCSBDateForm({
 
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="quarterYYYYQ">Quarter YYYYQ</Form.Label>
+            <Form.Label htmlFor="diningCommonsCode">diningCommonsCode</Form.Label>
             <Form.Control
-              data-testid="UCSBDateForm-quarterYYYYQ"
-              id="quarterYYYYQ"
+              data-testid="UCSBDiningCommonsMenuItemsForm-diningCommonsCode"
+              id="diningCommonsCode"
               type="text"
-              isInvalid={Boolean(errors.quarterYYYYQ)}
-              {...register("quarterYYYYQ", {
-                required: true,
-                pattern: yyyyq_regex,
+              placeholder="ortega"
+              isInvalid={!!errors.diningCommonsCode}
+              {...register("diningCommonsCode", {
+                required: "diningCommonsCode is required.",
+                pattern: {
+                  value: /^[A-Za-z]+$/,
+                  message: "diningCommonsCode must be in the format String",
+                },
               })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.quarterYYYYQ && "QuarterYYYYQ is required. "}
-              {errors.quarterYYYYQ?.type === "pattern" &&
-                "QuarterYYYYQ must be in the format YYYYQ, e.g. 20224 for Fall 2022"}
+              {errors.diningCommonsCode?.message}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
-        <Col>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="localDateTime">Date (iso format)</Form.Label>
-            <Form.Control
-              data-testid="UCSBDateForm-localDateTime"
-              id="localDateTime"
-              type="datetime-local"
-              isInvalid={Boolean(errors.localDateTime)}
-              {...register("localDateTime", {
-                required: true,
-                pattern: isodate_regex,
-              })}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.localDateTime && "LocalDateTime is required. "}
-            </Form.Control.Feedback>
-          </Form.Group>
-        </Col>
-      </Row>
-
-      <Row>
         <Col>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="name">Name</Form.Label>
             <Form.Control
-              data-testid="UCSBDateForm-name"
+              data-testid="UCSBDiningCommonsMenuItemsForm-name"
               id="name"
               type="text"
-              isInvalid={Boolean(errors.name)}
+              placeholder="pasta"
+              isInvalid={!!errors.name}
               {...register("name", {
                 required: "Name is required.",
               })}
@@ -110,13 +83,34 @@ function UCSBDateForm({
 
       <Row>
         <Col>
-          <Button type="submit" data-testid="UCSBDateForm-submit">
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="station">Station</Form.Label>
+            <Form.Control
+              data-testid="UCSBDiningCommonsMenuItemsForm-station"
+              id="station"
+              type="text"
+              placeholder="italian"
+              isInvalid={!!errors.station}
+              {...register("station", {
+                required: "Station is required.",
+              })}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.station?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col>
+          <Button type="submit" data-testid="UCSBDiningCommonsMenuItemsForm-submit">
             {buttonLabel}
           </Button>
           <Button
             variant="Secondary"
             onClick={() => navigate(-1)}
-            data-testid="UCSBDateForm-cancel"
+            data-testid="UCSBDiningCommonsMenuItemsForm-cancel"
           >
             Cancel
           </Button>
@@ -126,4 +120,4 @@ function UCSBDateForm({
   );
 }
 
-export default UCSBDateForm;
+export default UCSBDiningCommonsMenuItemsForm;
