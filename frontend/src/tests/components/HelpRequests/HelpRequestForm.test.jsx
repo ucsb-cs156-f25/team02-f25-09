@@ -1,10 +1,12 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router";
 
-import HelpRequestForm, { removeZ } from "main/components/HelpRequests/HelpRequestForm";
+import HelpRequestForm from "main/components/HelpRequests/HelpRequestForm";
 import { helpRequestFixtures } from "fixtures/helpRequestFixtures";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import { removeZ } from "HelpRequests/RemoveZ.jsx"
 
 const mockedNavigate = vi.fn();
 vi.mock("react-router", async () => {

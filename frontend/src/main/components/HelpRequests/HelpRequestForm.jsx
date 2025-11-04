@@ -1,10 +1,7 @@
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-
-export function removeZ(myString) {
-  return myString.replace("Z", "");
-}
+import { removeZ } from "HelpRequests/RemoveZ.jsx"
 
 function HelpRequestForm({
   initialContents,
