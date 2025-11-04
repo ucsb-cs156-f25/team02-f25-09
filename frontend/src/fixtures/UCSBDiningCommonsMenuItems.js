@@ -7,19 +7,19 @@ const UCSBDiningCommonsMenuItemsFixtures = {
   },
   threeItems: [
     {
-    id: 2,
+    id: 1,
     diningCommonsCode: "dlg",
     name: "pizza",
     station: "american",
     },
     {
-    id: 3,
+    id: 2,
     diningCommonsCode: "ortega",
     name: "pasta",
     station: "italian",
     },
     {
-    id: 1,
+    id: 3,
     diningCommonsCode: "dlg",
     name: "sandwich",
     station: "european",
