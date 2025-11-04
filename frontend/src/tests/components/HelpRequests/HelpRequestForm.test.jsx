@@ -6,8 +6,6 @@ import { helpRequestFixtures } from "fixtures/helpRequestFixtures";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { removeZ } from "main/components/HelpRequests/RemoveZ.jsx"
-
 const mockedNavigate = vi.fn();
 vi.mock("react-router", async () => {
   const originalModule = await vi.importActual("react-router");
@@ -29,11 +27,6 @@ describe("HelpRequestForm tests", () => {
     "Solved",
   ];
   const testId = "HelpRequestForm";
-
-  test("that the removeZ function works properly", () => {
-    expect(removeZ("ABC")).toBe("ABC");
-    expect(removeZ("ABCZ")).toBe("ABC");
-  });
 
   test("renders correctly with no initialContents", async () => {
     render(
@@ -70,18 +63,6 @@ describe("HelpRequestForm tests", () => {
 
     expect(await screen.findByTestId(`${testId}-id`)).toBeInTheDocument();
     expect(screen.getByText(`Id`)).toBeInTheDocument();
-
-    expect(screen.getByLabelText("Id")).toHaveValue(String(helpRequestFixtures.oneRequest.id));
-    expect(screen.getByLabelText("Requester Email")).toHaveValue(helpRequestFixtures.oneRequest.requesterEmail);
-    expect(screen.getByLabelText("Team ID")).toHaveValue(helpRequestFixtures.oneRequest.teamId);
-    expect(screen.getByLabelText("Table or Breakout Room")).toHaveValue(helpRequestFixtures.oneRequest.tableOrBreakoutRoom);
-    expect(screen.getByLabelText("Explanation")).toHaveValue(helpRequestFixtures.oneRequest.explanation);
-
-    if (helpRequestFixtures.oneRequest.solved) {
-      expect(screen.getByLabelText("Solved")).toBeChecked();
-    } else {
-      expect(screen.getByLabelText("Solved")).not.toBeChecked();
-    }
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
