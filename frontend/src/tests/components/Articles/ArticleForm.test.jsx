@@ -93,12 +93,12 @@ describe("ArticleForm tests", () => {
     expect(screen.getByText(/Email is required/)).toBeInTheDocument();
     expect(screen.getByText(/Date added is required/)).toBeInTheDocument();
 
-    const nameInput = screen.getByTestId(`${testId}-title`);
-    fireEvent.change(nameInput, { target: { value: "a".repeat(31) } });
+    const titleInput = screen.getByTestId(`${testId}-title`);
+    fireEvent.change(titleInput, { target: { value: "a".repeat(256) } });
     fireEvent.click(submitButton);
-
     await waitFor(() => {
-      expect(screen.getByText(/Max length 30 characters/)).toBeInTheDocument();
+      expect(screen.getByText(/Max length 255 characters/)).toBeInTheDocument();
     });
+
   });
 });
