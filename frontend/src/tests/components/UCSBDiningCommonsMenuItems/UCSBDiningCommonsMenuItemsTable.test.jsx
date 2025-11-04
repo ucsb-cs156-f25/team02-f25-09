@@ -5,7 +5,16 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import axios from "axios";
+import { onDeleteSuccess, cellToAxiosParamsDelete } from "main/utils/UCSBDiningCommonsMenuItemsUtils";
+import * as toastify from "react-toastify";
 import AxiosMockAdapter from "axios-mock-adapter";
+
+
+vi.mock("react-toastify", () => {
+  return {
+    toast: vi.fn(),
+  };
+});
 
 const mockedNavigate = vi.fn();
 vi.mock("react-router", async () => {
@@ -54,6 +63,16 @@ describe("UserTable tests", () => {
       "2",
     );
 
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`)
+    ).toHaveTextContent(UCSBDiningCommonsMenuItemsFixtures.threeItems[0].diningCommonsCode);
+
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-diningCommonsCode`)
+    ).toHaveTextContent(UCSBDiningCommonsMenuItemsFixtures.threeItems[1].diningCommonsCode);
+
+
+
     const editButton = screen.queryByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
     );
@@ -100,6 +119,14 @@ describe("UserTable tests", () => {
       "2",
     );
 
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`)
+    ).toHaveTextContent(UCSBDiningCommonsMenuItemsFixtures.threeItems[0].diningCommonsCode);
+
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-diningCommonsCode`)
+    ).toHaveTextContent(UCSBDiningCommonsMenuItemsFixtures.threeItems[1].diningCommonsCode);
+    
     const editButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
     );
@@ -185,6 +212,29 @@ describe("UserTable tests", () => {
     // assert - check that the delete endpoint was called
 
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
+    expect(axiosMock.history.delete[0].url).toBe("/api/ucsbdiningcommons");
     expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
+  });
+
+test("onDeleteSuccess logs message and calls toast", () => {
+    const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+
+    onDeleteSuccess("Test message");
+
+    expect(consoleSpy).toHaveBeenCalledWith("Test message");
+    expect(toastify.toast).toHaveBeenCalledWith("Test message");
+
+    consoleSpy.mockRestore();
+  });
+
+  test("cellToAxiosParamsDelete returns correct axios params", () => {
+    const cell = { row: { original: { id: 123 } } };
+    const result = cellToAxiosParamsDelete(cell);
+
+    expect(result).toEqual({
+      url: "/api/ucsbdiningcommons",
+      method: "DELETE",
+      params: { id: 123 },
+    });
   });
 });
