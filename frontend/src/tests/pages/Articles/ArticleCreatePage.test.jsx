@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import UCSBOrganizationCreatePage from "main/pages/UCSBOrganization/UCSBOrganizationCreatePage";
+import ArticleCreatePage from "main/pages/Articles/ArticleCreatePage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
 
@@ -30,7 +30,7 @@ vi.mock("react-router", async (importOriginal) => {
   };
 });
 
-describe("UCSBOrganizationCreatePage tests", () => {
+describe("ArticleCreatePage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
   beforeEach(() => {
@@ -50,77 +50,84 @@ describe("UCSBOrganizationCreatePage tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBOrganizationCreatePage />
+          <ArticleCreatePage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByLabelText("Inactive")).toBeInTheDocument();
+      expect(screen.getByLabelText("Title")).toBeInTheDocument();
     });
   });
 
-  test("on submit, makes request to backend, and redirects to /ucsborganization", async () => {
+  test("on submit, makes request to backend, and redirects to /articles", async () => {
     const queryClient = new QueryClient();
-    const organization = {
-      orgCode: "AB",
-      orgTranslationShort: "Alpha Beta",
-      orgTranslation: "Alpha Beta",
-      inactive: false,
+    const article = {
+      id: 3,
+      title: "Test Article",
+      url: "https://example.com",
+      explanation: "This is a test article",
+      email: "test@example.com",
+      dateAdded: "2022-01-02T12:00",
     };
 
-    axiosMock.onPost("/api/ucsborganization/post").reply(202, organization);
+    axiosMock.onPost("/api/articles/post").reply(202, article);
 
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBOrganizationCreatePage />
+          <ArticleCreatePage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByLabelText("Org Code")).toBeInTheDocument();
+      expect(screen.getByLabelText("Title")).toBeInTheDocument();
     });
 
-    const orgCodeInput = screen.getByLabelText("Org Code");
-    expect(orgCodeInput).toBeInTheDocument();
+    const titleInput = screen.getByLabelText("Title");
+    expect(titleInput).toBeInTheDocument();
 
-    const orgTranslationShortInput = screen.getByLabelText(
-      "Org Translation Short",
-    );
-    expect(orgTranslationShortInput).toBeInTheDocument();
+    const urlInput = screen.getByLabelText("URL");
+    expect(urlInput).toBeInTheDocument();
 
-    const orgTranslationInput = screen.getByLabelText("Org Translation");
-    expect(orgTranslationInput).toBeInTheDocument();
+    const explanationInput = screen.getByLabelText("Explanation");
+    expect(explanationInput).toBeInTheDocument();
 
-    const inactiveInput = screen.getByLabelText("Inactive");
-    expect(inactiveInput).toBeInTheDocument();
+    const emailInput = screen.getByLabelText("Email");
+    expect(emailInput).toBeInTheDocument();
+
+    const dateAddedInput = screen.getByLabelText("Date Added (iso format)");
+    expect(dateAddedInput).toBeInTheDocument();
 
     const createButton = screen.getByText("Create");
     expect(createButton).toBeInTheDocument();
 
-    fireEvent.change(orgCodeInput, { target: { value: "AB" } });
-    fireEvent.change(orgTranslationShortInput, {
-      target: { value: "Alpha Beta" },
+    fireEvent.change(titleInput, { target: { value: "Test Article" } });
+    fireEvent.change(urlInput, { target: { value: "https://example.com" } });
+    fireEvent.change(explanationInput, {
+      target: { value: "This is a test article" },
     });
-    fireEvent.change(orgTranslationInput, { target: { value: "Alpha Beta" } });
-    fireEvent.change(inactiveInput, { target: { value: false } });
+    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
+    fireEvent.change(dateAddedInput, {
+      target: { value: "2022-01-02T12:00" },
+    });
     fireEvent.click(createButton);
 
     await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
     expect(axiosMock.history.post[0].params).toEqual({
-      orgCode: "AB",
-      orgTranslationShort: "Alpha Beta",
-      orgTranslation: "Alpha Beta",
-      inactive: "false",
+      title: "Test Article",
+      url: "https://example.com",
+      explanation: "This is a test article",
+      email: "test@example.com",
+      dateAdded: "2022-01-02T12:00",
     });
 
     // assert - check that the toast was called with the expected message
     expect(mockToast).toBeCalledWith(
-      "New organization Created - orgCode: AB orgTranslationShort: Alpha Beta",
+      "New article Created - id: 3 title: Test Article",
     );
-    expect(mockNavigate).toBeCalledWith({ to: "/ucsborganization" });
+    expect(mockNavigate).toBeCalledWith({ to: "/articles" });
   });
 });
