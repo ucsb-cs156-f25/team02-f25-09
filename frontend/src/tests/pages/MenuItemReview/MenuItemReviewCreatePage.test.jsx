@@ -63,7 +63,7 @@ describe("MenuItemReview tests", () => {
   test("when you fill in the form and hit submit, it makes a request to the backend", async () => {
     const queryClient = new QueryClient();
     const menuItemReview = {
-      itemId: 5,
+      itemId: "5",
       reviewerEmail: "yorble@ucsb.edu",
       stars: 4,
       dateReviewed: "2022-02-02T00:00",

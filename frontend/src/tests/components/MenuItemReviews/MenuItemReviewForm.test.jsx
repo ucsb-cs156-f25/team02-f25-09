@@ -53,7 +53,8 @@ describe("MenuItemReviewForm tests", () => {
     );
     const starField = screen.getByTestId("MenuItemReviewForm-stars");
     fireEvent.change(starField, { target: { value: "-1" } });
-
+    const itemIdField = screen.getByTestId("MenuItemReviewForm-itemId")
+    fireEvent.change(itemIdField, { target: { value: "abc" } }); // non-numeric
     fireEvent.change(reviewerEmailField, { target: { value: "bad-input" } });
 
     const submitButton = screen.getByTestId("MenuItemReviewForm-submit");
@@ -67,6 +68,12 @@ describe("MenuItemReviewForm tests", () => {
     await waitFor(() =>
       expect(
         screen.getByText(/Not a valid reviewer email/),
+      ).toBeInTheDocument(),
+    );
+
+    await waitFor(() =>
+      expect(
+        screen.getByText(/ItemId must be a valid number/),
       ).toBeInTheDocument(),
     );
 
@@ -87,7 +94,20 @@ describe("MenuItemReviewForm tests", () => {
     await waitFor(() =>
       expect(screen.getByText("Stars must be between 0-5")).toBeInTheDocument(),
     );
+
+    fireEvent.change(starField, { target: { value: "asdasd" } });
+    fireEvent.click(submitButton);
+    await waitFor(() =>
+      expect(screen.getByText("Stars must be a valid number")).toBeInTheDocument(),
+    );
+    fireEvent.change(itemIdField, { target: { value: "-1" } });
+    fireEvent.click(submitButton);
+    await waitFor(() =>
+      expect(screen.getByText("ItemId must be greater than 0")).toBeInTheDocument(),
+    );
+
   });
+
 
   test("Correct Error messsages on missing input", async () => {
     render(
