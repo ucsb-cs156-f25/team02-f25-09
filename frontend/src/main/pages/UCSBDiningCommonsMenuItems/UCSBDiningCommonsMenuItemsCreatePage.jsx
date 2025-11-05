@@ -10,7 +10,7 @@ export default function UCSBDiningCommonsMenuItemsCreatePage({
   const objectToAxiosParams = (UCSBDiningCommonsMenuItems) => ({
     url: "/api/ucsbdiningcommons/post",
     method: "POST",
-    params: {
+    data: {
       diningCommonsCode: UCSBDiningCommonsMenuItems.diningCommonsCode,
       name: UCSBDiningCommonsMenuItems.name,
       station: UCSBDiningCommonsMenuItems.station,
@@ -37,7 +37,7 @@ export default function UCSBDiningCommonsMenuItemsCreatePage({
   };
 
   if (isSuccess && !storybook) {
-    return <Navigate to="/ucsbdiningcommons" />;
+    return <Navigate to="/UCSBDiningCommonsMenuItems" />;
   }
 
   return (
