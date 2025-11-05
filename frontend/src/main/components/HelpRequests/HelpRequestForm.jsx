@@ -143,10 +143,6 @@ function HelpRequestForm({
           // data-testid={testIdPrefix + "-solved"}
           id="solved"
           type="checkbox"
-          isInvalid={Boolean(errors.solved)}
-          {...register("solved", {
-            required: "Solved is required.",
-          })}
         />
         <Form.Control.Feedback type="invalid">
           {errors.solved?.message}
