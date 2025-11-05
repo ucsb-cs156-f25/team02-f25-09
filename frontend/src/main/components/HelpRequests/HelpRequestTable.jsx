@@ -5,19 +5,19 @@ import { useBackendMutation } from "main/utils/useBackend";
 import {
   cellToAxiosParamsDelete,
   onDeleteSuccess,
-} from "main/utils/UCSBOrganizationUtils";
+} from "main/utils/helpRequestUtils";
 import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
 
-export default function UCSBOrganizationTable({
-  organizations,
+export default function HelpRequestTable({
+  requests,
   currentUser,
-  testIdPrefix = "UCSBOrganizationTable",
+  testIdPrefix = "HelpRequestTable",
 }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/UCSBOrganization/edit/${cell.row.original.orgCode}`);
+    navigate(`/helprequest/edit/${cell.row.original.id}`);
   };
 
   // Stryker disable all : hard to test for query caching
@@ -25,7 +25,7 @@ export default function UCSBOrganizationTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/ucsborganization/all"],
+    ["/api/helprequest/all"],
   );
   // Stryker restore all
 
@@ -36,21 +36,33 @@ export default function UCSBOrganizationTable({
 
   const columns = [
     {
-      header: "Org Code",
-      accessorKey: "orgCode", // accessor is the "key" in the data
+      header: "id",
+      accessorKey: "id", // accessor is the "key" in the data
     },
 
     {
-      header: "Org Translation Short",
-      accessorKey: "orgTranslationShort",
+      header: "Requester Email",
+      accessorKey: "requesterEmail",
     },
     {
-      header: "Org Translation",
-      accessorKey: "orgTranslation",
+      header: "Team Id",
+      accessorKey: "teamId",
     },
     {
-      header: "Inactive",
-      accessorKey: "inactive",
+      header: "Table or Breakout Room",
+      accessorKey: "tableOrBreakoutRoom",
+    },
+    {
+      header: "Request Time",
+      accessorKey: "requestTime",
+    },
+    {
+      header: "Explanation",
+      accessorKey: "explanation",
+    },
+    {
+      header: "Solved",
+      accessorKey: "solved",
     },
   ];
 
@@ -61,7 +73,5 @@ export default function UCSBOrganizationTable({
     );
   }
 
-  return (
-    <OurTable data={organizations} columns={columns} testid={testIdPrefix} />
-  );
+  return <OurTable data={requests} columns={columns} testid={testIdPrefix} />;
 }
