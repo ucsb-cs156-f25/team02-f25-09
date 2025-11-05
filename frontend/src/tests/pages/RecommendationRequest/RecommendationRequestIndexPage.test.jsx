@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import PlaceholderIndexPage from "main/pages/RecommendationRequest/RecommendationRequestIndexPage";
+import RecommendationRequestIndexPage from "main/pages/RecommendationRequest/RecommendationRequestIndexPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
 
