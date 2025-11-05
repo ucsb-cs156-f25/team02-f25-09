@@ -33,8 +33,6 @@ vi.mock("react-router", async (importOriginal) => {
   };
 });
 
-
-
 let axiosMock;
 describe("UCSBOrganizationEditPage tests", () => {
   describe("when the backend doesn't return data", () => {
@@ -48,7 +46,9 @@ describe("UCSBOrganizationEditPage tests", () => {
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock.onGet("/api/ucsborganization", { params: { orgCode: "DMB" } }).timeout();
+      axiosMock
+        .onGet("/api/ucsborganization", { params: { orgCode: "DMB" } })
+        .timeout();
     });
 
     afterEach(() => {
@@ -70,7 +70,9 @@ describe("UCSBOrganizationEditPage tests", () => {
         </QueryClientProvider>,
       );
       await screen.findByText("Edit Organization");
-      expect(screen.queryByTestId("Organization-orgCode")).not.toBeInTheDocument();
+      expect(
+        screen.queryByTestId("Organization-orgCode"),
+      ).not.toBeInTheDocument();
       restoreConsole();
     });
   });
@@ -86,12 +88,14 @@ describe("UCSBOrganizationEditPage tests", () => {
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock.onGet("/api/ucsborganization", { params: { orgCode: "DMB" } }).reply(200, {
-        orgCode: "DMB",
-        orgTranslationShort: "Dean Map B",
-        orgTranslation: "Dean Map Bean",
-        inactive: false,
-      });
+      axiosMock
+        .onGet("/api/ucsborganization", { params: { orgCode: "DMB" } })
+        .reply(200, {
+          orgCode: "DMB",
+          orgTranslationShort: "Dean Map B",
+          orgTranslation: "Dean Map Bean",
+          inactive: false,
+        });
       axiosMock.onPut("/api/ucsborganization").reply(200, {
         orgCode: "DMB",
         orgTranslationShort: "Dean MAGE B",
@@ -121,7 +125,9 @@ describe("UCSBOrganizationEditPage tests", () => {
       await screen.findByTestId("UCSBOrganizationForm-orgCode");
 
       const orgCodeField = screen.getByTestId("UCSBOrganizationForm-orgCode");
-      const orgTranslationShortField = screen.getByTestId("UCSBOrganizationForm-orgTranslationShort");
+      const orgTranslationShortField = screen.getByTestId(
+        "UCSBOrganizationForm-orgTranslationShort",
+      );
       const orgTranslationField = screen.getByLabelText("Org Translation");
       const inactiveField = screen.getByLabelText("Inactive");
       const submitButton = screen.getByText("Update");
@@ -136,7 +142,6 @@ describe("UCSBOrganizationEditPage tests", () => {
       expect(inactiveField).toHaveValue("false");
 
       expect(submitButton).toHaveTextContent("Update");
-
 
       fireEvent.change(orgTranslationShortField, {
         target: { value: "Dean MAGE B" },
@@ -167,7 +172,5 @@ describe("UCSBOrganizationEditPage tests", () => {
         }),
       ); // posted object
     });
-
-
   });
 });
