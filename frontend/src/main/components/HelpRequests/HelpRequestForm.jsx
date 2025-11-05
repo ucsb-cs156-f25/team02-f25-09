@@ -1,6 +1,7 @@
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { removeZ } from "main/components/HelpRequests/RemoveZ.jsx"
 
 function HelpRequestForm({
   initialContents,
@@ -10,7 +11,7 @@ function HelpRequestForm({
   const defaultValues = initialContents
     ? {
         ...initialContents,
-        requestTime: initialContents.requestTime.replace("Z", ""),
+        requestTime: removeZ(initialContents.requestTime)
       }
     : {};
 
@@ -72,7 +73,7 @@ function HelpRequestForm({
       <Form.Group className="mb-3">
         <Form.Label htmlFor="teamId">Team ID</Form.Label>
         <Form.Control
-          data-testid={testIdPrefix + "-teamId"}
+          // data-testid={testIdPrefix + "-teamId"}
           id="teamId"
           type="text"
           isInvalid={Boolean(errors.teamId)}
@@ -90,7 +91,7 @@ function HelpRequestForm({
           Table or Breakout Room
         </Form.Label>
         <Form.Control
-          data-testid={testIdPrefix + "-tableOrBreakoutRoom"}
+          // data-testid={testIdPrefix + "-tableOrBreakoutRoom"}
           id="tableOrBreakoutRoom"
           type="text"
           isInvalid={Boolean(errors.tableOrBreakoutRoom)}
@@ -106,7 +107,7 @@ function HelpRequestForm({
       <Form.Group className="mb-3">
         <Form.Label htmlFor="requestTime">Request Time (in UTC)</Form.Label>
         <Form.Control
-          data-testid={testIdPrefix + "-requestTime"}
+          // data-testid={testIdPrefix + "-requestTime"}
           id="requestTime"
           type="datetime-local"
           isInvalid={Boolean(errors.requestTime)}
@@ -123,7 +124,7 @@ function HelpRequestForm({
       <Form.Group className="mb-3">
         <Form.Label htmlFor="explanation">Explanation</Form.Label>
         <Form.Control
-          data-testid={testIdPrefix + "-explanation"}
+          // data-testid={testIdPrefix + "-explanation"}
           id="explanation"
           type="text"
           isInvalid={Boolean(errors.explanation)}
@@ -139,7 +140,7 @@ function HelpRequestForm({
       <Form.Group className="mb-3">
         <Form.Label htmlFor="solved">Solved</Form.Label>
         <Form.Check
-          data-testid={testIdPrefix + "-solved"}
+          // data-testid={testIdPrefix + "-solved"}
           id="solved"
           type="checkbox"
           isInvalid={Boolean(errors.solved)}
@@ -152,9 +153,7 @@ function HelpRequestForm({
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Button type="submit" data-testid={testIdPrefix + "-submit"}>
-        {buttonLabel}
-      </Button>
+      <Button type="submit">{buttonLabel}</Button>
       <Button
         variant="Secondary"
         onClick={() => navigate(-1)}
