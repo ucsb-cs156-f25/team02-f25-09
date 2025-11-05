@@ -39,26 +39,28 @@ public class UCSBDiningCommonsMenuItemsControllerTests extends ControllerTestCas
   @Test
   public void logged_out_users_cannot_get_all() throws Exception {
     mockMvc
-        .perform(get("/api/ucsbdiningcommons/all"))
+        .perform(get("/api/UCSBDiningCommonsMenuItems/all"))
         .andExpect(status().is(403)); // logged out users can't get all
   }
 
   @WithMockUser(roles = {"USER"})
   @Test
   public void logged_in_users_can_get_all() throws Exception {
-    mockMvc.perform(get("/api/ucsbdiningcommons/all")).andExpect(status().is(200)); // logged
+    mockMvc
+        .perform(get("/api/UCSBDiningCommonsMenuItems/all"))
+        .andExpect(status().is(200)); // logged
   }
 
   @Test
   public void logged_out_users_cannot_post() throws Exception {
-    mockMvc.perform(post("/api/ucsbdiningcommons/post")).andExpect(status().is(403));
+    mockMvc.perform(post("/api/UCSBDiningCommonsMenuItems/post")).andExpect(status().is(403));
   }
 
   @WithMockUser(roles = {"USER"})
   @Test
   public void logged_in_regular_users_cannot_post() throws Exception {
     mockMvc
-        .perform(post("/api/ucsbdiningcommons/post"))
+        .perform(post("/api/UCSBDiningCommonsMenuItems/post"))
         .andExpect(status().is(403)); // only admins can post
   }
 
@@ -140,7 +142,10 @@ public class UCSBDiningCommonsMenuItemsControllerTests extends ControllerTestCas
 
     // act
     MvcResult response =
-        mockMvc.perform(get("/api/ucsbdiningcommons/all")).andExpect(status().isOk()).andReturn();
+        mockMvc
+            .perform(get("/api/UCSBDiningCommonsMenuItems/all"))
+            .andExpect(status().isOk())
+            .andReturn();
 
     // assert
 
@@ -169,7 +174,7 @@ public class UCSBDiningCommonsMenuItemsControllerTests extends ControllerTestCas
     MvcResult response =
         mockMvc
             .perform(
-                post("/api/ucsbdiningcommons/post?diningCommonsCode=dlg&name=pizza&station=american")
+                post("/api/UCSBDiningCommonsMenuItems/post?diningCommonsCode=dlg&name=pizza&station=american")
                     .with(csrf()))
             .andExpect(status().isOk())
             .andReturn();
