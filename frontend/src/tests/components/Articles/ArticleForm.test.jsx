@@ -1,10 +1,10 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router";
 
-import UCSBOrganizationForm from "main/components/UCSBOrganization/UCSBOrganizationForm";
-import { ucsbOrganizationFixtures } from "fixtures/UCSBOrganizationFixtures";
-
+import ArticleForm from "main/components/Articles/ArticleForm";
+import { articleFixtures } from "fixtures/articleFixtures";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { expect } from "vitest";
 
 const mockedNavigate = vi.fn();
 vi.mock("react-router", async () => {
@@ -15,22 +15,17 @@ vi.mock("react-router", async () => {
   };
 });
 
-describe("UCSBOrganizationForm tests", () => {
+describe("ArticleForm tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = [
-    "Org Translation Short",
-    "Org Translation",
-    "Inactive",
-  ];
-  const testId = "UCSBOrganizationForm";
-
+  const expectedHeaders = ["Title", "URL", "Explanation", "Email", "Date Added (iso format)"];
+  const testId = "ArticleForm";
   test("renders correctly with no initialContents", async () => {
     render(
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>  
         <Router>
-          <UCSBOrganizationForm />
-        </Router>
+          <ArticleForm />
+        </Router> 
       </QueryClientProvider>,
     );
 
@@ -46,9 +41,7 @@ describe("UCSBOrganizationForm tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <Router>
-          <UCSBOrganizationForm
-            initialContents={ucsbOrganizationFixtures.oneOrganization}
-          />
+          <ArticleForm initialContents={articleFixtures.oneArticle} />
         </Router>
       </QueryClientProvider>,
     );
@@ -60,15 +53,20 @@ describe("UCSBOrganizationForm tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(await screen.findByTestId(`${testId}-orgCode`)).toBeInTheDocument();
-    expect(screen.getByText(`Org Code`)).toBeInTheDocument();
+    expect(await screen.findByTestId(`${testId}-id`)).toBeInTheDocument();
+    expect(screen.getByText(`Id`)).toBeInTheDocument();
+    expect(screen.getByLabelText(`Id`)).toHaveValue(String(articleFixtures.oneArticle.id));
+    expect(screen.getByLabelText(`Title`)).toHaveValue(articleFixtures.oneArticle.title);
+    expect(screen.getByLabelText(`URL`)).toHaveValue(articleFixtures.oneArticle.url);
+    expect(screen.getByLabelText(`Explanation`)).toHaveValue(articleFixtures.oneArticle.explanation);
+    expect(screen.getByLabelText(`Email`)).toHaveValue(articleFixtures.oneArticle.email);
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
     render(
       <QueryClientProvider client={queryClient}>
         <Router>
-          <UCSBOrganizationForm />
+          <ArticleForm />
         </Router>
       </QueryClientProvider>,
     );
@@ -84,7 +82,7 @@ describe("UCSBOrganizationForm tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <Router>
-          <UCSBOrganizationForm />
+          <ArticleForm />
         </Router>
       </QueryClientProvider>,
     );
@@ -93,21 +91,18 @@ describe("UCSBOrganizationForm tests", () => {
     const submitButton = screen.getByText(/Create/);
     fireEvent.click(submitButton);
 
-    await screen.findByText(/OrgTranslationShort is required/);
-    expect(screen.getByText(/OrgTranslation is required/)).toBeInTheDocument();
-    expect(screen.getByText(/Inactive is required/)).toBeInTheDocument();
-    expect(screen.getByText(/OrgCode is required/)).toBeInTheDocument();
+    await screen.findByText(/Title is required/);
+    expect(screen.getByText(/Explanation is required/)).toBeInTheDocument();
+    expect(screen.getByText(/URL is required/)).toBeInTheDocument();
+    expect(screen.getByText(/Email is required/)).toBeInTheDocument();
+    expect(screen.getByText(/Date Added is required/)).toBeInTheDocument();
 
-    const orgTranslationShortInput = screen.getByTestId(
-      `${testId}-orgTranslationShort`,
-    );
-    fireEvent.change(orgTranslationShortInput, {
-      target: { value: "a".repeat(256) },
-    });
+    const titleInput = screen.getByTestId(`${testId}-title`);
+    fireEvent.change(titleInput, { target: { value: "a".repeat(256) } });
     fireEvent.click(submitButton);
-
     await waitFor(() => {
       expect(screen.getByText(/Max length 255 characters/)).toBeInTheDocument();
     });
+
   });
 });
