@@ -26,19 +26,17 @@ Default.parameters = {
         status: 200,
       });
     }),
-    http.get("/api/articles", ({ request }) => {
-      const url = new URL(request.url);
-      const id = url.searchParams.get("id");
-      return HttpResponse.json(
-        articleFixtures.threeArticles.find((a) => a.id === parseInt(id)),
-        {
-          status: 200,
-        }
-      );
+    http.get("/api/articles", () => {
+      return HttpResponse.json(articleFixtures.threeArticles[0], {
+        status: 200,
+      });
     }),
     http.put("/api/articles", () => {
       return HttpResponse.json({}, { status: 200 });
     }),
+    http.put("/api/articles", (req) => {
+      window.alert("PUT: " + req.url + " and body: " + req.body);
+      return HttpResponse.json({}, { status: 200 });
+    }),
   ],
 };
-

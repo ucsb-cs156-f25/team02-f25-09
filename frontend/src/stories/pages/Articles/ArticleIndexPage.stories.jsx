@@ -3,7 +3,7 @@ import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { articleFixtures } from "fixtures/articleFixtures";
 import { http, HttpResponse } from "msw";
-import ArticlesIndexPage from "main/pages/Articles/ArticlesIndexPage";
+import ArticlesIndexPage from "main/pages/Articles/ArticleIndexPage";
 
 export default {
   title: "pages/Articles/ArticlesIndexPage",

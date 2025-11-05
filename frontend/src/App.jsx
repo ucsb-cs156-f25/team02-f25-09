@@ -19,14 +19,14 @@ import PlaceholderIndexPage from "main/pages/Placeholder/PlaceholderIndexPage";
 import PlaceholderCreatePage from "main/pages/Placeholder/PlaceholderCreatePage";
 import PlaceholderEditPage from "main/pages/Placeholder/PlaceholderEditPage";
 
-import ArticlesEditPage from "main/pages/Articles/ArticlesEditPage";
-import ArticlesCreatePage from "main/pages/Articles/ArticlesCreatePage";
+import ArticlesEditPage from "main/pages/Articles/ArticleEditPage";
+import ArticlesCreatePage from "main/pages/Articles/ArticleCreatePage";
 
 import { hasRole, useCurrentUser } from "main/utils/useCurrentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
-import ArticlesIndexPage from "main/pages/Articles/ArticlesIndexPage";
+import ArticlesIndexPage from "main/pages/Articles/ArticleIndexPage";
 
 function App() {
   const currentUser = useCurrentUser();
