@@ -15,8 +15,8 @@ export default function AppNavbar({
     <>
       {(currentUrl.startsWith("http://localhost:3000") ||
         currentUrl.startsWith("http://127.0.0.1:3000")) && (
-        <AppNavbarLocalhost url={currentUrl} />
-      )}
+          <AppNavbarLocalhost url={currentUrl} />
+        )}
 
       <Navbar
         expand="xl"
@@ -65,6 +65,9 @@ export default function AppNavbar({
                   <Nav.Link as={Link} to="/restaurants">
                     Restaurants
                   </Nav.Link>
+                  <Nav.Link as={Link} to="/articles">
+                    Articles
+                  </Nav.Link>
                   <Nav.Link as={Link} to="/ucsbdates">
                     UCSB Dates
                   </Nav.Link>
@@ -73,6 +76,9 @@ export default function AppNavbar({
                   </Nav.Link>
                   <Nav.Link as={Link} to="/UCSBOrganization">
                     UCSB Organization
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/recommendationrequest">
+                    Recommendation Request
                   </Nav.Link>
                   <Nav.Link as={Link} to="/helprequest">
                     Help Requests

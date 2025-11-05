@@ -6,7 +6,7 @@ import { helpRequestFixtures } from "fixtures/helpRequestFixtures";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { removeZ } from "main/components/HelpRequests/RemoveZ.jsx";
+import { removeZ } from "main/components/HelpRequests/RemoveZ.jsx"
 
 const mockedNavigate = vi.fn();
 vi.mock("react-router", async () => {
@@ -71,21 +71,11 @@ describe("HelpRequestForm tests", () => {
     expect(await screen.findByTestId(`${testId}-id`)).toBeInTheDocument();
     expect(screen.getByText(`Id`)).toBeInTheDocument();
 
-    expect(screen.getByLabelText("Id")).toHaveValue(
-      String(helpRequestFixtures.oneRequest.id),
-    );
-    expect(screen.getByLabelText("Requester Email")).toHaveValue(
-      helpRequestFixtures.oneRequest.requesterEmail,
-    );
-    expect(screen.getByLabelText("Team ID")).toHaveValue(
-      helpRequestFixtures.oneRequest.teamId,
-    );
-    expect(screen.getByLabelText("Table or Breakout Room")).toHaveValue(
-      helpRequestFixtures.oneRequest.tableOrBreakoutRoom,
-    );
-    expect(screen.getByLabelText("Explanation")).toHaveValue(
-      helpRequestFixtures.oneRequest.explanation,
-    );
+    expect(screen.getByLabelText("Id")).toHaveValue(String(helpRequestFixtures.oneRequest.id));
+    expect(screen.getByLabelText("Requester Email")).toHaveValue(helpRequestFixtures.oneRequest.requesterEmail);
+    expect(screen.getByLabelText("Team ID")).toHaveValue(helpRequestFixtures.oneRequest.teamId);
+    expect(screen.getByLabelText("Table or Breakout Room")).toHaveValue(helpRequestFixtures.oneRequest.tableOrBreakoutRoom);
+    expect(screen.getByLabelText("Explanation")).toHaveValue(helpRequestFixtures.oneRequest.explanation);
 
     if (helpRequestFixtures.oneRequest.solved) {
       expect(screen.getByLabelText("Solved")).toBeChecked();

@@ -200,7 +200,7 @@ describe("UCSBOrganizationTable tests", () => {
 
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
-      .onDelete("/api/UCSBOrganization")
+      .onDelete("/api/ucsborganization")
       .reply(200, { message: "Organization deleted" });
 
     // act - render the component
@@ -234,6 +234,6 @@ describe("UCSBOrganizationTable tests", () => {
     // assert - check that the delete endpoint was called
 
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
-    expect(axiosMock.history.delete[0].params).toEqual({ id: "WPC" });
+    expect(axiosMock.history.delete[0].params).toEqual({ orgCode: "WPC" });
   });
 });
