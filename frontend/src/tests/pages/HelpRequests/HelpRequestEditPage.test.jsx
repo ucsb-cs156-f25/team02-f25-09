@@ -68,7 +68,9 @@ describe("HelpRequestEditPage tests", () => {
         </QueryClientProvider>,
       );
       await screen.findByText("Edit Request");
-      expect(screen.queryByTestId("HelpRequest-requesterEmail")).not.toBeInTheDocument();
+      expect(
+        screen.queryByTestId("HelpRequest-requesterEmail"),
+      ).not.toBeInTheDocument();
       restoreConsole();
     });
   });
@@ -125,7 +127,9 @@ describe("HelpRequestEditPage tests", () => {
       await screen.findByTestId("HelpRequestForm-id");
 
       const idField = screen.getByTestId("HelpRequestForm-id");
-      const requesterEmailField = screen.getByTestId("HelpRequestForm-requesterEmail");
+      const requesterEmailField = screen.getByTestId(
+        "HelpRequestForm-requesterEmail",
+      );
       // const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
       // const tableOrBreakoutRoomField = screen.getByTestId("HelpRequestForm-tableOrBreakoutRoom");
       // const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
@@ -133,7 +137,9 @@ describe("HelpRequestEditPage tests", () => {
       // const solvedField = screen.getByTestId("HelpRequestForm-solved");
 
       const teamIdField = screen.getByLabelText(/Team ID/i);
-      const tableOrBreakoutRoomField = screen.getByLabelText(/Table or Breakout Room/i);
+      const tableOrBreakoutRoomField = screen.getByLabelText(
+        /Table or Breakout Room/i,
+      );
       const requestTimeField = screen.getByLabelText(/Request Time/i);
       const explanationField = screen.getByLabelText(/Explanation/i);
       const solvedField = screen.getByLabelText(/Solved/i);
@@ -208,9 +214,13 @@ describe("HelpRequestEditPage tests", () => {
       await screen.findByTestId("HelpRequestForm-id");
 
       const idField = screen.getByTestId("HelpRequestForm-id");
-      const requesterEmailField = screen.getByTestId("HelpRequestForm-requesterEmail");
+      const requesterEmailField = screen.getByTestId(
+        "HelpRequestForm-requesterEmail",
+      );
       const teamIdField = screen.getByLabelText(/Team ID/i);
-      const tableOrBreakoutRoomField = screen.getByLabelText(/Table or Breakout Room/i);
+      const tableOrBreakoutRoomField = screen.getByLabelText(
+        /Table or Breakout Room/i,
+      );
       const requestTimeField = screen.getByLabelText(/Request Time/i);
       const explanationField = screen.getByLabelText(/Explanation/i);
       const solvedField = screen.getByLabelText(/Solved/i);
@@ -223,7 +233,6 @@ describe("HelpRequestEditPage tests", () => {
       expect(requestTimeField).toHaveValue("2025-11-02T11:12");
       expect(explanationField).toHaveValue("This is a test.");
       expect(solvedField).toBeChecked();
-
 
       expect(submitButton).toBeInTheDocument();
 
