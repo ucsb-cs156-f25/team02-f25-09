@@ -1,7 +1,7 @@
 import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
-import UCSBDiningCommonsMenuItemsEditPage from "main/pages/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsEditPage";
+import MenuItemReviewEditPage from "main/pages/MenuItemReview/MenuItemReviewEditPage";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
@@ -36,7 +36,7 @@ vi.mock("react-router", async (importOriginal) => {
 });
 
 let axiosMock;
-describe("UCSBDiningCommonsMenuItemsEditPage tests", () => {
+describe("MenuItemReviewEditPage tests", () => {
   describe("when the backend doesn't return data", () => {
     beforeEach(() => {
       axiosMock = new AxiosMockAdapter(axios);
@@ -46,9 +46,7 @@ describe("UCSBDiningCommonsMenuItemsEditPage tests", () => {
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock
-        .onGet("/api/ucsbdiningcommons", { params: { id: 17 } })
-        .timeout();
+      axiosMock.onGet("/api/menuitemreview", { params: { id: 17 } }).timeout();
     });
 
     afterEach(() => {
@@ -65,18 +63,14 @@ describe("UCSBDiningCommonsMenuItemsEditPage tests", () => {
       render(
         <QueryClientProvider client={queryClient}>
           <MemoryRouter>
-            <UCSBDiningCommonsMenuItemsEditPage />
+            <MenuItemReviewEditPage />
           </MemoryRouter>
         </QueryClientProvider>,
       );
 
       await screen.findByText(/Welcome/);
-      await screen.findByText("Edit UCSBDiningCommonsMenuItems");
-      expect(
-        screen.queryByTestId(
-          "UCSBDiningCommonsMenuItemsForm-diningCommonsCode",
-        ),
-      ).not.toBeInTheDocument();
+      await screen.findByText("Edit MenuItemReview");
+      expect(screen.queryByTestId("menuItemReview-id")).not.toBeInTheDocument();
       restoreConsole();
     });
   });
@@ -93,18 +87,20 @@ describe("UCSBDiningCommonsMenuItemsEditPage tests", () => {
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
       axiosMock
-        .onGet("/api/ucsbdiningcommons", { params: { id: 17 } })
+        .onGet("/api/menuitemreview", { params: { id: 17 } })
         .reply(200, {
-          id: 17,
-          diningCommonsCode: "ortega",
-          name: "pasta",
-          station: "italian",
+          dateReviewed: "2022-12-25T08:00",
+          reviewerEmail: "yorble@ucsb.edu",
+          itemId: "4",
+          stars: "5",
+          comments: "Hello",
         });
-      axiosMock.onPut("/api/ucsbdiningcommons").reply(200, {
-        id: "17",
-        diningCommonsCode: "ortega",
-        name: "pasta",
-        station: "italian",
+      axiosMock.onPut("/api/menuitemreview").reply(200, {
+        dateReviewed: "2022-12-25T08:00",
+        reviewerEmail: "yorble@ucsb.edu",
+        itemId: "4",
+        stars: "5",
+        comments: "Hello",
       });
     });
 
@@ -120,51 +116,44 @@ describe("UCSBDiningCommonsMenuItemsEditPage tests", () => {
       render(
         <QueryClientProvider client={queryClient}>
           <MemoryRouter>
-            <UCSBDiningCommonsMenuItemsEditPage />
+            <MenuItemReviewEditPage />
           </MemoryRouter>
         </QueryClientProvider>,
       );
       await screen.findByText(/Welcome/);
-      await screen.findByTestId(
-        "UCSBDiningCommonsMenuItemsForm-diningCommonsCode",
-      );
-      expect(
-        screen.getByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode"),
-      ).toBeInTheDocument();
+      await screen.findByTestId("MenuItemReviewForm-id");
+      expect(screen.getByTestId("MenuItemReviewForm-id")).toBeInTheDocument();
     });
 
     test("Is populated with the data provided", async () => {
       render(
         <QueryClientProvider client={queryClient}>
           <MemoryRouter>
-            <UCSBDiningCommonsMenuItemsEditPage />
+            <MenuItemReviewEditPage />
           </MemoryRouter>
         </QueryClientProvider>,
       );
 
-      await screen.findByTestId(
-        "UCSBDiningCommonsMenuItemsForm-diningCommonsCode",
+      await screen.findByTestId("MenuItemReviewForm-id");
+
+      const itemIdField = screen.getByTestId("MenuItemReviewForm-itemId");
+      const reviewerEmailField = screen.getByTestId(
+        "MenuItemReviewForm-reviewerEmail",
+      );
+      const starField = screen.getByTestId("MenuItemReviewForm-stars");
+      const commentsField = screen.getByTestId("MenuItemReviewForm-comments");
+      const dateReviewedField = screen.getByTestId(
+        "MenuItemReviewForm-dateReviewed",
       );
 
-      const idField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-id");
-      const diningCommonsCodeField = screen.getByTestId(
-        "UCSBDiningCommonsMenuItemsForm-diningCommonsCode",
-      );
-      const nameField = screen.getByTestId(
-        "UCSBDiningCommonsMenuItemsForm-name",
-      );
-      const stationField = screen.getByTestId(
-        "UCSBDiningCommonsMenuItemsForm-station",
-      );
+      const submitButton = screen.getByTestId("MenuItemReviewForm-submit");
 
-      const submitButton = screen.getByTestId(
-        "UCSBDiningCommonsMenuItemsForm-submit",
-      );
+      expect(itemIdField).toHaveValue("4");
+      expect(reviewerEmailField).toHaveValue("yorble@ucsb.edu");
+      expect(starField).toHaveValue("5");
+      expect(dateReviewedField).toHaveValue("2022-12-25T08:00");
+      expect(commentsField).toHaveValue("Hello");
 
-      expect(idField).toHaveValue("17");
-      expect(diningCommonsCodeField).toHaveValue("ortega");
-      expect(nameField).toHaveValue("pasta");
-      expect(stationField).toHaveValue("italian");
       expect(submitButton).toBeInTheDocument();
     });
 
@@ -172,58 +161,60 @@ describe("UCSBDiningCommonsMenuItemsEditPage tests", () => {
       render(
         <QueryClientProvider client={queryClient}>
           <MemoryRouter>
-            <UCSBDiningCommonsMenuItemsEditPage />
+            <MenuItemReviewEditPage />
           </MemoryRouter>
         </QueryClientProvider>,
       );
 
-      await screen.findByTestId(
-        "UCSBDiningCommonsMenuItemsForm-diningCommonsCode",
+      await screen.findByTestId("MenuItemReviewForm-itemId");
+
+      const itemIdField = screen.getByTestId("MenuItemReviewForm-itemId");
+      const reviewerEmailField = screen.getByTestId(
+        "MenuItemReviewForm-reviewerEmail",
+      );
+      const starField = screen.getByTestId("MenuItemReviewForm-stars");
+      const commentsField = screen.getByTestId("MenuItemReviewForm-comments");
+      const dateReviewedField = screen.getByTestId(
+        "MenuItemReviewForm-dateReviewed",
       );
 
-      const idField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-id");
-      const diningCommonsCodeField = screen.getByTestId(
-        "UCSBDiningCommonsMenuItemsForm-diningCommonsCode",
-      );
-      const nameField = screen.getByTestId(
-        "UCSBDiningCommonsMenuItemsForm-name",
-      );
-      const stationField = screen.getByTestId(
-        "UCSBDiningCommonsMenuItemsForm-station",
-      );
+      const submitButton = screen.getByTestId("MenuItemReviewForm-submit");
 
-      const submitButton = screen.getByTestId(
-        "UCSBDiningCommonsMenuItemsForm-submit",
-      );
-
-      expect(idField).toHaveValue("17");
-      expect(diningCommonsCodeField).toHaveValue("ortega");
-      expect(nameField).toHaveValue("pasta");
-      expect(stationField).toHaveValue("italian");
+      expect(itemIdField).toHaveValue("4");
+      expect(reviewerEmailField).toHaveValue("yorble@ucsb.edu");
+      expect(starField).toHaveValue("5");
+      expect(dateReviewedField).toHaveValue("2022-12-25T08:00");
+      expect(commentsField).toHaveValue("Hello");
 
       expect(submitButton).toBeInTheDocument();
 
-      fireEvent.change(diningCommonsCodeField, { target: { value: "ortega" } });
-      fireEvent.change(nameField, { target: { value: "pasta" } });
-      fireEvent.change(stationField, {
-        target: { value: "italian" },
+      fireEvent.change(itemIdField, { target: { value: "4" } });
+      fireEvent.change(reviewerEmailField, {
+        target: { value: "yorble@ucsb.edu" },
       });
+      fireEvent.change(dateReviewedField, {
+        target: { value: "2022-12-25T08:00" },
+      });
+      fireEvent.change(starField, { target: { value: "5" } });
+      fireEvent.change(commentsField, { target: { value: "Hello" } });
 
       fireEvent.click(submitButton);
 
       await waitFor(() => expect(mockToast).toBeCalled());
       expect(mockToast).toBeCalledWith(
-        "UCSBDiningCommonsMenuItems Updated - id: 17 name: pasta",
+        "MenuItemReview Updated - ItemId: 4 reviewerEmail: yorble@ucsb.edu",
       );
-      expect(mockNavigate).toBeCalledWith({ to: "/ucsbdiningcommons" });
+      expect(mockNavigate).toBeCalledWith({ to: "/menuitemreview" });
 
       expect(axiosMock.history.put.length).toBe(1); // times called
-      expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
+      expect(axiosMock.history.put[0].params).toEqual({ id: "" });
       expect(axiosMock.history.put[0].data).toBe(
         JSON.stringify({
-          diningCommonsCode: "ortega",
-          name: "pasta",
-          station: "italian",
+          itemId: "4",
+          reviewerEmail: "yorble@ucsb.edu",
+          dateReviewed: "2022-12-25T08:00",
+          stars: "5",
+          comments: "Hello",
         }),
       ); // posted object
     });

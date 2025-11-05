@@ -139,9 +139,7 @@ describe("ArticlesEditPage tests", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => expect(mockToast).toBeCalled());
-      expect(mockToast).toBeCalledWith(
-        "Article Updated - id: 17",
-      );
+      expect(mockToast).toBeCalledWith("Article Updated - id: 17");
 
       expect(mockNavigate).toBeCalledWith({ to: "/articles" });
 
@@ -184,9 +182,7 @@ describe("ArticlesEditPage tests", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => expect(mockToast).toBeCalled());
-      expect(mockToast).toBeCalledWith(
-        "Article Updated - id: 17",
-      );
+      expect(mockToast).toBeCalledWith("Article Updated - id: 17");
       expect(mockNavigate).toBeCalledWith({ to: "/articles" });
     });
   });

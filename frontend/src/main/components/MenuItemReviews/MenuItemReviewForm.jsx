@@ -24,8 +24,8 @@ function MenuItemReviewForm({
   const isodate_regex =
     /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
   const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // Stryker restore Regex
-  
+  // Stryker restore Regex
+
   // Stryker disable next-line all
   //const yyyyq_regex = /((19)|(20))\d{2}[1-4]/i; // Accepts from 1900-2099 followed by 1-4.  Close enough.
 
@@ -79,14 +79,15 @@ function MenuItemReviewForm({
                 pattern: email_regex,
               })}
             />
-            
+
             <Form.Control.Feedback type="invalid">
-              
-               {errors.reviewerEmail?.type === "required" ? "reviewerEmail is required." : null}
-               {errors.reviewerEmail?.type === "pattern"  ? "Not a valid reviewer email." : null}
+              {errors.reviewerEmail?.type === "required"
+                ? "reviewerEmail is required."
+                : null}
+              {errors.reviewerEmail?.type === "pattern"
+                ? "Not a valid reviewer email."
+                : null}
             </Form.Control.Feedback>
-            
-            
           </Form.Group>
         </Col>
 
@@ -98,27 +99,21 @@ function MenuItemReviewForm({
               id="stars"
               type="int"
               isInvalid={Boolean(errors.stars)}
-             
-
               {...register("stars", {
                 required: "stars are required.",
 
-                min:{
+                min: {
                   value: 0,
-                  message: "Stars must be between 0-5"
+                  message: "Stars must be between 0-5",
                 },
-                max:{
+                max: {
                   value: 5,
-                  message: "Stars must be between 0-5"
-                }
-                ,
-                
+                  message: "Stars must be between 0-5",
+                },
               })}
-              
             />
             <Form.Control.Feedback type="invalid">
               {errors.stars?.message}
-              
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -158,7 +153,6 @@ function MenuItemReviewForm({
             />
             <Form.Control.Feedback type="invalid">
               {errors.dateReviewed && "dateReviewed is required"}
-              
             </Form.Control.Feedback>
           </Form.Group>
         </Col>

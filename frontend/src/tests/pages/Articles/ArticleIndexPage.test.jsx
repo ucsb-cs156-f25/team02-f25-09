@@ -57,7 +57,7 @@ describe("ArticlesIndexPage tests", () => {
         <MemoryRouter>
           <ArticlesIndexPage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
@@ -79,38 +79,38 @@ describe("ArticlesIndexPage tests", () => {
         <MemoryRouter>
           <ArticlesIndexPage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
       expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-id`)
+        screen.getByTestId(`${testId}-cell-row-0-col-id`),
       ).toHaveTextContent("8");
     });
-    expect(
-      screen.getByTestId(`${testId}-cell-row-1-col-id`)
-    ).toHaveTextContent("9");
-    expect(
-      screen.getByTestId(`${testId}-cell-row-2-col-id`)
-    ).toHaveTextContent("10");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
+      "9",
+    );
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(
+      "10",
+    );
 
     const createArticleButton = screen.queryByText("Create Article");
     expect(createArticleButton).not.toBeInTheDocument();
 
-    const title = screen.getByText("All the right notes: the ENO’s ‘Dead Man Walking’");
+    const title = screen.getByText(
+      "All the right notes: the ENO’s ‘Dead Man Walking’",
+    );
     expect(title).toBeInTheDocument();
 
-    const explanation = screen.getByText(
-      "This harrowing opera is based"
-    );
+    const explanation = screen.getByText("This harrowing opera is based");
     expect(explanation).toBeInTheDocument();
 
     // for non-admin users, details button is visible, but the edit and delete buttons should not be visible
     expect(
-      screen.queryByTestId("ArticleTable-cell-row-0-col-Delete-button")
+      screen.queryByTestId("ArticleTable-cell-row-0-col-Delete-button"),
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByTestId("ArticleTable-cell-row-0-col-Edit-button")
+      screen.queryByTestId("ArticleTable-cell-row-0-col-Edit-button"),
     ).not.toBeInTheDocument();
   });
 
@@ -126,7 +126,7 @@ describe("ArticlesIndexPage tests", () => {
         <MemoryRouter>
           <ArticlesIndexPage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
@@ -135,7 +135,7 @@ describe("ArticlesIndexPage tests", () => {
 
     const errorMessage = console.error.mock.calls[0][0];
     expect(errorMessage).toMatch(
-      "Error communicating with backend via GET on /api/articles/all"
+      "Error communicating with backend via GET on /api/articles/all",
     );
     restoreConsole();
   });
@@ -155,21 +155,21 @@ describe("ArticlesIndexPage tests", () => {
         <MemoryRouter>
           <ArticlesIndexPage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
       expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-id`)
+        screen.getByTestId(`${testId}-cell-row-0-col-id`),
       ).toBeInTheDocument();
     });
 
-    expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-id`)
-    ).toHaveTextContent("8");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
+      "8",
+    );
 
     const deleteButton = await screen.findByTestId(
-      `${testId}-cell-row-0-col-Delete-button`
+      `${testId}-cell-row-0-col-Delete-button`,
     );
     expect(deleteButton).toBeInTheDocument();
 
