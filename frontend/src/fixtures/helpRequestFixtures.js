@@ -6,7 +6,7 @@ const helpRequestFixtures = {
     tableOrBreakoutRoom: "table01",
     requestTime: "2025-11-02T10:12:00",
     explanation: "This is a test.",
-    solved: true,
+    solved: false,
   },
   threeRequests: [
     {
