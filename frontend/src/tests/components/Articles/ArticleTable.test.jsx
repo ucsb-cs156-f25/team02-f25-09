@@ -19,8 +19,22 @@ vi.mock("react-router", async () => {
 describe("ArticleTable tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = ["id", "Title", "URL", "Explanation", "Email", "Date Added (iso format)"];
-  const expectedFields = ["id", "title", "url", "explanation", "email", "dateAdded"];
+  const expectedHeaders = [
+    "id",
+    "Title",
+    "URL",
+    "Explanation",
+    "Email",
+    "Date Added (iso format)",
+  ];
+  const expectedFields = [
+    "id",
+    "title",
+    "url",
+    "explanation",
+    "email",
+    "dateAdded",
+  ];
   const testId = "ArticleTable";
 
   test("renders empty table correctly", () => {
@@ -31,7 +45,7 @@ describe("ArticleTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <ArticleTable articles={[]} currentUser={currentUser} /> 
+          <ArticleTable articles={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>,
     );

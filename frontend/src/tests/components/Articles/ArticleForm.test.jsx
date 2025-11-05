@@ -18,14 +18,20 @@ vi.mock("react-router", async () => {
 describe("ArticleForm tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = ["Title", "URL", "Explanation", "Email", "Date Added (iso format)"];
+  const expectedHeaders = [
+    "Title",
+    "URL",
+    "Explanation",
+    "Email",
+    "Date Added (iso format)",
+  ];
   const testId = "ArticleForm";
   test("renders correctly with no initialContents", async () => {
     render(
-      <QueryClientProvider client={queryClient}>  
+      <QueryClientProvider client={queryClient}>
         <Router>
           <ArticleForm />
-        </Router> 
+        </Router>
       </QueryClientProvider>,
     );
 
@@ -55,11 +61,21 @@ describe("ArticleForm tests", () => {
 
     expect(await screen.findByTestId(`${testId}-id`)).toBeInTheDocument();
     expect(screen.getByText(`Id`)).toBeInTheDocument();
-    expect(screen.getByLabelText(`Id`)).toHaveValue(String(articleFixtures.oneArticle.id));
-    expect(screen.getByLabelText(`Title`)).toHaveValue(articleFixtures.oneArticle.title);
-    expect(screen.getByLabelText(`URL`)).toHaveValue(articleFixtures.oneArticle.url);
-    expect(screen.getByLabelText(`Explanation`)).toHaveValue(articleFixtures.oneArticle.explanation);
-    expect(screen.getByLabelText(`Email`)).toHaveValue(articleFixtures.oneArticle.email);
+    expect(screen.getByLabelText(`Id`)).toHaveValue(
+      String(articleFixtures.oneArticle.id),
+    );
+    expect(screen.getByLabelText(`Title`)).toHaveValue(
+      articleFixtures.oneArticle.title,
+    );
+    expect(screen.getByLabelText(`URL`)).toHaveValue(
+      articleFixtures.oneArticle.url,
+    );
+    expect(screen.getByLabelText(`Explanation`)).toHaveValue(
+      articleFixtures.oneArticle.explanation,
+    );
+    expect(screen.getByLabelText(`Email`)).toHaveValue(
+      articleFixtures.oneArticle.email,
+    );
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
@@ -103,6 +119,5 @@ describe("ArticleForm tests", () => {
     await waitFor(() => {
       expect(screen.getByText(/Max length 255 characters/)).toBeInTheDocument();
     });
-
   });
 });

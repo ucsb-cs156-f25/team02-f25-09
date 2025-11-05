@@ -33,7 +33,7 @@ describe("RecommendationRequestCreatePage tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RecommendationRequestCreatePage/>
+          <RecommendationRequestCreatePage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
