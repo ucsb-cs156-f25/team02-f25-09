@@ -58,8 +58,12 @@ describe("HelpRequestCreatePage tests", () => {
     await waitFor(() => {
       expect(screen.getByLabelText("Requester Email")).toBeInTheDocument();
       expect(screen.getByLabelText("Team ID")).toBeInTheDocument();
-      expect(screen.getByLabelText("Table or Breakout Room")).toBeInTheDocument();
-      expect(screen.getByLabelText("Request Time (in UTC)")).toBeInTheDocument();
+      expect(
+        screen.getByLabelText("Table or Breakout Room"),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText("Request Time (in UTC)"),
+      ).toBeInTheDocument();
       expect(screen.getByLabelText("Explanation")).toBeInTheDocument();
       expect(screen.getByLabelText("Solved")).toBeInTheDocument();
     });
@@ -90,8 +94,12 @@ describe("HelpRequestCreatePage tests", () => {
     await waitFor(() => {
       expect(screen.getByLabelText("Requester Email")).toBeInTheDocument();
       expect(screen.getByLabelText("Team ID")).toBeInTheDocument();
-      expect(screen.getByLabelText("Table or Breakout Room")).toBeInTheDocument();
-      expect(screen.getByLabelText("Request Time (in UTC)")).toBeInTheDocument();
+      expect(
+        screen.getByLabelText("Table or Breakout Room"),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText("Request Time (in UTC)"),
+      ).toBeInTheDocument();
       expect(screen.getByLabelText("Explanation")).toBeInTheDocument();
       expect(screen.getByLabelText("Solved")).toBeInTheDocument();
     });
@@ -102,7 +110,9 @@ describe("HelpRequestCreatePage tests", () => {
     const teamIdInput = screen.getByLabelText("Team ID");
     expect(teamIdInput).toBeInTheDocument();
 
-    const tableOrBreakoutRoomInput = screen.getByLabelText("Table or Breakout Room");
+    const tableOrBreakoutRoomInput = screen.getByLabelText(
+      "Table or Breakout Room",
+    );
     expect(tableOrBreakoutRoomInput).toBeInTheDocument();
 
     const requestTimeInput = screen.getByLabelText("Request Time (in UTC)");
@@ -117,7 +127,9 @@ describe("HelpRequestCreatePage tests", () => {
     const createButton = screen.getByText("Create");
     expect(createButton).toBeInTheDocument();
 
-    fireEvent.change(requesterEmailInput, { target: { value: "changed@ucsb.edu" } });
+    fireEvent.change(requesterEmailInput, {
+      target: { value: "changed@ucsb.edu" },
+    });
     fireEvent.change(teamIdInput, {
       target: { value: "Changed Team ID" },
     });
@@ -154,7 +166,7 @@ describe("HelpRequestCreatePage tests", () => {
       tableOrBreakoutRoom: Table 01 
       requestTime: 2025-10-10T10:10 
       explanation: This is a test. 
-      solved: false`
+      solved: false`,
     );
 
     expect(mockNavigate).toBeCalledWith({ to: "/helprequest" });
