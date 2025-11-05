@@ -6,11 +6,14 @@ import { http, HttpResponse } from "msw";
 import UCSBDiningCommonsMenuItemsCreatePage from "main/pages/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsCreatePage";
 
 export default {
-  title: "pages/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsCreatePage",
+  title:
+    "pages/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsCreatePage",
   component: UCSBDiningCommonsMenuItemsCreatePage,
 };
 
-const Template = () => <UCSBDiningCommonsMenuItemsCreatePage storybook={true} />;
+const Template = () => (
+  <UCSBDiningCommonsMenuItemsCreatePage storybook={true} />
+);
 
 export const Default = Template.bind({});
 Default.parameters = {

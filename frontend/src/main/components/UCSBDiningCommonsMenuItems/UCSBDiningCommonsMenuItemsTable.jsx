@@ -9,7 +9,10 @@ import {
 import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
 
-export default function UCSBDiningCommonsMenuItemsTable({ items , currentUser }) {
+export default function UCSBDiningCommonsMenuItemsTable({
+  items,
+  currentUser,
+}) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
@@ -51,12 +54,28 @@ export default function UCSBDiningCommonsMenuItemsTable({ items , currentUser })
 
   if (hasRole(currentUser, "ROLE_ADMIN")) {
     columns.push(
-      ButtonColumn("Edit", "primary", editCallback, "UCSBDiningCommonsMenuItemsTable"),
+      ButtonColumn(
+        "Edit",
+        "primary",
+        editCallback,
+        "UCSBDiningCommonsMenuItemsTable",
+      ),
     );
     columns.push(
-      ButtonColumn("Delete", "danger", deleteCallback, "UCSBDiningCommonsMenuItemsTable"),
+      ButtonColumn(
+        "Delete",
+        "danger",
+        deleteCallback,
+        "UCSBDiningCommonsMenuItemsTable",
+      ),
     );
   }
 
-  return <OurTable data={items} columns={columns} testid={"UCSBDiningCommonsMenuItemsTable"} />;
+  return (
+    <OurTable
+      data={items}
+      columns={columns}
+      testid={"UCSBDiningCommonsMenuItemsTable"}
+    />
+  );
 }
