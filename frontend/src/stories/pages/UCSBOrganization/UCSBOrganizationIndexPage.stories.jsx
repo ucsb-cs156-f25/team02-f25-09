@@ -1,28 +1,33 @@
 import React from "react";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { articleFixtures } from "fixtures/articleFixtures";
+import { ucsbOrganizationFixtures } from "fixtures/UCSBOrganizationFixtures";
 import { http, HttpResponse } from "msw";
-import ArticlesIndexPage from "main/pages/Articles/ArticlesIndexPage";
+
+import UCSBOrganizationIndexPage from "main/pages/UCSBOrganization/UCSBOrganizationIndexPage";
 
 export default {
-  title: "pages/Articles/ArticlesIndexPage",
-  component: ArticlesIndexPage,
+  title: "pages/UCSBOrganization/UCSBOrganizationIndexPage",
+  component: UCSBOrganizationIndexPage,
 };
 
-const Template = () => <ArticlesIndexPage storybook={true} />;
+const Template = () => <UCSBOrganizationIndexPage storybook={true} />;
 
 export const Empty = Template.bind({});
 Empty.parameters = {
   msw: [
     http.get("/api/currentUser", () => {
-      return HttpResponse.json(apiCurrentUserFixtures.userOnly);
+      return HttpResponse.json(apiCurrentUserFixtures.userOnly, {
+        status: 200,
+      });
     }),
     http.get("/api/systemInfo", () => {
-      return HttpResponse.json(systemInfoFixtures.showingNeither);
+      return HttpResponse.json(systemInfoFixtures.showingNeither, {
+        status: 200,
+      });
     }),
-    http.get("/api/articles/all", () => {
-      return HttpResponse.json([]);
+    http.get("/api/ucsborganization/all", () => {
+      return HttpResponse.json([], { status: 200 });
     }),
   ],
 };
@@ -37,8 +42,8 @@ ThreeItemsOrdinaryUser.parameters = {
     http.get("/api/systemInfo", () => {
       return HttpResponse.json(systemInfoFixtures.showingNeither);
     }),
-    http.get("/api/articles/all", () => {
-      return HttpResponse.json(articleFixtures.threeArticles);
+    http.get("/api/ucsborganization/all", () => {
+      return HttpResponse.json(ucsbOrganizationFixtures.threeOrganization);
     }),
   ],
 };
@@ -53,11 +58,14 @@ ThreeItemsAdminUser.parameters = {
     http.get("/api/systemInfo", () => {
       return HttpResponse.json(systemInfoFixtures.showingNeither);
     }),
-    http.get("/api/articles/all", () => {
-      return HttpResponse.json(articleFixtures.threeArticles);
+    http.get("/api/ucsborganization/all", () => {
+      return HttpResponse.json(ucsbOrganizationFixtures.threeOrganization);
     }),
-    http.delete("/api/articles", () => {
-      return HttpResponse.json("Article with id 8 deleted");
+    http.delete("/api/ucsborganization", () => {
+      return HttpResponse.json(
+        { message: "Organization deleted successfully" },
+        { status: 200 },
+      );
     }),
   ],
 };
