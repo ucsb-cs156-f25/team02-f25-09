@@ -39,7 +39,10 @@ export default function UCSBDiningCommonsMenuItemsIndexPage() {
       <div className="pt-2">
         {createButton()}
         <h1>UCSBDiningCommonsMenuItems</h1>
-        <UCSBDiningCommonsMenuItemsTable items={items} currentUser={currentUser} />
+        <UCSBDiningCommonsMenuItemsTable
+          items={items}
+          currentUser={currentUser}
+        />
       </div>
     </BasicLayout>
   );

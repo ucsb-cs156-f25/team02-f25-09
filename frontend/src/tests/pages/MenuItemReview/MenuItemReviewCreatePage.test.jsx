@@ -67,7 +67,7 @@ describe("MenuItemReview tests", () => {
       reviewerEmail: "yorble@ucsb.edu",
       stars: 4,
       dateReviewed: "2022-02-02T00:00",
-      comments: "Great"
+      comments: "Great",
     };
 
     axiosMock.onPost("/api/menuitemreview/post").reply(202, menuItemReview);
@@ -87,16 +87,21 @@ describe("MenuItemReview tests", () => {
     });
 
     const itemIdField = screen.getByTestId("MenuItemReviewForm-itemId");
-    const reviewerEmailField = screen.getByTestId("MenuItemReviewForm-reviewerEmail");
+    const reviewerEmailField = screen.getByTestId(
+      "MenuItemReviewForm-reviewerEmail",
+    );
     const starField = screen.getByTestId("MenuItemReviewForm-stars");
     const commentsField = screen.getByTestId("MenuItemReviewForm-comments");
-    const dateReviewedField = screen.getByTestId("MenuItemReviewForm-dateReviewed");
-
+    const dateReviewedField = screen.getByTestId(
+      "MenuItemReviewForm-dateReviewed",
+    );
 
     const submitButton = screen.getByTestId("MenuItemReviewForm-submit");
 
     fireEvent.change(itemIdField, { target: { value: 5 } });
-    fireEvent.change(reviewerEmailField, { target: { value: "yorble@ucsb.edu" } });
+    fireEvent.change(reviewerEmailField, {
+      target: { value: "yorble@ucsb.edu" },
+    });
     fireEvent.change(dateReviewedField, {
       target: { value: "2022-02-02T00:00" },
     });
@@ -114,7 +119,7 @@ describe("MenuItemReview tests", () => {
       reviewerEmail: "yorble@ucsb.edu",
       itemId: "5",
       stars: "4",
-      comments: "Hello"
+      comments: "Hello",
     });
 
     expect(mockToast).toBeCalledWith(

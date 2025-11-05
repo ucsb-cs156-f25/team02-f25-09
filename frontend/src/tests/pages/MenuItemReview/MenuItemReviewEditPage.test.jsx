@@ -70,9 +70,7 @@ describe("MenuItemReviewEditPage tests", () => {
 
       await screen.findByText(/Welcome/);
       await screen.findByText("Edit MenuItemReview");
-      expect(
-        screen.queryByTestId("menuItemReview-id"),
-      ).not.toBeInTheDocument();
+      expect(screen.queryByTestId("menuItemReview-id")).not.toBeInTheDocument();
       restoreConsole();
     });
   });
@@ -88,19 +86,21 @@ describe("MenuItemReviewEditPage tests", () => {
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock.onGet("/api/menuitemreview", { params: { id: 17 } }).reply(200, {
-        dateReviewed: "2022-12-25T08:00",
-        reviewerEmail: "yorble@ucsb.edu",
-        itemId: "4",
-        stars: "5",
-        comments: "Hello"
-      });
+      axiosMock
+        .onGet("/api/menuitemreview", { params: { id: 17 } })
+        .reply(200, {
+          dateReviewed: "2022-12-25T08:00",
+          reviewerEmail: "yorble@ucsb.edu",
+          itemId: "4",
+          stars: "5",
+          comments: "Hello",
+        });
       axiosMock.onPut("/api/menuitemreview").reply(200, {
         dateReviewed: "2022-12-25T08:00",
         reviewerEmail: "yorble@ucsb.edu",
         itemId: "4",
         stars: "5",
-        comments: "Hello"
+        comments: "Hello",
       });
     });
 
@@ -122,9 +122,7 @@ describe("MenuItemReviewEditPage tests", () => {
       );
       await screen.findByText(/Welcome/);
       await screen.findByTestId("MenuItemReviewForm-id");
-      expect(
-        screen.getByTestId("MenuItemReviewForm-id"),
-      ).toBeInTheDocument();
+      expect(screen.getByTestId("MenuItemReviewForm-id")).toBeInTheDocument();
     });
 
     test("Is populated with the data provided", async () => {
@@ -139,10 +137,14 @@ describe("MenuItemReviewEditPage tests", () => {
       await screen.findByTestId("MenuItemReviewForm-id");
 
       const itemIdField = screen.getByTestId("MenuItemReviewForm-itemId");
-      const reviewerEmailField = screen.getByTestId("MenuItemReviewForm-reviewerEmail");
+      const reviewerEmailField = screen.getByTestId(
+        "MenuItemReviewForm-reviewerEmail",
+      );
       const starField = screen.getByTestId("MenuItemReviewForm-stars");
       const commentsField = screen.getByTestId("MenuItemReviewForm-comments");
-      const dateReviewedField = screen.getByTestId("MenuItemReviewForm-dateReviewed");
+      const dateReviewedField = screen.getByTestId(
+        "MenuItemReviewForm-dateReviewed",
+      );
 
       const submitButton = screen.getByTestId("MenuItemReviewForm-submit");
 
@@ -167,10 +169,14 @@ describe("MenuItemReviewEditPage tests", () => {
       await screen.findByTestId("MenuItemReviewForm-itemId");
 
       const itemIdField = screen.getByTestId("MenuItemReviewForm-itemId");
-      const reviewerEmailField = screen.getByTestId("MenuItemReviewForm-reviewerEmail");
+      const reviewerEmailField = screen.getByTestId(
+        "MenuItemReviewForm-reviewerEmail",
+      );
       const starField = screen.getByTestId("MenuItemReviewForm-stars");
       const commentsField = screen.getByTestId("MenuItemReviewForm-comments");
-      const dateReviewedField = screen.getByTestId("MenuItemReviewForm-dateReviewed");
+      const dateReviewedField = screen.getByTestId(
+        "MenuItemReviewForm-dateReviewed",
+      );
 
       const submitButton = screen.getByTestId("MenuItemReviewForm-submit");
 
@@ -183,7 +189,9 @@ describe("MenuItemReviewEditPage tests", () => {
       expect(submitButton).toBeInTheDocument();
 
       fireEvent.change(itemIdField, { target: { value: "4" } });
-      fireEvent.change(reviewerEmailField, { target: { value: "yorble@ucsb.edu" } });
+      fireEvent.change(reviewerEmailField, {
+        target: { value: "yorble@ucsb.edu" },
+      });
       fireEvent.change(dateReviewedField, {
         target: { value: "2022-12-25T08:00" },
       });
@@ -206,7 +214,7 @@ describe("MenuItemReviewEditPage tests", () => {
           reviewerEmail: "yorble@ucsb.edu",
           dateReviewed: "2022-12-25T08:00",
           stars: "5",
-          comments: "Hello"
+          comments: "Hello",
         }),
       ); // posted object
     });

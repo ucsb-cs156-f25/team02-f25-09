@@ -1,5 +1,8 @@
 import { toast } from "react-toastify";
-import { onDeleteSuccess, cellToAxiosParamsDelete } from "main/utils/articleUtils";
+import {
+  onDeleteSuccess,
+  cellToAxiosParamsDelete,
+} from "main/utils/articleUtils";
 
 vi.mock("react-toastify", () => ({
   toast: vi.fn(),

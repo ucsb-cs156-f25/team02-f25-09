@@ -41,7 +41,9 @@ export default function MenuItemReviewEditPage({ storybook = false }) {
   });
 
   const onSuccess = (menuitemreview) => {
-    toast(`MenuItemReview Updated - ItemId: ${menuitemreview.itemId} reviewerEmail: ${menuitemreview.reviewerEmail}`);
+    toast(
+      `MenuItemReview Updated - ItemId: ${menuitemreview.itemId} reviewerEmail: ${menuitemreview.reviewerEmail}`,
+    );
   };
 
   const mutation = useBackendMutation(

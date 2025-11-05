@@ -1,7 +1,7 @@
 import React from "react";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { UCSBDiningCommonsMenuItemsFixtures } from "fixtures/UCSBDiningCommonsMenuItems"; 
+import { UCSBDiningCommonsMenuItemsFixtures } from "fixtures/UCSBDiningCommonsMenuItems";
 import { http, HttpResponse } from "msw";
 
 import UCSBDiningCommonsMenuItemsEditPage from "main/pages/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsEditPage";
@@ -27,9 +27,12 @@ Default.parameters = {
       });
     }),
     http.get("/api/ucsbdiningcommons", () => {
-      return HttpResponse.json(UCSBDiningCommonsMenuItemsFixtures.threeItems[0], {
-        status: 200,
-      });
+      return HttpResponse.json(
+        UCSBDiningCommonsMenuItemsFixtures.threeItems[0],
+        {
+          status: 200,
+        },
+      );
     }),
     http.put("/api/ucsbdiningcommons", () => {
       return HttpResponse.json({}, { status: 200 });

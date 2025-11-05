@@ -53,9 +53,9 @@ describe("UCSBDiningCommonsMenuItemsCreatePage tests", () => {
       </QueryClientProvider>,
     );
     await waitFor(() => {
-        expect(screen.getByLabelText("diningCommonsCode")).toBeInTheDocument();
-        });
+      expect(screen.getByLabelText("diningCommonsCode")).toBeInTheDocument();
     });
+  });
 
   test("when you fill in the form and hit submit, it makes a request to the backend, redirects to /ucsbdiningcommons", async () => {
     const queryClient = new QueryClient();
@@ -77,21 +77,25 @@ describe("UCSBDiningCommonsMenuItemsCreatePage tests", () => {
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByLabelText("diningCommonsCode"),
-      ).toBeInTheDocument();
+      expect(screen.getByLabelText("diningCommonsCode")).toBeInTheDocument();
     });
 
-    const diningCommonsCodeField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode");
+    const diningCommonsCodeField = screen.getByTestId(
+      "UCSBDiningCommonsMenuItemsForm-diningCommonsCode",
+    );
     expect(diningCommonsCodeField).toBeInTheDocument();
 
     const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-name");
     expect(nameField).toBeInTheDocument();
-    
-    const stationField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-station");
+
+    const stationField = screen.getByTestId(
+      "UCSBDiningCommonsMenuItemsForm-station",
+    );
     expect(stationField).toBeInTheDocument();
-    
-    const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-submit");
+
+    const submitButton = screen.getByTestId(
+      "UCSBDiningCommonsMenuItemsForm-submit",
+    );
     expect(submitButton).toBeInTheDocument();
 
     fireEvent.change(diningCommonsCodeField, { target: { value: "ortega" } });

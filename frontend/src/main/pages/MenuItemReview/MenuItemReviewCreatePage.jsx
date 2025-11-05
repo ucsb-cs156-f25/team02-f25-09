@@ -10,15 +10,17 @@ export default function MenuItemReviewCreatePage({ storybook = false }) {
     method: "POST",
     params: {
       itemId: menuItemReview.itemId,
-      reviewerEmail:  menuItemReview.reviewerEmail,
-      stars:  menuItemReview.stars,
-      comments:  menuItemReview.comments,
-      dateReviewed:  menuItemReview.dateReviewed,
+      reviewerEmail: menuItemReview.reviewerEmail,
+      stars: menuItemReview.stars,
+      comments: menuItemReview.comments,
+      dateReviewed: menuItemReview.dateReviewed,
     },
   });
 
   const onSuccess = (menuItemReview) => {
-    toast(`New menuItemReview Created - itemId: ${menuItemReview.itemId} reviewerEmail: ${menuItemReview.reviewerEmail}`);
+    toast(
+      `New menuItemReview Created - itemId: ${menuItemReview.itemId} reviewerEmail: ${menuItemReview.reviewerEmail}`,
+    );
   };
 
   const mutation = useBackendMutation(
