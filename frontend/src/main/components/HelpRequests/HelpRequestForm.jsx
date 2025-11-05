@@ -143,10 +143,8 @@ function HelpRequestForm({
           // data-testid={testIdPrefix + "-solved"}
           id="solved"
           type="checkbox"
+          {...register("solved")}
         />
-        <Form.Control.Feedback type="invalid">
-          {errors.solved?.message}
-        </Form.Control.Feedback>
       </Form.Group>
 
       <Button type="submit">{buttonLabel}</Button>
