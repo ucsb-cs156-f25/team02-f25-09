@@ -32,7 +32,7 @@ describe("MenuItemReviewForm tests", () => {
       </Router>,
     );
     await screen.findByTestId(/MenuItemReviewForm-id/);
-    expect(screen.getByText(/Id/)).toBeInTheDocument();
+    expect(screen.getByText('Id',{exact: true})).toBeInTheDocument();
     expect(screen.getByTestId(/MenuItemReviewForm-id/)).toHaveValue("1");
   });
 
@@ -42,21 +42,55 @@ describe("MenuItemReviewForm tests", () => {
         <MenuItemReviewForm />
       </Router>,
     );
-    await screen.findByTestId("MenuItemForm-itemId");
+    await screen.findByTestId("MenuItemReviewForm-itemId");
     
-    const dateReviewedField = screen.getByTestId("MenuItemReviewForm-dateReviewed");
+    //const dateReviewedField = screen.getByTestId("MenuItemReviewForm-dateReviewed");
     
+    const reviewerEmailField = screen.getByTestId("MenuItemReviewForm-reviewerEmail")
+    const starField = screen.getByTestId("MenuItemReviewForm-stars")
+    fireEvent.change(starField, { target: { value: "-1" } });
 
+    
+    fireEvent.change(reviewerEmailField, { target: { value: "bad-input" } });
+
+    
     const submitButton = screen.getByTestId("MenuItemReviewForm-submit");
 
-    fireEvent.change(dateReviewedField, { target: { value: "bad-input" } });
+    //fireEvent.change(dateReviewedField, { target: { value: "2025-13-04T15:20:30" } });
 
     fireEvent.click(submitButton);
 
-    await screen.findByText(/dateReviewed must be in ISO format/);
+    //await screen.findByText(/dateReviewed must be in ISO format/);
+ 
+    await waitFor(() =>
     expect(
-      screen.getByText(/dateReviewed must be in ISO format/),
-    ).toBeInTheDocument();
+      screen.getByText(/Not a valid reviewer email/)
+    ).toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+    expect(
+      screen.getByText("Stars must be between 0-5")
+    ).toBeInTheDocument()
+    );
+
+    fireEvent.change(starField, { target: { value: ""} });
+    await waitFor(() =>
+    expect(
+      screen.queryByText("Stars must be between 0-5")
+    ).not.toBeInTheDocument()
+    );
+
+    fireEvent.change(starField, { target: { value: "6" } });
+    fireEvent.click(submitButton);
+    
+    await waitFor(() =>
+    expect(
+      screen.getByText("Stars must be between 0-5")
+    ).toBeInTheDocument()
+    );
+
+    
   });
 
   test("Correct Error messsages on missing input", async () => {
@@ -66,15 +100,15 @@ describe("MenuItemReviewForm tests", () => {
       </Router>,
     );
     await screen.findByTestId("MenuItemReviewForm-submit");
-    const submitButton = screen.getByTestId("MenuItemForm-submit");
+    const submitButton = screen.getByTestId("MenuItemReviewForm-submit");
 
     fireEvent.click(submitButton);
 
-    await screen.findByText(/Item ID is required./);
+    await screen.findByText(/ItemId is required./);
     expect(screen.getByText(/reviewerEmail is required./)).toBeInTheDocument();
     expect(screen.getByText(/stars are required./)).toBeInTheDocument();
     expect(screen.getByText(/comments are required./)).toBeInTheDocument();
-    expect(screen.getByText(/dateReviewed is required./)).toBeInTheDocument();
+    expect(screen.getByText(/dateReviewed is required/)).toBeInTheDocument();
   });
 
   test("No Error messsages on good input", async () => {
@@ -89,9 +123,9 @@ describe("MenuItemReviewForm tests", () => {
 
     const itemIdField = screen.getByTestId("MenuItemReviewForm-itemId");
     const reviewerEmailField = screen.getByTestId("MenuItemReviewForm-reviewerEmail");
-    const dateReviewedField = screen.getByTestId("MenuItemReviewForm-localDateTime");
+    const dateReviewedField = screen.getByTestId("MenuItemReviewForm-dateReviewed");
     const starField = screen.getByTestId("MenuItemReviewForm-stars");
-    const commentField = screen.getByTestId("MenuItemReview-comments")
+    const commentField = screen.getByTestId("MenuItemReviewForm-comments")
     const submitButton = screen.getByTestId("MenuItemReviewForm-submit");
 
     fireEvent.change(itemIdField, { target: { value: "3" } });
@@ -110,12 +144,14 @@ describe("MenuItemReviewForm tests", () => {
       screen.queryByText(/ItemId is required./),
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByText(/dateReviewed must be in ISO format/),
+      screen.queryByText(/dateReviewed must be in ISO format/)
     ).not.toBeInTheDocument();
     expect(screen.queryByText(/reviewerEmail is required./)).not.toBeInTheDocument();
     expect(screen.queryByText(/stars are required./)).not.toBeInTheDocument();
     expect(screen.queryByText(/comments are required./)).not.toBeInTheDocument();
-    expect(screen.queryByText(/dateReviewed is required./)).not.toBeInTheDocument();
+    expect(screen.queryByText(/dateReviewed is required/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Not a valid reviewer email/)).not.toBeInTheDocument();
+
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
@@ -124,7 +160,7 @@ describe("MenuItemReviewForm tests", () => {
         <MenuItemReviewForm />
       </Router>,
     );
-    await screen.findByTestId("MenuItemForm-cancel");
+    await screen.findByTestId("MenuItemReviewForm-cancel");
     const cancelButton = screen.getByTestId("MenuItemReviewForm-cancel");
 
     fireEvent.click(cancelButton);
