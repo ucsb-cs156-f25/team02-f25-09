@@ -1,11 +1,9 @@
 const restaurantFixtures = {
-  oneRestaurant: [
-    {
-      id: 1,
-      name: "The Habit",
-      description: "Burgers and Fries",
-    },
-  ],
+  oneRestaurant: {
+    id: 1,
+    name: "The Habit",
+    description: "Burgers and Fries",
+  },
 
   threeRestaurants: [
     {
