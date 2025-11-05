@@ -15,13 +15,15 @@ export default function RecommendationRequestCreatePage({ storybook = false }) {
       professorEmail: rr.professorEmail,
       explanation: rr.explanation,
       dateRequested: rr.dateRequested, // ISO string from form
-      dateNeeded: rr.dateNeeded,       // ISO string from form
+      dateNeeded: rr.dateNeeded, // ISO string from form
       done: rr.done,
     },
   });
 
   const onSuccess = (created) => {
-    toast(`New RecommendationRequest created — id: ${created.id}, code: ${created.code}`);
+    toast(
+      `New RecommendationRequest created — id: ${created.id}, code: ${created.code}`,
+    );
   };
 
   const mutation = useBackendMutation(

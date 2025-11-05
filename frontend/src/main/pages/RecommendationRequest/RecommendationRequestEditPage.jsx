@@ -20,7 +20,7 @@ export default function RecommendationRequestsEditPage({ storybook = false }) {
       method: "GET",
       url: `/api/recommendationrequests`,
       params: { id },
-    }
+    },
   );
 
   // Build PUT request from form data
@@ -34,13 +34,15 @@ export default function RecommendationRequestsEditPage({ storybook = false }) {
       professorEmail: rr.professorEmail,
       explanation: rr.explanation,
       dateRequested: rr.dateRequested, // ISO string from form
-      dateNeeded: rr.dateNeeded,       // ISO string from form
+      dateNeeded: rr.dateNeeded, // ISO string from form
       done: rr.done,
     },
   });
 
   const onSuccess = (updated) => {
-    toast(`RecommendationRequest updated — id: ${updated.id}, code: ${updated.code}`);
+    toast(
+      `RecommendationRequest updated — id: ${updated.id}, code: ${updated.code}`,
+    );
   };
 
   const mutation = useBackendMutation(

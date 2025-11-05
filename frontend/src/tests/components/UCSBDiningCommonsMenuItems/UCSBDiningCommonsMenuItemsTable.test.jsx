@@ -5,10 +5,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import axios from "axios";
-import { onDeleteSuccess, cellToAxiosParamsDelete } from "main/utils/UCSBDiningCommonsMenuItemsUtils";
+import {
+  onDeleteSuccess,
+  cellToAxiosParamsDelete,
+} from "main/utils/UCSBDiningCommonsMenuItemsUtils";
 import * as toastify from "react-toastify";
 import AxiosMockAdapter from "axios-mock-adapter";
-
 
 vi.mock("react-toastify", () => {
   return {
@@ -64,14 +66,16 @@ describe("UserTable tests", () => {
     );
 
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`)
-    ).toHaveTextContent(UCSBDiningCommonsMenuItemsFixtures.threeItems[0].diningCommonsCode);
+      screen.getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`),
+    ).toHaveTextContent(
+      UCSBDiningCommonsMenuItemsFixtures.threeItems[0].diningCommonsCode,
+    );
 
     expect(
-      screen.getByTestId(`${testId}-cell-row-1-col-diningCommonsCode`)
-    ).toHaveTextContent(UCSBDiningCommonsMenuItemsFixtures.threeItems[1].diningCommonsCode);
-
-
+      screen.getByTestId(`${testId}-cell-row-1-col-diningCommonsCode`),
+    ).toHaveTextContent(
+      UCSBDiningCommonsMenuItemsFixtures.threeItems[1].diningCommonsCode,
+    );
 
     const editButton = screen.queryByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
@@ -120,13 +124,17 @@ describe("UserTable tests", () => {
     );
 
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`)
-    ).toHaveTextContent(UCSBDiningCommonsMenuItemsFixtures.threeItems[0].diningCommonsCode);
+      screen.getByTestId(`${testId}-cell-row-0-col-diningCommonsCode`),
+    ).toHaveTextContent(
+      UCSBDiningCommonsMenuItemsFixtures.threeItems[0].diningCommonsCode,
+    );
 
     expect(
-      screen.getByTestId(`${testId}-cell-row-1-col-diningCommonsCode`)
-    ).toHaveTextContent(UCSBDiningCommonsMenuItemsFixtures.threeItems[1].diningCommonsCode);
-    
+      screen.getByTestId(`${testId}-cell-row-1-col-diningCommonsCode`),
+    ).toHaveTextContent(
+      UCSBDiningCommonsMenuItemsFixtures.threeItems[1].diningCommonsCode,
+    );
+
     const editButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
     );
@@ -216,7 +224,7 @@ describe("UserTable tests", () => {
     expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
   });
 
-test("onDeleteSuccess logs message and calls toast", () => {
+  test("onDeleteSuccess logs message and calls toast", () => {
     const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
     onDeleteSuccess("Test message");
