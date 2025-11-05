@@ -1,7 +1,7 @@
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { removeZ } from "main/components/HelpRequests/RemoveZ.jsx";
+import { removeZ } from "main/components/HelpRequests/RemoveZ.jsx"
 
 function HelpRequestForm({
   initialContents,
@@ -11,7 +11,7 @@ function HelpRequestForm({
   const defaultValues = initialContents
     ? {
         ...initialContents,
-        requestTime: removeZ(initialContents.requestTime),
+        requestTime: removeZ(initialContents.requestTime)
       }
     : {};
 
@@ -143,14 +143,8 @@ function HelpRequestForm({
           // data-testid={testIdPrefix + "-solved"}
           id="solved"
           type="checkbox"
-          isInvalid={Boolean(errors.solved)}
-          {...register("solved", {
-            required: "Solved is required.",
-          })}
+          {...register("solved")}
         />
-        <Form.Control.Feedback type="invalid">
-          {errors.solved?.message}
-        </Form.Control.Feedback>
       </Form.Group>
 
       <Button type="submit">{buttonLabel}</Button>
