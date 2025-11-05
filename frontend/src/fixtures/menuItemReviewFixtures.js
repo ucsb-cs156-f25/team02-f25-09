@@ -1,12 +1,11 @@
 const menuItemReviewFixtures = {
-
   oneMenuItemReview: {
     id: 1,
     itemId: 1,
     reviewerEmail: "oyararbas@ucsb.edu",
     stars: 5,
     dateReviewed: "2025-10-28T20:55:30",
-    comments: "Amazing!"
+    comments: "Amazing!",
   },
 
   /*
@@ -42,7 +41,7 @@ const menuItemReviewFixtures = {
       reviewerEmail: "oyararbas@ucsb.edu",
       dateReviewed: "2025-10-28T20:55:30",
       stars: 2,
-      comments: "Terrible"
+      comments: "Terrible",
     },
     {
       id: 2,
@@ -50,7 +49,7 @@ const menuItemReviewFixtures = {
       reviewerEmail: "oyararbas@ucsb.edu",
       dateReviewed: "2025-10-28T20:55:30",
       stars: 2,
-      comments: "Terrible"
+      comments: "Terrible",
     },
     {
       id: 3,
@@ -58,7 +57,7 @@ const menuItemReviewFixtures = {
       reviewerEmail: "oyararbas@ucsb.edu",
       dateReviewed: "2025-10-30T20:55:30",
       stars: 4,
-      comments: "Alright"
+      comments: "Alright",
     },
   ],
 };

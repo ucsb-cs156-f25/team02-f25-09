@@ -1,4 +1,4 @@
-const articlesFixtures = {
+const articleFixtures = {
   oneArticle: {
     id: 8,
     title: "All the right notes: the ENO’s ‘Dead Man Walking’",
@@ -38,4 +38,4 @@ const articlesFixtures = {
   ],
 };
 
-export { articlesFixtures };
+export { articleFixtures };
