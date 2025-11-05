@@ -67,7 +67,7 @@ describe("RecommendationRequestCreatePage tests", () => {
       done: false,
     };
 
-    axiosMock3.onPost("/api/recommendationrequest/post").reply(202, created);
+    axiosMock3.onPost("/api/recommendationrequests/post").reply(202, created);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -120,6 +120,6 @@ describe("RecommendationRequestCreatePage tests", () => {
     expect(mockToast3).toBeCalledWith(
       "New recommendationRequest Created - id: 17 code: CMPSC 156",
     );
-    expect(mockNavigate3).toBeCalledWith({ to: "/recommendationrequest" });
+    expect(mockNavigate3).toBeCalledWith({ to: "/recommendationrequests" });
   });
 });

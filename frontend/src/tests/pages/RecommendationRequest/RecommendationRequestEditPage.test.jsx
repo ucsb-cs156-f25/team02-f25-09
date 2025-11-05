@@ -40,7 +40,7 @@ describe("RecommendationRequestEditPage tests", () => {
       axiosMock2 = new AxiosMockAdapter(axios);
       axiosMock2.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
       axiosMock2.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-      axiosMock2.onGet("/api/recommendationrequest", { params: { id: 17 } }).timeout();
+      axiosMock2.onGet("/api/recommendationrequests", { params: { id: 17 } }).timeout();
     });
 
     afterEach(() => {
@@ -76,7 +76,7 @@ describe("RecommendationRequestEditPage tests", () => {
       axiosMock2.resetHistory();
       axiosMock2.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
       axiosMock2.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-      axiosMock2.onGet("/api/recommendationrequest", { params: { id: 17 } }).reply(200, {
+      axiosMock2.onGet("/api/recommendationrequests", { params: { id: 17 } }).reply(200, {
         id: 17,
         code: "CMPSC 156",
         requesterEmail: "student@ucsb.edu",
@@ -86,7 +86,7 @@ describe("RecommendationRequestEditPage tests", () => {
         dateNeeded: "2022-04-01",
         done: false,
       });
-      axiosMock2.onPut("/api/recommendationrequest").reply(200, {
+      axiosMock2.onPut("/api/recommendationrequests").reply(200, {
         id: "17",
         code: "CMPSC 156",
         requesterEmail: "student@ucsb.edu",
@@ -186,7 +186,7 @@ describe("RecommendationRequestEditPage tests", () => {
       expect(mockToast2).toBeCalledWith(
         "RecommendationRequest Updated - id: 17 code: CMPSC 156",
       );
-      expect(mockNavigate2).toBeCalledWith({ to: "/recommendationrequest" });
+      expect(mockNavigate2).toBeCalledWith({ to: "/recommendationrequests" });
 
       expect(axiosMock2.history.put.length).toBe(1); // times called
       expect(axiosMock2.history.put[0].params).toEqual({ id: 17 });
