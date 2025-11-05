@@ -1,3 +1,3 @@
 export function removeZ(myString) {
-    return myString.replace("Z", "");
+  return myString.replace("Z", "");
 }

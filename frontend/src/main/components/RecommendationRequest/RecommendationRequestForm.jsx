@@ -1,4 +1,3 @@
-
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
@@ -20,8 +19,8 @@ function RecommendationRequestForm({
   // Stryker disable Regex
   const isodate_regex =
     /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
-  
-    const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   // Stryker restore Regex
   return (
     <Form noValidate onSubmit={handleSubmit(submitAction)}>
@@ -54,7 +53,7 @@ function RecommendationRequestForm({
               })}
             />
             <Form.Control.Feedback type="invalid">
-            {errors.code?.type === "required" ? "Code is required." : null}
+              {errors.code?.type === "required" ? "Code is required." : null}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -74,8 +73,12 @@ function RecommendationRequestForm({
               })}
             />
             <Form.Control.Feedback type="invalid">
-            {errors.requesterEmail?.type === "required" ? "Requester email is required." : null}
-            {errors.requesterEmail?.type === "pattern"  ? "Enter a valid email address." : null}
+              {errors.requesterEmail?.type === "required"
+                ? "Requester email is required."
+                : null}
+              {errors.requesterEmail?.type === "pattern"
+                ? "Enter a valid email address."
+                : null}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -93,8 +96,10 @@ function RecommendationRequestForm({
               })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.professorEmail?.type === "required" && "Professor email is required."}
-              {errors.professorEmail?.type === "pattern" && "Enter a valid email address."}
+              {errors.professorEmail?.type === "required" &&
+                "Professor email is required."}
+              {errors.professorEmail?.type === "pattern" &&
+                "Enter a valid email address."}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -104,18 +109,20 @@ function RecommendationRequestForm({
           <Form.Group className="mb-3">
             <Form.Label htmlFor="explanation">Explanation</Form.Label>
             <Form.Control
-            as="textarea"
-            rows={3}
-            data-testid="RecommendationRequestForm-explanation"
-            id="explanation"
-            isInvalid={Boolean(errors.explanation)}
-            {...register("explanation", {
-                required: true,        // ← removed minLength
-            })}
+              as="textarea"
+              rows={3}
+              data-testid="RecommendationRequestForm-explanation"
+              id="explanation"
+              isInvalid={Boolean(errors.explanation)}
+              {...register("explanation", {
+                required: true, // ← removed minLength
+              })}
             />
             <Form.Control.Feedback type="invalid">
-            {errors.explanation?.type === "required" ? "Explanation is required." : null}
-            {/* removed minLength message */}
+              {errors.explanation?.type === "required"
+                ? "Explanation is required."
+                : null}
+              {/* removed minLength message */}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -123,7 +130,9 @@ function RecommendationRequestForm({
       <Row>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="dateRequested">Date Requested (ISO)</Form.Label>
+            <Form.Label htmlFor="dateRequested">
+              Date Requested (ISO)
+            </Form.Label>
             <Form.Control
               data-testid="RecommendationRequestForm-dateRequested"
               id="dateRequested"
@@ -135,8 +144,10 @@ function RecommendationRequestForm({
               })}
             />
             <Form.Control.Feedback type="invalid">
-            {errors.dateRequested?.type === "required" ? "Date requested is required." : null}
-            {/* {errors.dateRequested?.type === "pattern"  ? "Use ISO format." : null} */}
+              {errors.dateRequested?.type === "required"
+                ? "Date requested is required."
+                : null}
+              {/* {errors.dateRequested?.type === "pattern"  ? "Use ISO format." : null} */}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -154,8 +165,10 @@ function RecommendationRequestForm({
               })}
             />
             <Form.Control.Feedback type="invalid">
-            {errors.dateNeeded?.type === "required" ? "Date needed is required." : null}
-            {/* {errors.dateNeeded?.type === "pattern"  ? "Use ISO format." : null} */}
+              {errors.dateNeeded?.type === "required"
+                ? "Date needed is required."
+                : null}
+              {/* {errors.dateNeeded?.type === "pattern"  ? "Use ISO format." : null} */}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
