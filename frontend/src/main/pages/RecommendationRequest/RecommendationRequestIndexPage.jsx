@@ -10,7 +10,7 @@ export default function RecommendationRequestIndexPage() {
           <a href="/recommendationrequest/create">Create</a>
         </p>
         <p>
-          <a href="/reommendationrequest/edit/1">Edit</a>
+          <a href="/recommendationrequest/edit/1">Edit</a>
         </p>
       </div>
     </BasicLayout>
