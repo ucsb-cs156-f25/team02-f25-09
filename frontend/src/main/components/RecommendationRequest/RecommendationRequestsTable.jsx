@@ -10,7 +10,7 @@ import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
 
 export default function RecommendationRequestsTable({
-  recommendationRequests,
+  recommendationRequests = [],
   currentUser,
 }) {
   const navigate = useNavigate();
@@ -41,9 +41,10 @@ export default function RecommendationRequestsTable({
     { header: "Explanation", accessorKey: "explanation" },
     { header: "Date Requested", accessorKey: "dateRequested" },
     { header: "Date Needed", accessorKey: "dateNeeded" },
-    { header: "Done", accessorKey: "done" },
+    { header: "Done", accessorKey: "done", cell: ({ getValue }) => String(getValue()) },
   ];
 
+  
   if (hasRole(currentUser, "ROLE_ADMIN")) {
     columns.push(
       ButtonColumn(
@@ -65,7 +66,7 @@ export default function RecommendationRequestsTable({
 
   return (
     <OurTable
-      data={recommendationRequests}
+      data={recommendationRequests ?? []}
       columns={columns}
       testid={"RecommendationRequestsTable"}
     />
