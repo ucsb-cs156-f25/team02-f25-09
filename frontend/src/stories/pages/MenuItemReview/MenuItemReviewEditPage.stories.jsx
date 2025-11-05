@@ -1,17 +1,17 @@
 import React from "react";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { UCSBDiningCommonsMenuItemsFixtures } from "fixtures/UCSBDiningCommonsMenuItems";
+import { menuItemReviewFixtures } from "fixtures/menuItemReviewFixtures";
 import { http, HttpResponse } from "msw";
 
-import UCSBDiningCommonsMenuItemsEditPage from "main/pages/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsEditPage";
+import MenuItemReviewEditPage from "main/pages/MenuItemReview/MenuItemReviewEditPage";
 
 export default {
-  title: "pages/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsEditPage",
-  component: UCSBDiningCommonsMenuItemsEditPage,
+  title: "pages/MenuItemReview/MenuItemReviewEditPage",
+  component: MenuItemReviewEditPage,
 };
 
-const Template = () => <UCSBDiningCommonsMenuItemsEditPage storybook={true} />;
+const Template = () => <MenuItemReviewEditPage storybook={true} />;
 
 export const Default = Template.bind({});
 Default.parameters = {
@@ -26,15 +26,12 @@ Default.parameters = {
         status: 200,
       });
     }),
-    http.get("/api/ucsbdiningcommons", () => {
-      return HttpResponse.json(
-        UCSBDiningCommonsMenuItemsFixtures.threeItems[0],
-        {
-          status: 200,
-        },
-      );
+    http.get("/api/menuitemreview", () => {
+      return HttpResponse.json(menuItemReviewFixtures.threeMenuItemReviews[0], {
+        status: 200,
+      });
     }),
-    http.put("/api/ucsbdiningcommons", () => {
+    http.put("/api/menuitemreview", () => {
       return HttpResponse.json({}, { status: 200 });
     }),
   ],
