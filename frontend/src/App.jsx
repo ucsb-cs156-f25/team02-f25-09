@@ -7,7 +7,7 @@ import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 
-import RecommendationRequestIndexPage from "main/pages/RecommmendationRequest/RecommendationRequestIndexPage";
+import RecommendationRequestIndexPage from "main/pages/RecommendationRequest/RecommendationRequestIndexPage";
 import RecommendationRequestCreatePage from "main/pages/RecommendationRequest/RecommendationRequestCreatePage";
 import RecommendationRequestEditPage from "main/pages/RecommendationRequest/RecommendationRequestEditPage";
 
@@ -95,7 +95,7 @@ function App() {
           <Route
             exact
             path="/recommendationrequest/create"
-            element={<ReommendationRequestCreatePage />}
+            element={<RecommendationRequestCreatePage />}
           />
         </>
       )}
