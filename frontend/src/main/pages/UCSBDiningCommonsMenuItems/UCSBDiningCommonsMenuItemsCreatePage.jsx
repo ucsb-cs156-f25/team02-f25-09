@@ -8,9 +8,9 @@ export default function UCSBDiningCommonsMenuItemsCreatePage({
   storybook = false,
 }) {
   const objectToAxiosParams = (UCSBDiningCommonsMenuItems) => ({
-    url: "/api/ucsbdiningcommons/post",
+    url: "/api/UCSBDiningCommonsMenuItems/post",
     method: "POST",
-    data: {
+    params: {
       diningCommonsCode: UCSBDiningCommonsMenuItems.diningCommonsCode,
       name: UCSBDiningCommonsMenuItems.name,
       station: UCSBDiningCommonsMenuItems.station,
@@ -27,7 +27,7 @@ export default function UCSBDiningCommonsMenuItemsCreatePage({
     objectToAxiosParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    ["/api/ucsbdiningcommons/all"],
+    ["/api/UCSBDiningCommonsMenuItems/all"],
   );
 
   const { isSuccess } = mutation;

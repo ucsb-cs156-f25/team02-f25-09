@@ -66,7 +66,7 @@ describe("UCSBDiningCommonsMenuItemsCreatePage tests", () => {
       station: "italian",
     };
 
-    axiosMock.onPost("/api/ucsbdiningcommons/post").reply(202, item);
+    axiosMock.onPost("/api/UCSBDiningCommonsMenuItems/post").reply(202, item);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -104,7 +104,7 @@ describe("UCSBDiningCommonsMenuItemsCreatePage tests", () => {
 
     await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
-    expect(axiosMock.history.post[0].data).toEqual({
+    expect(axiosMock.history.post[0].params).toEqual({
       station: "italian",
       name: "pasta",
       diningCommonsCode: "ortega",
