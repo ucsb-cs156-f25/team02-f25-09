@@ -5,19 +5,19 @@ import { useBackendMutation } from "main/utils/useBackend";
 import {
   cellToAxiosParamsDelete,
   onDeleteSuccess,
-} from "main/utils/UCSBOrganizationUtils";
+} from "main/utils/articleUtils";
 import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
 
-export default function UCSBOrganizationTable({
-  organizations,
+export default function ArticleTable({
+  articles,
   currentUser,
-  testIdPrefix = "UCSBOrganizationTable",
+  testIdPrefix = "ArticleTable",
 }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/UCSBOrganization/edit/${cell.row.original.orgCode}`);
+    navigate(`/articles/edit/${cell.row.original.id}`);
   };
 
   // Stryker disable all : hard to test for query caching
@@ -25,7 +25,7 @@ export default function UCSBOrganizationTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/ucsborganization/all"],
+    ["/api/articles/all"],
   );
   // Stryker restore all
 
@@ -36,21 +36,28 @@ export default function UCSBOrganizationTable({
 
   const columns = [
     {
-      header: "Org Code",
-      accessorKey: "orgCode", // accessor is the "key" in the data
-    },
-
-    {
-      header: "Org Translation Short",
-      accessorKey: "orgTranslationShort",
+      header: "id",
+      accessorKey: "id", // accessor is the "key" in the data
     },
     {
-      header: "Org Translation",
-      accessorKey: "orgTranslation",
+      header: "Title",
+      accessorKey: "title",
     },
     {
-      header: "Inactive",
-      accessorKey: "inactive",
+      header: "URL",
+      accessorKey: "url",
+    },
+    {
+      header: "Explanation",
+      accessorKey: "explanation",
+    },
+    {
+      header: "Email",
+      accessorKey: "email",
+    },
+    {
+      header: "Date Added (iso format)",
+      accessorKey: "dateAdded",
     },
   ];
 
@@ -61,7 +68,5 @@ export default function UCSBOrganizationTable({
     );
   }
 
-  return (
-    <OurTable data={organizations} columns={columns} testid={testIdPrefix} />
-  );
+  return <OurTable data={articles} columns={columns} testid={testIdPrefix} />;
 }

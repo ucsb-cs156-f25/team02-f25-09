@@ -96,6 +96,7 @@ describe("UCSBOrganizationForm tests", () => {
     await screen.findByText(/OrgTranslationShort is required/);
     expect(screen.getByText(/OrgTranslation is required/)).toBeInTheDocument();
     expect(screen.getByText(/Inactive is required/)).toBeInTheDocument();
+    expect(screen.getByText(/OrgCode is required/)).toBeInTheDocument();
 
     const orgTranslationShortInput = screen.getByTestId(
       `${testId}-orgTranslationShort`,
