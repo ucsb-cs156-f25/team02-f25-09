@@ -100,7 +100,7 @@ function App() {
         <>
           <Route
             exact
-            path="/recommendationrequest"
+            path="/recommendationrequests"
             element={<RecommendationRequestIndexPage />}
           />
         </>
@@ -109,12 +109,12 @@ function App() {
         <>
           <Route
             exact
-            path="/recommendationrequest/edit/:id"
+            path="/recommendationrequests/edit/:id"
             element={<RecommendationRequestEditPage />}
           />
           <Route
             exact
-            path="/recommendationrequest/create"
+            path="/recommendationrequests/create"
             element={<RecommendationRequestCreatePage />}
           />
         </>
