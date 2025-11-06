@@ -28,7 +28,7 @@ Default.parameters = {
         status: 200,
       });
     }),
-    http.post("/api/ucsbdiningcommons/post", () => {
+    http.post("/api/ucsbdiningcommonsmenuitems/post", () => {
       return HttpResponse.json({}, { status: 200 });
     }),
   ],

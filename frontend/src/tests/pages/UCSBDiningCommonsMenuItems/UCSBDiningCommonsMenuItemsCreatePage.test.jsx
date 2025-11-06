@@ -53,11 +53,11 @@ describe("UCSBDiningCommonsMenuItemsCreatePage tests", () => {
       </QueryClientProvider>,
     );
     await waitFor(() => {
-      expect(screen.getByLabelText("diningCommonsCode")).toBeInTheDocument();
+      expect(screen.getByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode")).toBeInTheDocument();
     });
   });
 
-  test("when you fill in the form and hit submit, it makes a request to the backend, redirects to /ucsbdiningcommons", async () => {
+  test("when you fill in the form and hit submit, it makes a request to the backend, redirects to /ucsbdiningcommonsmenuitems", async () => {
     const queryClient = new QueryClient();
     const item = {
       id: 1,
@@ -66,7 +66,7 @@ describe("UCSBDiningCommonsMenuItemsCreatePage tests", () => {
       station: "italian",
     };
 
-    axiosMock.onPost("/api/ucsbdiningcommons/post").reply(202, item);
+    axiosMock.onPost("/api/ucsbdiningcommonsmenuitems/post").reply(202, item);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -77,45 +77,42 @@ describe("UCSBDiningCommonsMenuItemsCreatePage tests", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByLabelText("diningCommonsCode")).toBeInTheDocument();
+      expect(screen.getByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode")).toBeInTheDocument();
     });
 
     const diningCommonsCodeField = screen.getByTestId(
       "UCSBDiningCommonsMenuItemsForm-diningCommonsCode",
     );
-    expect(diningCommonsCodeField).toBeInTheDocument();
 
     const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemsForm-name");
-    expect(nameField).toBeInTheDocument();
 
     const stationField = screen.getByTestId(
       "UCSBDiningCommonsMenuItemsForm-station",
     );
-    expect(stationField).toBeInTheDocument();
-
+    
     const submitButton = screen.getByTestId(
       "UCSBDiningCommonsMenuItemsForm-submit",
     );
-    expect(submitButton).toBeInTheDocument();
 
     fireEvent.change(diningCommonsCodeField, { target: { value: "ortega" } });
     fireEvent.change(nameField, { target: { value: "pasta" } });
     fireEvent.change(stationField, {
       target: { value: "italian" },
     });
+    expect(submitButton).toBeInTheDocument();
     fireEvent.click(submitButton);
 
     await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
     expect(axiosMock.history.post[0].params).toEqual({
-      diningCommonsCode: "ortega",
-      name: "pasta",
       station: "italian",
+      name: "pasta",
+      diningCommonsCode: "ortega",
     });
 
     expect(mockToast).toBeCalledWith(
       "New UCSBDiningCommonsMenuItems Created - id: 1 name: pasta",
     );
-    expect(mockNavigate).toBeCalledWith({ to: "/ucsbdiningcommons" });
+    expect(mockNavigate).toBeCalledWith({ to: "/ucsbdiningcommonsmenuitems" });
   });
 });
