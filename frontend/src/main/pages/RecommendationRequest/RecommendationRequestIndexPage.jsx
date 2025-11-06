@@ -31,6 +31,7 @@ export default function RecommendationRequestIndexPage() {
     // Stryker disable next-line all : don't test internal caching of React Query
     ["/api/recommendationrequests/all"],
     { method: "GET", url: "/api/recommendationrequests/all" },
+    // Stryker disable next-line all : don't test value of empty list
     [],
   );
 

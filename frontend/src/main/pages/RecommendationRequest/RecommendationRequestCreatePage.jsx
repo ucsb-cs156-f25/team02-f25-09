@@ -5,7 +5,6 @@ import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
 export default function RecommendationRequestCreatePage({ storybook = false }) {
-  
   const objectToAxiosParams = (recommendationRequest) => ({
     url: "/api/recommendationrequests/post",
     method: "POST",
