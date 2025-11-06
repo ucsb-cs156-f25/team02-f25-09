@@ -251,7 +251,7 @@ describe("RecommendationRequestEditPage tests", () => {
           dateNeeded: "2025-11-15T00:00",
           done: false,
         }),
-      ); // posted object
+      ); 
     });
   });
 });
