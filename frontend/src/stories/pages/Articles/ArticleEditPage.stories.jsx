@@ -3,7 +3,7 @@ import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { http, HttpResponse } from "msw";
 
-import ArticleEditPage from "main/pages/Articles/ArticleEditPage";
+import ArticleEditPage from "main/pages/Articles/ArticlesEditPage";
 import { articleFixtures } from "fixtures/articleFixtures";
 
 export default {
