@@ -26,7 +26,7 @@ Default.parameters = {
         status: 200,
       });
     }),
-    http.get("/api/ucsbdiningcommons", () => {
+    http.get("/api/ucsbdiningcommonsmenuitems", () => {
       return HttpResponse.json(
         UCSBDiningCommonsMenuItemsFixtures.threeItems[0],
         {
@@ -34,7 +34,7 @@ Default.parameters = {
         },
       );
     }),
-    http.put("/api/ucsbdiningcommons", () => {
+    http.put("/api/ucsbdiningcommonsmenuitems", () => {
       return HttpResponse.json({}, { status: 200 });
     }),
   ],
