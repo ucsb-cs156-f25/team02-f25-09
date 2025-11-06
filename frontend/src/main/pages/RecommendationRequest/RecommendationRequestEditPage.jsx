@@ -32,7 +32,7 @@ export default function RecommendationRequestEditPage({ storybook = false }) {
       id: recommendationRequest.id,
     },
     data: {
-      id:recommendationRequest.id,
+      id: recommendationRequest.id,
       code: recommendationRequest.code,
       requesterEmail: recommendationRequest.requesterEmail,
       professorEmail: recommendationRequest.professorEmail,
@@ -60,7 +60,7 @@ export default function RecommendationRequestEditPage({ storybook = false }) {
     mutation.mutate(data);
   };
 
-  if (mutation.isSuccess && !storybook) {
+  if (isSuccess && !storybook) {
     return <Navigate to="/recommendationrequests" />;
   }
 

@@ -34,7 +34,7 @@ describe("RecommendationRequestIndexPage tests", () => {
       .onGet("/api/systemInfo")
       .reply(200, systemInfoFixtures.showingNeither);
   };
-   
+
   const setupAdminUser = () => {
     axiosMock.reset();
     axiosMock.resetHistory();
@@ -45,12 +45,12 @@ describe("RecommendationRequestIndexPage tests", () => {
       .onGet("/api/systemInfo")
       .reply(200, systemInfoFixtures.showingNeither);
   };
-   
+
   test("Renders with Create Button for admin user", async () => {
-  // arrange
-  setupAdminUser();
-  const queryClient = new QueryClient();
-  axiosMock.onGet("/api/recommendationrequests/all").reply(200, []);
+    // arrange
+    setupAdminUser();
+    const queryClient = new QueryClient();
+    axiosMock.onGet("/api/recommendationrequests/all").reply(200, []);
 
     // act
     render(
@@ -69,116 +69,119 @@ describe("RecommendationRequestIndexPage tests", () => {
     expect(button).toHaveAttribute("href", "/recommendationrequests/create");
     expect(button).toHaveStyle({ float: "right" });
   });
-   
-     test("renders three recommendation requests correctly for regular user", async () => {
-       // arrange
-       setupUserOnly();
-       const queryClient = new QueryClient();
-       axiosMock
-         .onGet("/api/recommendationrequests/all")
-         .reply(200, recommendationRequestFixtures.threeRecommendationRequests);
-   
-       // act
-       render(
-         <QueryClientProvider client={queryClient}>
-           <MemoryRouter>
-             <RecommendationRequestIndexPage/>
-           </MemoryRouter>
-         </QueryClientProvider>,
-       );
-   
-       // assert
-       await waitFor(() => {
-         expect(
-           screen.getByTestId(`${testId}-cell-row-0-col-id`),
-         ).toHaveTextContent("1");
-       });
-       expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-         "2",
-       );
-       expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(
-         "3",
-       );
-   
-       // assert that the Create button is not present when user isn't an admin
-       expect(screen.queryByText(/Create RecommendationRequest/)).not.toBeInTheDocument();
-     });
-   
-     test("renders empty table when backend unavailable, user only", async () => {
-       // arrange
-       setupUserOnly();
-       const queryClient = new QueryClient();
-       axiosMock.onGet("/api/recommendationrequests/all").timeout();
-       const restoreConsole = mockConsole();
-   
-       // act
-       render(
-         <QueryClientProvider client={queryClient}>
-           <MemoryRouter>
-             <RecommendationRequestIndexPage />
-           </MemoryRouter>
-         </QueryClientProvider>,
-       );
-   
-       // assert
-       await waitFor(() => {
-         expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1);
-       });
-   
-       const errorMessage = console.error.mock.calls[0][0];
-       expect(errorMessage).toMatch(
-         "Error communicating with backend via GET on /api/recommendationrequests/all",
-       );
-       restoreConsole();
-   
-       expect(
-         screen.queryByTestId(`${testId}-cell-row-0-col-id`),
-       ).not.toBeInTheDocument();
-     });
-   
-     test("what happens when you click delete, admin", async () => {
-       // arrange
-       setupAdminUser();
-       const queryClient = new QueryClient();
-       axiosMock
-         .onGet("/api/recommendationrequests/all")
-         .reply(200, recommendationRequestFixtures.threeRecommendationRequests);
-       axiosMock
-         .onDelete("/api/recommendationrequests")
-         .reply(200, "RecommendationRequest with id 1 was deleted");
-   
-       // act
-       render(
-         <QueryClientProvider client={queryClient}>
-           <MemoryRouter>
-             <RecommendationRequestIndexPage />
-           </MemoryRouter>
-         </QueryClientProvider>,
-       );
-   
-       // assert
-       await waitFor(() => {
-         expect(
-           screen.getByTestId(`${testId}-cell-row-0-col-id`),
-         ).toBeInTheDocument();
-       });
-   
-       expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
-         "1",
-       );
-   
-      const deleteButton = await screen.getByTestId(
+
+  test("renders three recommendation requests correctly for regular user", async () => {
+    // arrange
+    setupUserOnly();
+    const queryClient = new QueryClient();
+    axiosMock
+      .onGet("/api/recommendationrequests/all")
+      .reply(200, recommendationRequestFixtures.threeRecommendationRequests);
+
+    // act
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <RecommendationRequestIndexPage />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    // assert
+    await waitFor(() => {
+      expect(
+        screen.getByTestId(`${testId}-cell-row-0-col-id`),
+      ).toHaveTextContent("1");
+    });
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
+      "2",
+    );
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(
+      "3",
+    );
+
+    // assert that the Create button is not present when user isn't an admin
+    expect(
+      screen.queryByText(/Create RecommendationRequest/),
+    ).not.toBeInTheDocument();
+  });
+
+  test("renders empty table when backend unavailable, user only", async () => {
+    // arrange
+    setupUserOnly();
+    const queryClient = new QueryClient();
+    axiosMock.onGet("/api/recommendationrequests/all").timeout();
+    const restoreConsole = mockConsole();
+
+    // act
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <RecommendationRequestIndexPage />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    // assert
+    await waitFor(() => {
+      expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1);
+    });
+
+    const errorMessage = console.error.mock.calls[0][0];
+    expect(errorMessage).toMatch(
+      "Error communicating with backend via GET on /api/recommendationrequests/all",
+    );
+    restoreConsole();
+
+    expect(
+      screen.queryByTestId(`${testId}-cell-row-0-col-id`),
+    ).not.toBeInTheDocument();
+  });
+
+  test("what happens when you click delete, admin", async () => {
+    // arrange
+    setupAdminUser();
+    const queryClient = new QueryClient();
+    axiosMock
+      .onGet("/api/recommendationrequests/all")
+      .reply(200, recommendationRequestFixtures.threeRecommendationRequests);
+    axiosMock
+      .onDelete("/api/recommendationrequests")
+      .reply(200, "RecommendationRequest with id 1 was deleted");
+
+    // act
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <RecommendationRequestIndexPage />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    // assert
+    await waitFor(() => {
+      expect(
+        screen.getByTestId(`${testId}-cell-row-0-col-id`),
+      ).toBeInTheDocument();
+    });
+
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
+      "1",
+    );
+
+    const deleteButton = await screen.getByTestId(
       `${testId}-cell-row-0-col-Delete-button`,
+    );
+    expect(deleteButton).toBeInTheDocument();
+
+    // act
+    fireEvent.click(deleteButton);
+
+    // assert
+    await waitFor(() => {
+      expect(mockToast).toBeCalledWith(
+        "RecommendationRequest with id 1 was deleted",
       );
-       expect(deleteButton).toBeInTheDocument();
-   
-       // act
-       fireEvent.click(deleteButton);
-   
-       // assert
-       await waitFor(() => {
-         expect(mockToast).toBeCalledWith("RecommendationRequest with id 1 was deleted");
-       });
-     });
-   });
-   
+    });
+  });
+});

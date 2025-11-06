@@ -7,14 +7,17 @@ import { Button } from "react-bootstrap";
 import { useCurrentUser, hasRole } from "main/utils/useCurrentUser";
 
 export default function RecommendationRequestIndexPage() {
-  const currentUser  = useCurrentUser();
+  const currentUser = useCurrentUser();
 
-  const { data: recommendationRequests = [], error: _error, status: _status } =
-    useBackend(
-      ["/api/recommendationrequests/all"], // query key
-      { method: "GET", url: "/api/recommendationrequests/all" },
-      [], // initial data
-    );
+  const {
+    data: recommendationRequests = [],
+    error: _error,
+    status: _status,
+  } = useBackend(
+    ["/api/recommendationrequests/all"], // query key
+    { method: "GET", url: "/api/recommendationrequests/all" },
+    [], // initial data
+  );
 
   const isAdmin = hasRole(currentUser, "ROLE_ADMIN");
 

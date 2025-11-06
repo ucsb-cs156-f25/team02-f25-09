@@ -37,7 +37,7 @@ vi.mock("react-router", async (importOriginal) => {
 
 let axiosMock;
 describe("RecommendationRequestEditPage tests", () => {
-   describe("when the backend doesn't return data", () => {
+  describe("when the backend doesn't return data", () => {
     beforeEach(() => {
       axiosMock = new AxiosMockAdapter(axios);
       axiosMock
@@ -46,7 +46,9 @@ describe("RecommendationRequestEditPage tests", () => {
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock.onGet("/api/recommendationrequests", { params: { id: 11 } }).timeout();
+      axiosMock
+        .onGet("/api/recommendationrequests", { params: { id: 11 } })
+        .timeout();
     });
 
     afterEach(() => {
@@ -88,25 +90,29 @@ describe("RecommendationRequestEditPage tests", () => {
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock.onGet("/api/recommendationrequests", { params: { id: 11 } }).reply(200, {
+      axiosMock
+        .onGet("/api/recommendationrequests", { params: { id: 11 } })
+        .reply(200, {
           id: 11,
           code: "karenchorr",
           requesterEmail: "karencho@ucsb.edu",
           professorEmail: "laurencho@ucsb.edu",
-          explanation: "request for recommendation request for college application",
+          explanation:
+            "request for recommendation request for college application",
           dateRequested: "2022-01-02T00:00",
           dateNeeded: "2022-02-02T00:00",
           done: false,
-      });
+        });
       axiosMock.onPut("/api/recommendationrequests").reply(200, {
-          id: 11,
-          code: "karenchorr",
-          requesterEmail: "karencho@ucsb.edu",
-          professorEmail: "laurencho@ucsb.edu",
-          explanation: "request for recommendation request for college application",
-          dateRequested: "2022-01-02T00:00",
-          dateNeeded: "2022-02-02T00:00",
-          done: false,
+        id: 11,
+        code: "karenchorr",
+        requesterEmail: "karencho@ucsb.edu",
+        professorEmail: "laurencho@ucsb.edu",
+        explanation:
+          "request for recommendation request for college application",
+        dateRequested: "2022-01-02T00:00",
+        dateNeeded: "2022-02-02T00:00",
+        done: false,
       });
     });
 
@@ -128,9 +134,7 @@ describe("RecommendationRequestEditPage tests", () => {
       );
       await screen.findByText(/Welcome/);
       await screen.findByTestId("RecommendationRequestForm-code");
-      expect(
-        screen.getByLabelText("Code"),
-      ).toBeInTheDocument();
+      expect(screen.getByLabelText("Code")).toBeInTheDocument();
     });
 
     test("Is populated with the data provided", async () => {
@@ -142,22 +146,26 @@ describe("RecommendationRequestEditPage tests", () => {
         </QueryClientProvider>,
       );
 
-    await screen.getByLabelText("Code");
+      await screen.getByLabelText("Code");
 
-    const codeField = screen.getByLabelText("Code");
-    const requesterEmailField = screen.getByLabelText("Requester Email");
-    const professorEmailField = screen.getByLabelText("Professor Email");
-    const explanationField = screen.getByLabelText("Explanation");
-    const dateRequestedField = screen.getByLabelText("Date Requested (ISO)");
-    const dateNeededField = screen.getByLabelText("Date Needed (ISO)");
-    const doneField = screen.getByLabelText("Done");
+      const codeField = screen.getByLabelText("Code");
+      const requesterEmailField = screen.getByLabelText("Requester Email");
+      const professorEmailField = screen.getByLabelText("Professor Email");
+      const explanationField = screen.getByLabelText("Explanation");
+      const dateRequestedField = screen.getByLabelText("Date Requested (ISO)");
+      const dateNeededField = screen.getByLabelText("Date Needed (ISO)");
+      const doneField = screen.getByLabelText("Done");
 
-    const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
+      const submitButton = screen.getByTestId(
+        "RecommendationRequestForm-submit",
+      );
 
       expect(codeField).toHaveValue("karenchorr");
       expect(requesterEmailField).toHaveValue("karencho@ucsb.edu");
       expect(professorEmailField).toHaveValue("laurencho@ucsb.edu");
-      expect(explanationField).toHaveValue("request for recommendation request for college application");
+      expect(explanationField).toHaveValue(
+        "request for recommendation request for college application",
+      );
       expect(dateRequestedField).toBeInTheDocument("2022-01-02T00:00");
       expect(dateNeededField).toBeInTheDocument("2022-02-02T00:00");
       expect(doneField).toBeInTheDocument("done");
@@ -174,7 +182,7 @@ describe("RecommendationRequestEditPage tests", () => {
       );
 
       await waitFor(() => {
-          expect(screen.getByLabelText("Code")).toBeInTheDocument();
+        expect(screen.getByLabelText("Code")).toBeInTheDocument();
       });
 
       const idField = screen.getByLabelText("id");
@@ -185,14 +193,18 @@ describe("RecommendationRequestEditPage tests", () => {
       const dateRequestedField = screen.getByLabelText("Date Requested (ISO)");
       const dateNeededField = screen.getByLabelText("Date Needed (ISO)");
       const doneField = screen.getByLabelText("Done");
-      
-      const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
+
+      const submitButton = screen.getByTestId(
+        "RecommendationRequestForm-submit",
+      );
 
       expect(idField).toHaveValue("11");
       expect(codeField).toHaveValue("karenchorr");
       expect(requesterEmailField).toHaveValue("karencho@ucsb.edu");
       expect(professorEmailField).toHaveValue("laurencho@ucsb.edu");
-      expect(explanationField).toHaveValue("request for recommendation request for college application");
+      expect(explanationField).toHaveValue(
+        "request for recommendation request for college application",
+      );
       expect(dateRequestedField).toBeInTheDocument("2022-01-02T00:00");
       expect(dateNeededField).toBeInTheDocument("2022-02-02T00:00");
       expect(doneField).toBeInTheDocument("false");
@@ -200,11 +212,17 @@ describe("RecommendationRequestEditPage tests", () => {
       expect(submitButton).toBeInTheDocument();
 
       fireEvent.change(codeField, { target: { value: "laurenchorr" } });
-      fireEvent.change(requesterEmailField, { target: { value: "laurencho@ucsb.edu" } });
+      fireEvent.change(requesterEmailField, {
+        target: { value: "laurencho@ucsb.edu" },
+      });
       fireEvent.change(professorEmailField, {
         target: { value: "pconrad@ucsb.edu" },
       });
-      fireEvent.change(explanationField, { target: { value: "Requesting a latter of recommendation for ERSP 2025" } });
+      fireEvent.change(explanationField, {
+        target: {
+          value: "Requesting a latter of recommendation for ERSP 2025",
+        },
+      });
       fireEvent.change(dateRequestedField, {
         target: { value: "2025-11-05T00:00" },
       });
