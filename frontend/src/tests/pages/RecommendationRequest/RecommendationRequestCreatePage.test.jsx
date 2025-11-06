@@ -20,7 +20,7 @@ vi.mock("react-toastify", async (importOriginal) => {
 
 const mockNavigate = vi.fn();
 
-vi.mock("react-router", async (importOriginal) => {
+vi.mock("react-router-dom", async (importOriginal) => {
   const actual = await importOriginal();
   return {
     ...actual,

@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 import RecommendationRequestEditPage from "main/pages/RecommendationRequest/RecommendationRequestEditPage";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
@@ -21,7 +21,7 @@ vi.mock("react-toastify", async (importOriginal) => {
 });
 
 const mockNavigate2 = vi.fn();
-vi.mock("react-router", async (importOriginal) => {
+vi.mock("react-router-dom", async (importOriginal) => {
   const originalModule = await importOriginal();
   return {
     ...originalModule,
