@@ -59,8 +59,7 @@ function MenuItemReviewForm({
               {...register("itemId", {
                 required: "ItemId is required.",
                 //valueAsNumber: true,
-                validate: (value) =>
-                  !isNaN(value) || "ItemId must be a valid number",
+                validate: (value) => !isNaN(value) || "ItemId must be a valid number",
                 min: {
                   value: 0,
                   message: "ItemId must be greater than 0",
@@ -108,8 +107,7 @@ function MenuItemReviewForm({
               isInvalid={Boolean(errors.stars)}
               {...register("stars", {
                 required: "stars are required.",
-                validate: (value) =>
-                  (value && !isNaN(value)) || "Stars must be a valid number",
+                validate: (value) => (value && !isNaN(value)) || "Stars must be a valid number",
 
                 min: {
                   value: 0,
