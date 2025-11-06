@@ -4,7 +4,6 @@ import { http, HttpResponse } from "msw";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 
-// ✅ Use the correct path + casing and the capitalized component
 import RecommendationRequestCreatePage from "main/pages/RecommendationRequest/RecommendationRequestCreatePage";
 
 export default {
@@ -27,10 +26,9 @@ Default.parameters = {
     http.post("/api/recommendationrequests/post", () =>
       HttpResponse.json(
         {
-          id: 17,
-          code: "CS156",
-          requesterEmail: "lauren@ucsb.edu",
-          professorEmail: "prof@ucsb.edu",
+          code: "laurenchorr",
+          requesterEmail: "laurencho@ucsb.edu",
+          professorEmail: "pconrad@ucsb.edu",
           explanation: "Please write me a recommendation.",
           dateRequested: "2025-01-01T12:00",
           dateNeeded: "2025-01-10T12:00",

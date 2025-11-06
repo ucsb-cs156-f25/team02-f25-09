@@ -1,14 +1,13 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import RecommendationRequestForm from "main/components/RecommendationRequest/RecommendationRequestForm";
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router";
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
-export default function RecommendationRequestsEditPage({ storybook = false }) {
-  const { id } = useParams();
+export default function RecommendationRequestEditPage({ storybook = false }) {
+  let { id } = useParams();
 
-  // Load the existing RecommendationRequest by id
   const {
     data: recommendationRequest,
     _error,
@@ -17,32 +16,35 @@ export default function RecommendationRequestsEditPage({ storybook = false }) {
     // Stryker disable next-line all : don't test internal caching of React Query
     [`/api/recommendationrequests?id=${id}`],
     {
+      // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
       method: "GET",
       url: `/api/recommendationrequests`,
-      params: { id },
+      params: {
+        id,
+      },
     },
   );
 
-  // Build PUT request from form data
-  const objectToAxiosPutParams = (rr) => ({
+  const objectToAxiosPutParams = (recommendationRequest) => ({
     url: "/api/recommendationrequests",
     method: "PUT",
-    params: { id: rr.id },
+    params: {
+      id: recommendationRequest.id,
+    },
     data: {
-      code: rr.code,
-      requesterEmail: rr.requesterEmail,
-      professorEmail: rr.professorEmail,
-      explanation: rr.explanation,
-      dateRequested: rr.dateRequested, // ISO string from form
-      dateNeeded: rr.dateNeeded, // ISO string from form
-      done: rr.done,
+      id: recommendationRequest.id,
+      code: recommendationRequest.code,
+      requesterEmail: recommendationRequest.requesterEmail,
+      professorEmail: recommendationRequest.professorEmail,
+      explanation: recommendationRequest.explanation,
+      dateRequested: recommendationRequest.dateRequested,
+      dateNeeded: recommendationRequest.dateNeeded,
+      done: recommendationRequest.done,
     },
   });
 
-  const onSuccess = (updated) => {
-    toast(
-      `RecommendationRequest updated — id: ${updated.id}, code: ${updated.code}`,
-    );
+  const onSuccess = (recommendationRequest) => {
+    toast(`RecommendationRequest Updated - id: ${recommendationRequest.id} code: ${recommendationRequest.code}`);
   };
 
   const mutation = useBackendMutation(

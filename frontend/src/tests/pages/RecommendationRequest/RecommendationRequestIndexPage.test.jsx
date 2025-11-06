@@ -22,7 +22,7 @@ vi.mock("react-toastify", async (importOriginal) => {
 describe("RecommendationRequestIndexPage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
-  const testId = "RecommendationRequestTable";
+  const testId = "RecommendationRequestsTable";
 
   const setupUserOnly = () => {
     axiosMock.reset();
@@ -68,7 +68,7 @@ describe("RecommendationRequestIndexPage tests", () => {
     const queryClient = new QueryClient();
     axiosMock
       .onGet("/api/recommendationrequests/all")
-      .reply(200, recommendationRequestFixtures.threeRequests);
+      .reply(200, recommendationRequestFixtures.threeRecommendationRequests);
 
     // act
     render(
@@ -126,7 +126,7 @@ describe("RecommendationRequestIndexPage tests", () => {
     const queryClient = new QueryClient();
     axiosMock
       .onGet("/api/recommendationrequests/all")
-      .reply(200, recommendationRequestFixtures.threeRequests);
+      .reply(200, recommendationRequestFixtures.threeRecommendationRequests);
     axiosMock
       .onDelete("/api/recommendationrequests")
       .reply(200, "RecommendationRequest with id 1 was deleted");

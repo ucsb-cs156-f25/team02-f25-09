@@ -1,73 +1,88 @@
-import { render, waitFor, fireEvent, screen } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import RecommendationRequestCreatePage from "main/pages/RecommendationRequest/RecommendationRequestCreatePage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
-const mockToast3 = vi.fn();
+const mockToast = vi.fn();
 vi.mock("react-toastify", async (importOriginal) => {
   const originalModule = await importOriginal();
   return {
     ...originalModule,
-    toast: vi.fn((x) => mockToast3(x)),
+    toast: vi.fn((x) => mockToast(x)),
   };
 });
 
-const mockNavigate3 = vi.fn();
+const mockNavigate = vi.fn();
+
 vi.mock("react-router", async (importOriginal) => {
-  const originalModule = await importOriginal();
+  const actual = await importOriginal();
   return {
-    ...originalModule,
-    Navigate: vi.fn((x) => {
-      mockNavigate3(x);
-      return null;
+    ...actual,
+    // Provide a simple Link that renders an anchor so Navbar.Brand as={Link} works.
+    Link: ({ to, children, ...rest }) => (
+      <a href={typeof to === "string" ? to : "#"} {...rest}>
+        {children}
+      </a>
+    ),
+    // Intercept Navigate to assert redirects
+    Navigate: vi.fn((props) => {
+      mockNavigate(props);
+      return null; // don’t actually render anything
     }),
   };
 });
 
 describe("RecommendationRequestCreatePage tests", () => {
-  const axiosMock3 = new AxiosMockAdapter(axios);
+  const axiosMock = new AxiosMockAdapter(axios);
 
   beforeEach(() => {
-    axiosMock3.reset();
-    axiosMock3.resetHistory();
-    axiosMock3.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
-    axiosMock3.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+    vi.clearAllMocks();
+    axiosMock.reset();
+    axiosMock.resetHistory();
+    axiosMock
+      .onGet("/api/currentUser")
+      .reply(200, apiCurrentUserFixtures.userOnly);
+    axiosMock
+      .onGet("/api/systemInfo")
+      .reply(200, systemInfoFixtures.showingNeither);
   });
 
+  const queryClient = new QueryClient();
   test("renders without crashing", async () => {
-    const queryClient = new QueryClient();
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RecommendationRequestCreatePage />
+          <RecommendationRequestCreatePage/>
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId("RecommendationRequestForm-code")).toBeInTheDocument();
+      expect(screen.getByLabelText("Requester Email")).toBeInTheDocument();
     });
   });
 
-  test("when you fill in the form and hit submit, it posts JSON to the backend", async () => {
+  test("on submit, makes request to backend, and redirects to /recommendationrequests", async () => {
     const queryClient = new QueryClient();
-    const created = {
-      id: 17,
-      code: "CMPSC 156",
-      requesterEmail: "student@ucsb.edu",
-      professorEmail: "prof@ucsb.edu",
-      explanation: "Grad school applications",
-      dateRequested: "2022-03-14",
-      dateNeeded: "2022-04-01",
-      done: false,
+     const created = {
+        id: 11,
+        code: "laurenchorr",
+        requesterEmail: "laurencho@ucsb.edu",
+        professorEmail: "pconrad@ucsb.edu",
+        explanation: "Please write me a recommendation.",
+        dateRequested: "2025-01-01T12:00Z",
+        dateNeeded: "2025-01-10T12:00Z",
+        done: false,
     };
 
-    axiosMock3.onPost("/api/recommendationrequests/post").reply(202, created);
+
+    axiosMock.onPost("/api/recommendationrequests/post").reply(202, created);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -78,48 +93,55 @@ describe("RecommendationRequestCreatePage tests", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId("RecommendationRequestForm-code")).toBeInTheDocument();
+      expect(screen.getByLabelText("Requester Email")).toBeInTheDocument();
     });
 
-    const codeField = screen.getByTestId("RecommendationRequestForm-code");
-    const requesterEmailField = screen.getByTestId("RecommendationRequestForm-requesterEmail");
-    const professorEmailField = screen.getByTestId("RecommendationRequestForm-professorEmail");
-    const explanationField = screen.getByTestId("RecommendationRequestForm-explanation");
-    const dateRequestedField = screen.getByTestId("RecommendationRequestForm-dateRequested");
-    const dateNeededField = screen.getByTestId("RecommendationRequestForm-dateNeeded");
-    const doneField = screen.getByTestId("RecommendationRequestForm-done");
-    const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
+    const codeInput = screen.getByLabelText("Code");
+    expect(codeInput).toBeInTheDocument();
 
-    fireEvent.change(codeField, { target: { value: "CMPSC 156" } });
-    fireEvent.change(requesterEmailField, { target: { value: "student@ucsb.edu" } });
-    fireEvent.change(professorEmailField, { target: { value: "prof@ucsb.edu" } });
-    fireEvent.change(explanationField, { target: { value: "Grad school applications" } });
-    fireEvent.change(dateRequestedField, { target: { value: "2022-03-14" } });
-    fireEvent.change(dateNeededField, { target: { value: "2022-04-01" } });
-    // done defaults to unchecked; leave as false
+    const requesterEmailInput = screen.getByLabelText("Requester Email");
+    expect(requesterEmailInput).toBeInTheDocument();
 
-    expect(submitButton).toBeInTheDocument();
+    const professorEmailInput = screen.getByLabelText("Professor Email");
+    expect(professorEmailInput).toBeInTheDocument();
+    
+    const explanationInput = screen.getByLabelText("Explanation");
+    expect(explanationInput).toBeInTheDocument();
 
-    fireEvent.click(submitButton);
+    const dateRequestedInput = screen.getByLabelText("Date Requested (ISO)");
+    expect(dateRequestedInput).toBeInTheDocument();
+    
+    const dateNeededInput = screen.getByLabelText("Date Needed (ISO)");
+    expect(dateNeededInput).toBeInTheDocument();
+ 
+    fireEvent.change(screen.getByLabelText("Code"), { target: { value: "laurenchorr" } });
+    fireEvent.change(screen.getByLabelText("Requester Email"), { target: { value: "laurencho@ucsb.edu" } });
+    fireEvent.change(screen.getByLabelText("Professor Email"), { target: { value: "pconrad@ucsb.edu" } });
+    fireEvent.change(screen.getByLabelText("Explanation"), { target: { value: "Please write me a recommendation." } });
+    fireEvent.change(screen.getByLabelText("Date Requested (ISO)"), { target: { value: "2025-01-01T12:00" } });
+    fireEvent.change(screen.getByLabelText("Date Needed (ISO)"), { target: { value: "2025-01-10T12:00" } });
 
-    await waitFor(() => expect(axiosMock3.history.post.length).toBe(1));
+    const createButton = screen.getByText("Create");
+    expect(createButton).toBeInTheDocument();
 
-    // For RecommendationRequest we send JSON in the body (not query params)
-    expect(axiosMock3.history.post[0].data).toBe(
-      JSON.stringify({
-        code: "CMPSC 156",
-        requesterEmail: "student@ucsb.edu",
-        professorEmail: "prof@ucsb.edu",
-        explanation: "Grad school applications",
-        dateRequested: "2022-03-14",
-        dateNeeded: "2022-04-01",
-        done: false,
-      }),
+    fireEvent.click(createButton);
+
+    await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
+
+    expect(axiosMock.history.post[0].params).toEqual({
+      code: "laurenchorr",
+      requesterEmail: "laurencho@ucsb.edu",
+      professorEmail: "pconrad@ucsb.edu",
+      explanation: "Please write me a recommendation.",
+      dateRequested: "2025-01-01T12:00Z",
+      dateNeeded: "2025-01-10T12:00Z",
+      done: false,
+    });
+
+    // assert - check that the toast was called with the expected message
+    expect(mockToast).toBeCalledWith(
+      "New Recommendation Request Created - id: 11 requester email: laurencho@ucsb.edu",
     );
-
-    expect(mockToast3).toBeCalledWith(
-      "New recommendationRequest Created - id: 17 code: CMPSC 156",
-    );
-    expect(mockNavigate3).toBeCalledWith({ to: "/recommendationrequests" });
+    expect(mockNavigate).toBeCalledWith({ to: "/recommendationrequests" });
   });
 });

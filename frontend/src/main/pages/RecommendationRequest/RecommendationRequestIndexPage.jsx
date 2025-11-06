@@ -6,7 +6,7 @@ import RecommendationRequestsTable from "main/components/RecommendationRequest/R
 import { Button } from "react-bootstrap";
 import { useCurrentUser, hasRole } from "main/utils/useCurrentUser";
 
-export default function RecommendationRequestsIndexPage() {
+export default function RecommendationRequestIndexPage() {
   const currentUser = useCurrentUser();
 
   const createButton = () => {
@@ -24,7 +24,7 @@ export default function RecommendationRequestsIndexPage() {
   };
 
   const {
-    data: recommendationRequests,
+    data: requests,
     error: _error,
     status: _status,
   } = useBackend(
@@ -39,10 +39,7 @@ export default function RecommendationRequestsIndexPage() {
       <div className="pt-2">
         {createButton()}
         <h1>RecommendationRequests</h1>
-        <RecommendationRequestsTable
-          recommendationRequests={recommendationRequests}
-          currentUser={currentUser}
-        />
+        <RecommendationRequestsTable requests={requests} currentUser={currentUser} />
       </div>
     </BasicLayout>
   );

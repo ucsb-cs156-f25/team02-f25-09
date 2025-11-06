@@ -25,7 +25,7 @@ vi.mock("react-router", async (importOriginal) => {
   const originalModule = await importOriginal();
   return {
     ...originalModule,
-    useParams: vi.fn(() => ({ id: 17 })),
+    useParams: vi.fn(() => ({ id: 11 })),
     Navigate: vi.fn((x) => {
       mockNavigate2(x);
       return null;
@@ -40,7 +40,7 @@ describe("RecommendationRequestEditPage tests", () => {
       axiosMock2 = new AxiosMockAdapter(axios);
       axiosMock2.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
       axiosMock2.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-      axiosMock2.onGet("/api/recommendationrequests", { params: { id: 17 } }).timeout();
+      axiosMock2.onGet("/api/recommendationrequests", { params: { id: 11 } }).timeout();
     });
 
     afterEach(() => {
@@ -62,9 +62,8 @@ describe("RecommendationRequestEditPage tests", () => {
         </QueryClientProvider>,
       );
 
-      await screen.findByText(/Welcome/);
       await screen.findByText("Edit RecommendationRequest");
-      expect(screen.queryByTestId("RecommendationRequestForm-code")).not.toBeInTheDocument();
+      expect(screen.queryByTestId("RecommendationRequestForm-requesterEmail")).not.toBeInTheDocument();
       restoreConsole();
     });
   });
@@ -76,25 +75,21 @@ describe("RecommendationRequestEditPage tests", () => {
       axiosMock2.resetHistory();
       axiosMock2.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
       axiosMock2.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-      axiosMock2.onGet("/api/recommendationrequests", { params: { id: 17 } }).reply(200, {
-        id: 17,
-        code: "CMPSC 156",
+      axiosMock2.onGet("/api/recommendationrequests", { params: { id: 11 } }).reply(200, {
+        id: 11,
         requesterEmail: "student@ucsb.edu",
         professorEmail: "prof@ucsb.edu",
         explanation: "Grad school applications",
         dateRequested: "2022-03-14",
         dateNeeded: "2022-04-01",
-        done: false,
       });
       axiosMock2.onPut("/api/recommendationrequests").reply(200, {
-        id: "17",
-        code: "CMPSC 156",
+        id: "11",
         requesterEmail: "student@ucsb.edu",
         professorEmail: "prof@ucsb.edu",
         explanation: "Fellowship recommendation",
         dateRequested: "2022-03-15",
         dateNeeded: "2022-04-10",
-        done: true,
       });
     });
 
@@ -115,8 +110,8 @@ describe("RecommendationRequestEditPage tests", () => {
         </QueryClientProvider>,
       );
       await screen.findByText(/Welcome/);
-      await screen.findByTestId("RecommendationRequestForm-code");
-      expect(screen.getByTestId("RecommendationRequestForm-code")).toBeInTheDocument();
+      await screen.getByLabelText("Code");
+      expect(screen.getByLabelText("Code")).toBeInTheDocument();
     });
 
     test("Is populated with the data provided", async () => {
@@ -128,19 +123,20 @@ describe("RecommendationRequestEditPage tests", () => {
         </QueryClientProvider>,
       );
 
-      await screen.findByTestId("RecommendationRequestForm-code");
+      await screen.getByLabelText("Code");
 
-      const idField = screen.getByTestId("RecommendationRequestForm-id");
-      const codeField = screen.getByTestId("RecommendationRequestForm-code");
-      const requesterEmailField = screen.getByTestId("RecommendationRequestForm-requesterEmail");
-      const professorEmailField = screen.getByTestId("RecommendationRequestForm-professorEmail");
-      const explanationField = screen.getByTestId("RecommendationRequestForm-explanation");
-      const dateRequestedField = screen.getByTestId("RecommendationRequestForm-dateRequested");
-      const dateNeededField = screen.getByTestId("RecommendationRequestForm-dateNeeded");
-      const doneField = screen.getByTestId("RecommendationRequestForm-done");
-      const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
+      const idField = screen.getByLabelText("id");
+      const codeField = screen.getByLabelText("Code");
+      const requesterEmailField = screen.getByLabelText("Requester Email");
+      const professorEmailField = screen.getByLabelText("Professor Email");
+      const explanationField = screen.getByLabelText("Explanation");
+      const dateRequestedField = screen.getByLabelText("Date Requested (ISO)");
+      const dateNeededField = screen.getByLabelText("Date Needed (ISO)");
+      const doneField = screen.getByLabelText("Done");
 
-      expect(idField).toHaveValue("17");
+      const submitButton = screen.getAllByTestId("RecommendationRequestForm-submit");
+
+      expect(idField).toHaveValue("11");
       expect(codeField).toHaveValue("CMPSC 156");
       expect(requesterEmailField).toHaveValue("student@ucsb.edu");
       expect(professorEmailField).toHaveValue("prof@ucsb.edu");
@@ -160,19 +156,20 @@ describe("RecommendationRequestEditPage tests", () => {
         </QueryClientProvider>,
       );
 
-      await screen.findByTestId("RecommendationRequestForm-code");
+      await screen.getByLabelText("Code");
 
-      const idField = screen.getByTestId("RecommendationRequestForm-id");
-      const codeField = screen.getByTestId("RecommendationRequestForm-code");
-      const requesterEmailField = screen.getByTestId("RecommendationRequestForm-requesterEmail");
-      const professorEmailField = screen.getByTestId("RecommendationRequestForm-professorEmail");
-      const explanationField = screen.getByTestId("RecommendationRequestForm-explanation");
-      const dateRequestedField = screen.getByTestId("RecommendationRequestForm-dateRequested");
-      const dateNeededField = screen.getByTestId("RecommendationRequestForm-dateNeeded");
-      const doneField = screen.getByTestId("RecommendationRequestForm-done");
-      const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
+      const idField = screen.getByLabelText("id");
+      const codeField = screen.getByLabelText("Code");
+      const requesterEmailField = screen.getByLabelText("Requester Email");
+      const professorEmailField = screen.getByLabelText("Professor Email");
+      const explanationField = screen.getByLabelText("Explanation");
+      const dateRequestedField = screen.getByLabelText("Date Requested (ISO)");
+      const dateNeededField = screen.getByLabelText("Date Needed (ISO)");
+      const doneField = screen.getByLabelText("Done");
 
-      expect(idField).toHaveValue("17");
+      const submitButton = screen.getAllByTestId("Update");
+
+      expect(idField).toHaveValue("11");
       expect(codeField).toHaveValue("CMPSC 156");
 
       fireEvent.change(explanationField, { target: { value: "Fellowship recommendation" } });
@@ -184,12 +181,12 @@ describe("RecommendationRequestEditPage tests", () => {
 
       await waitFor(() => expect(mockToast2).toBeCalled());
       expect(mockToast2).toBeCalledWith(
-        "RecommendationRequest Updated - id: 17 code: CMPSC 156",
+        "RecommendationRequest Updated - id: 11 code: CMPSC 156",
       );
       expect(mockNavigate2).toBeCalledWith({ to: "/recommendationrequests" });
 
       expect(axiosMock2.history.put.length).toBe(1); // times called
-      expect(axiosMock2.history.put[0].params).toEqual({ id: 17 });
+      expect(axiosMock2.history.put[0].params).toEqual({ id: 11 });
       expect(axiosMock2.history.put[0].data).toBe(
         JSON.stringify({
           code: "CMPSC 156",

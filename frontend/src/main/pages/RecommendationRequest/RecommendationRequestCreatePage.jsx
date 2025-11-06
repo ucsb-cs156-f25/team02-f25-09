@@ -1,29 +1,29 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import RecommendationRequestForm from "main/components/RecommendationRequest/RecommendationRequestForm";
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router";
 import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
 export default function RecommendationRequestCreatePage({ storybook = false }) {
-  // Data shape should match RecommendationRequestForm fields
-  const objectToAxiosParams = (rr) => ({
+  
+  const addZ = (string) => string + "Z";
+  
+  const objectToAxiosParams = (recommendationRequest) => ({
     url: "/api/recommendationrequests/post",
     method: "POST",
     params: {
-      code: rr.code,
-      requesterEmail: rr.requesterEmail,
-      professorEmail: rr.professorEmail,
-      explanation: rr.explanation,
-      dateRequested: rr.dateRequested, // ISO string from form
-      dateNeeded: rr.dateNeeded, // ISO string from form
-      done: rr.done,
+      code: recommendationRequest.code,
+      requesterEmail: recommendationRequest.requesterEmail,
+      professorEmail: recommendationRequest.professorEmail,  
+      explanation: recommendationRequest.explanation,  
+      dateRequested: recommendationRequest.dateRequested + "Z",  
+      dateNeeded: recommendationRequest.dateNeeded + "Z",  
+      done: recommendationRequest.done,
     },
   });
 
-  const onSuccess = (created) => {
-    toast(
-      `New RecommendationRequest created — id: ${created.id}, code: ${created.code}`,
-    );
+  const onSuccess = (recommendationRequest) => {
+    toast(`New Recommendation Request Created - id: ${recommendationRequest.id} requester email: ${recommendationRequest.requesterEmail}`);
   };
 
   const mutation = useBackendMutation(
@@ -47,6 +47,7 @@ export default function RecommendationRequestCreatePage({ storybook = false }) {
     <BasicLayout>
       <div className="pt-2">
         <h1>Create New RecommendationRequest</h1>
+
         <RecommendationRequestForm submitAction={onSubmit} />
       </div>
     </BasicLayout>
