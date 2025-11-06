@@ -31,7 +31,7 @@ export default function RecommendationRequestIndexPage() {
     // Stryker disable next-line all : don't test internal caching of React Query
     ["/api/recommendationrequests/all"],
     { method: "GET", url: "/api/recommendationrequests/all" },
-    []
+    [],
   );
 
   return (
@@ -39,7 +39,10 @@ export default function RecommendationRequestIndexPage() {
       <div className="pt-2">
         {createButton()}
         <h1>RecommendationRequest</h1>
-        <RecommendationRequestsTable recommendationRequests={recommendationRequests} currentUser={currentUser} />
+        <RecommendationRequestsTable
+          recommendationRequests={recommendationRequests}
+          currentUser={currentUser}
+        />
       </div>
     </BasicLayout>
   );

@@ -57,13 +57,15 @@ describe("RecommendationRequestIndexPage tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RecommendationRequestIndexPage/>
+          <RecommendationRequestIndexPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByText(/Create RecommendationRequest/)).toBeInTheDocument();
+      expect(
+        screen.getByText(/Create RecommendationRequest/),
+      ).toBeInTheDocument();
     });
     const button = screen.getByText(/Create RecommendationRequest/);
     expect(button).toHaveAttribute("href", "/recommendationrequests/create");
@@ -97,12 +99,13 @@ describe("RecommendationRequestIndexPage tests", () => {
     );
 
     // check these lines
-    const createRecommendationRequestButton = screen.queryByText("Create RecommendationRequest");
+    const createRecommendationRequestButton = screen.queryByText(
+      "Create RecommendationRequest",
+    );
     expect(createRecommendationRequestButton).not.toBeInTheDocument();
-    
+
     const id = screen.getByText("1");
     expect(id).toBeInTheDocument();
-
 
     const code = screen.getByText("laurenchonewrr");
     expect(code).toBeInTheDocument();
@@ -111,26 +114,30 @@ describe("RecommendationRequestIndexPage tests", () => {
     expect(requesterEmail).toBeInTheDocument();
 
     const row = screen.getByTestId("RecommendationRequestsTable-row-0");
-    const professorEmail = within(row).getByText(
-      "pconrad@cs.ucsb.edu",
-    );
+    const professorEmail = within(row).getByText("pconrad@cs.ucsb.edu");
     expect(professorEmail).toBeInTheDocument();
 
-    const explanation = screen.getByText("Recommendation for summer 2027 internship");
+    const explanation = screen.getByText(
+      "Recommendation for summer 2027 internship",
+    );
     expect(explanation).toBeInTheDocument();
 
     const dateRequested = screen.getByText("2025-11-01T21:57:33.034Z");
     expect(dateRequested).toBeInTheDocument();
 
-    const dateNeeded = screen.getByText("2025-11-21T21:57:33.034Z",);
+    const dateNeeded = screen.getByText("2025-11-21T21:57:33.034Z");
     expect(dateNeeded).toBeInTheDocument();
 
     // for non-admin users, details button is visible, but the edit and delete buttons should not be visible
     expect(
-      screen.queryByTestId("RecommendationRequestsTable-cell-row-0-col-Delete-button"),
+      screen.queryByTestId(
+        "RecommendationRequestsTable-cell-row-0-col-Delete-button",
+      ),
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByTestId("RecommendationRequestsTable-cell-row-0-col-Edit-button"),
+      screen.queryByTestId(
+        "RecommendationRequestsTable-cell-row-0-col-Edit-button",
+      ),
     ).not.toBeInTheDocument();
   });
 
@@ -196,7 +203,9 @@ describe("RecommendationRequestIndexPage tests", () => {
     fireEvent.click(deleteButton);
 
     await waitFor(() => {
-      expect(mockToast).toBeCalledWith("RecommendationRequest with id 1 was deleted");
+      expect(mockToast).toBeCalledWith(
+        "RecommendationRequest with id 1 was deleted",
+      );
     });
 
     await waitFor(() => {
