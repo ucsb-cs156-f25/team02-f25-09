@@ -3,15 +3,14 @@ import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { http, HttpResponse } from "msw";
 
-import ArticleEditPage from "main/pages/Articles/ArticlesEditPage";
-import { articleFixtures } from "fixtures/articleFixtures";
+import RecommendationRequestCreatePage from "main/pages/RecommendationRequest/RecommendationRequestCreatePage";
 
 export default {
-  title: "pages/Articles/ArticleEditPage",
-  component: ArticleEditPage,
+  title: "pages/RecommendationRequest/RecommendationRequestCreatePage",
+  component: RecommendationRequestCreatePage,
 };
 
-const Template = () => <ArticleEditPage storybook={true} />;
+const Template = () => <RecommendationRequestCreatePage storybook={true} />;
 
 export const Default = Template.bind({});
 Default.parameters = {
@@ -26,16 +25,7 @@ Default.parameters = {
         status: 200,
       });
     }),
-    http.get("/api/articles", () => {
-      return HttpResponse.json(articleFixtures.threeArticles[0], {
-        status: 200,
-      });
-    }),
-    http.put("/api/articles", () => {
-      return HttpResponse.json({}, { status: 200 });
-    }),
-    http.put("/api/articles", (req) => {
-      window.alert("PUT: " + req.url + " and body: " + req.body);
+    http.post("/api/recommendationrequests/post", () => {
       return HttpResponse.json({}, { status: 200 });
     }),
   ],
