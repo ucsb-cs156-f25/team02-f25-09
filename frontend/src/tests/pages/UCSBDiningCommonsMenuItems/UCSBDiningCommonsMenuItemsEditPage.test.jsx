@@ -47,7 +47,7 @@ describe("UCSBDiningCommonsMenuItemsEditPage tests", () => {
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
       axiosMock
-        .onGet("/api/ucsbdiningcommons", { params: { id: 17 } })
+        .onGet("/api/ucsbdiningcommonsmenuitems", { params: { id: 17 } })
         .timeout();
     });
 
@@ -93,14 +93,14 @@ describe("UCSBDiningCommonsMenuItemsEditPage tests", () => {
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
       axiosMock
-        .onGet("/api/ucsbdiningcommons", { params: { id: 17 } })
+        .onGet("/api/ucsbdiningcommonsmenuitems", { params: { id: 17 } })
         .reply(200, {
           id: 17,
           diningCommonsCode: "ortega",
           name: "pasta",
           station: "italian",
         });
-      axiosMock.onPut("/api/ucsbdiningcommons").reply(200, {
+      axiosMock.onPut("/api/ucsbdiningcommonsmenuitems").reply(200, {
         id: "17",
         diningCommonsCode: "ortega",
         name: "pasta",
@@ -215,7 +215,7 @@ describe("UCSBDiningCommonsMenuItemsEditPage tests", () => {
       expect(mockToast).toBeCalledWith(
         "UCSBDiningCommonsMenuItems Updated - id: 17 name: pasta",
       );
-      expect(mockNavigate).toBeCalledWith({ to: "/ucsbdiningcommons" });
+      expect(mockNavigate).toBeCalledWith({ to: "/ucsbdiningcommonsmenuitems" });
 
       expect(axiosMock.history.put.length).toBe(1); // times called
       expect(axiosMock.history.put[0].params).toEqual({ id: 17 });

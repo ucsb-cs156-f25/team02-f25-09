@@ -35,6 +35,10 @@ import ArticlesEditPage from "main/pages/Articles/ArticlesEditPage";
 import ArticlesCreatePage from "main/pages/Articles/ArticlesCreatePage";
 import ArticlesIndexPage from "main/pages/Articles/ArticlesIndexPage";
 
+import UCSBDiningCommonsMenuItemsIndexPage from "main/pages/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsIndexPage";
+import UCSBDiningCommonsMenuItemsCreatePage from "main/pages/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsCreatePage";
+import UCSBDiningCommonsMenuItemsEditPage from "main/pages/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsEditPage";
+
 import { hasRole, useCurrentUser } from "main/utils/useCurrentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -201,19 +205,23 @@ function App() {
 
       {hasRole(currentUser, "ROLE_USER") && (
         <>
-          <Route exact path="/ucsbdiningcommons" element={<UCSBDiningCommonsMenuItemsIndexPage />} />
+          <Route
+            exact
+            path="/ucsbdiningcommonsmenuitems"
+            element={<UCSBDiningCommonsMenuItemsIndexPage />}
+          />
         </>
       )}
       {hasRole(currentUser, "ROLE_ADMIN") && (
         <>
           <Route
             exact
-            path="/ucsbdiningcommons/edit/:id"
+            path="/ucsbdiningcommonsmenuitems/edit/:id"
             element={<UCSBDiningCommonsMenuItemsEditPage />}
           />
           <Route
             exact
-            path="/ucsbdiningcommons/create"
+            path="/ucsbdiningcommonsmenuitems/create"
             element={<UCSBDiningCommonsMenuItemsCreatePage />}
           />
         </>

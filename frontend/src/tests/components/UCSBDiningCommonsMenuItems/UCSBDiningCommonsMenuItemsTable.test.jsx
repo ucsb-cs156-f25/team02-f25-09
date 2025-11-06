@@ -176,7 +176,7 @@ describe("UserTable tests", () => {
     fireEvent.click(editButton);
 
     await waitFor(() =>
-      expect(mockedNavigate).toHaveBeenCalledWith("/ucsbdiningcommons/edit/1"),
+      expect(mockedNavigate).toHaveBeenCalledWith("/ucsbdiningcommonsmenuitems/edit/1"),
     );
   });
 
@@ -186,7 +186,7 @@ describe("UserTable tests", () => {
 
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
-      .onDelete("/api/ucsbdiningcommons")
+      .onDelete("/api/ucsbdiningcommonsmenuitems")
       .reply(200, { message: "Item deleted" });
 
     // act - render the component
@@ -220,7 +220,7 @@ describe("UserTable tests", () => {
     // assert - check that the delete endpoint was called
 
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
-    expect(axiosMock.history.delete[0].url).toBe("/api/ucsbdiningcommons");
+    expect(axiosMock.history.delete[0].url).toBe("/api/ucsbdiningcommonsmenuitems");
     expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
   });
 
@@ -240,7 +240,7 @@ describe("UserTable tests", () => {
     const result = cellToAxiosParamsDelete(cell);
 
     expect(result).toEqual({
-      url: "/api/ucsbdiningcommons",
+      url: "/api/ucsbdiningcommonsmenuitems",
       method: "DELETE",
       params: { id: 123 },
     });

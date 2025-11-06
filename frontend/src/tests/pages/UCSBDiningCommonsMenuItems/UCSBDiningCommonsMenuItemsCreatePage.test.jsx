@@ -57,7 +57,7 @@ describe("UCSBDiningCommonsMenuItemsCreatePage tests", () => {
     });
   });
 
-  test("when you fill in the form and hit submit, it makes a request to the backend, redirects to /UCSBDiningCommonsMenuItems", async () => {
+  test("when you fill in the form and hit submit, it makes a request to the backend, redirects to /ucsbdiningcommonsmenuitems", async () => {
     const queryClient = new QueryClient();
     const item = {
       id: 1,
@@ -66,7 +66,7 @@ describe("UCSBDiningCommonsMenuItemsCreatePage tests", () => {
       station: "italian",
     };
 
-    axiosMock.onPost("/api/UCSBDiningCommonsMenuItems/post").reply(202, item);
+    axiosMock.onPost("/api/ucsbdiningcommonsmenuitems/post").reply(202, item);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -113,6 +113,6 @@ describe("UCSBDiningCommonsMenuItemsCreatePage tests", () => {
     expect(mockToast).toBeCalledWith(
       "New UCSBDiningCommonsMenuItems Created - id: 1 name: pasta",
     );
-    expect(mockNavigate).toBeCalledWith({ to: "/UCSBDiningCommonsMenuItems" });
+    expect(mockNavigate).toBeCalledWith({ to: "/ucsbdiningcommonsmenuitems" });
   });
 });

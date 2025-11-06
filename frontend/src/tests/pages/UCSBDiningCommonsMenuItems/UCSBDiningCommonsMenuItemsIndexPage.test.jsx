@@ -50,7 +50,7 @@ describe("UCSBDiningCommonsMenuItemsIndexPage tests", () => {
     // arrange
     setupAdminUser();
     const queryClient = new QueryClient();
-    axiosMock.onGet("/api/UCSBDiningCommonsMenuItems/all").reply(200, []);
+    axiosMock.onGet("/api/ucsbdiningcommonsmenuitems/all").reply(200, []);
 
     // act
     render(
@@ -68,7 +68,7 @@ describe("UCSBDiningCommonsMenuItemsIndexPage tests", () => {
       ).toBeInTheDocument();
     });
     const button = screen.getByText(/Create UCSBDiningCommonsMenuItems/);
-    expect(button).toHaveAttribute("href", "/ucsbdiningcommons/create");
+    expect(button).toHaveAttribute("href", "/ucsbdiningcommonsmenuitems/create");
     expect(button).toHaveAttribute("style", "float: right;");
   });
 
@@ -77,7 +77,7 @@ describe("UCSBDiningCommonsMenuItemsIndexPage tests", () => {
     setupUserOnly();
     const queryClient = new QueryClient();
     axiosMock
-      .onGet("/api/UCSBDiningCommonsMenuItems/all")
+      .onGet("/api/ucsbdiningcommonsmenuitems/all")
       .reply(200, UCSBDiningCommonsMenuItemsFixtures.threeItems);
 
     // act
@@ -112,7 +112,7 @@ describe("UCSBDiningCommonsMenuItemsIndexPage tests", () => {
     // arrange
     setupUserOnly();
     const queryClient = new QueryClient();
-    axiosMock.onGet("/api/UCSBDiningCommonsMenuItems/all").timeout();
+    axiosMock.onGet("/api/ucsbdiningcommonsmenuitems/all").timeout();
     const restoreConsole = mockConsole();
 
     // act
@@ -131,7 +131,7 @@ describe("UCSBDiningCommonsMenuItemsIndexPage tests", () => {
 
     const errorMessage = console.error.mock.calls[0][0];
     expect(errorMessage).toMatch(
-      "Error communicating with backend via GET on /api/UCSBDiningCommonsMenuItems/all",
+      "Error communicating with backend via GET on /api/ucsbdiningcommonsmenuitems/all",
     );
     restoreConsole();
 
@@ -145,10 +145,10 @@ describe("UCSBDiningCommonsMenuItemsIndexPage tests", () => {
     setupAdminUser();
     const queryClient = new QueryClient();
     axiosMock
-      .onGet("/api/UCSBDiningCommonsMenuItems/all")
+      .onGet("/api/ucsbdiningcommonsmenuitems/all")
       .reply(200, UCSBDiningCommonsMenuItemsFixtures.threeItems);
     axiosMock
-      .onDelete("/api/ucsbdiningcommons")
+      .onDelete("/api/ucsbdiningcommonsmenuitems")
       .reply(200, "UCSBDiningCommonsMenuItems with id 1 was deleted");
 
     // act
