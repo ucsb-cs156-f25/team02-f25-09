@@ -27,15 +27,23 @@ describe("RecommendationRequestIndexPage tests", () => {
   const setupUserOnly = () => {
     axiosMock.reset();
     axiosMock.resetHistory();
-    axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
-    axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+    axiosMock
+      .onGet("/api/currentUser")
+      .reply(200, apiCurrentUserFixtures.userOnly);
+    axiosMock
+      .onGet("/api/systemInfo")
+      .reply(200, systemInfoFixtures.showingNeither);
   };
 
   const setupAdminUser = () => {
     axiosMock.reset();
     axiosMock.resetHistory();
-    axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.adminUser);
-    axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+    axiosMock
+      .onGet("/api/currentUser")
+      .reply(200, apiCurrentUserFixtures.adminUser);
+    axiosMock
+      .onGet("/api/systemInfo")
+      .reply(200, systemInfoFixtures.showingNeither);
   };
 
   test("Renders with Create Button for admin user", async () => {
@@ -55,7 +63,9 @@ describe("RecommendationRequestIndexPage tests", () => {
 
     // assert
     await waitFor(() => {
-      expect(screen.getByText(/Create RecommendationRequest/)).toBeInTheDocument();
+      expect(
+        screen.getByText(/Create RecommendationRequest/),
+      ).toBeInTheDocument();
     });
     const button = screen.getByText(/Create RecommendationRequest/);
     expect(button).toHaveAttribute("href", "/recommendationrequests/create");
@@ -81,13 +91,21 @@ describe("RecommendationRequestIndexPage tests", () => {
 
     // assert
     await waitFor(() => {
-      expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+      expect(
+        screen.getByTestId(`${testId}-cell-row-0-col-id`),
+      ).toHaveTextContent("1");
     });
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
-    expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
+      "2",
+    );
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(
+      "3",
+    );
 
     // assert that the Create button is not present when user isn't an admin
-    expect(screen.queryByText(/Create RecommendationRequest/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Create RecommendationRequest/),
+    ).not.toBeInTheDocument();
   });
 
   test("renders empty table when backend unavailable, user only", async () => {
@@ -117,7 +135,9 @@ describe("RecommendationRequestIndexPage tests", () => {
     );
     restoreConsole();
 
-    expect(screen.queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId(`${testId}-cell-row-0-col-id`),
+    ).not.toBeInTheDocument();
   });
 
   test("what happens when you click delete, admin", async () => {
@@ -142,10 +162,14 @@ describe("RecommendationRequestIndexPage tests", () => {
 
     // assert
     await waitFor(() => {
-      expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument();
+      expect(
+        screen.getByTestId(`${testId}-cell-row-0-col-id`),
+      ).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
+      "1",
+    );
 
     const deleteButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Delete-button`,
@@ -157,7 +181,9 @@ describe("RecommendationRequestIndexPage tests", () => {
 
     // assert
     await waitFor(() => {
-      expect(mockToast).toBeCalledWith("RecommendationRequest with id 1 was deleted");
+      expect(mockToast).toBeCalledWith(
+        "RecommendationRequest with id 1 was deleted",
+      );
     });
   });
 });

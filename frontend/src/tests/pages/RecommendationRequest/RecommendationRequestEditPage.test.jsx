@@ -38,9 +38,15 @@ describe("RecommendationRequestEditPage tests", () => {
   describe("when the backend doesn't return data", () => {
     beforeEach(() => {
       axiosMock2 = new AxiosMockAdapter(axios);
-      axiosMock2.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
-      axiosMock2.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-      axiosMock2.onGet("/api/recommendationrequests", { params: { id: 11 } }).timeout();
+      axiosMock2
+        .onGet("/api/currentUser")
+        .reply(200, apiCurrentUserFixtures.userOnly);
+      axiosMock2
+        .onGet("/api/systemInfo")
+        .reply(200, systemInfoFixtures.showingNeither);
+      axiosMock2
+        .onGet("/api/recommendationrequests", { params: { id: 11 } })
+        .timeout();
     });
 
     afterEach(() => {
@@ -63,7 +69,9 @@ describe("RecommendationRequestEditPage tests", () => {
       );
 
       await screen.findByText("Edit RecommendationRequest");
-      expect(screen.queryByTestId("RecommendationRequestForm-requesterEmail")).not.toBeInTheDocument();
+      expect(
+        screen.queryByTestId("RecommendationRequestForm-requesterEmail"),
+      ).not.toBeInTheDocument();
       restoreConsole();
     });
   });
@@ -73,16 +81,22 @@ describe("RecommendationRequestEditPage tests", () => {
       axiosMock2 = new AxiosMockAdapter(axios);
       axiosMock2.reset();
       axiosMock2.resetHistory();
-      axiosMock2.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
-      axiosMock2.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-      axiosMock2.onGet("/api/recommendationrequests", { params: { id: 11 } }).reply(200, {
-        id: 11,
-        requesterEmail: "student@ucsb.edu",
-        professorEmail: "prof@ucsb.edu",
-        explanation: "Grad school applications",
-        dateRequested: "2022-03-14",
-        dateNeeded: "2022-04-01",
-      });
+      axiosMock2
+        .onGet("/api/currentUser")
+        .reply(200, apiCurrentUserFixtures.userOnly);
+      axiosMock2
+        .onGet("/api/systemInfo")
+        .reply(200, systemInfoFixtures.showingNeither);
+      axiosMock2
+        .onGet("/api/recommendationrequests", { params: { id: 11 } })
+        .reply(200, {
+          id: 11,
+          requesterEmail: "student@ucsb.edu",
+          professorEmail: "prof@ucsb.edu",
+          explanation: "Grad school applications",
+          dateRequested: "2022-03-14",
+          dateNeeded: "2022-04-01",
+        });
       axiosMock2.onPut("/api/recommendationrequests").reply(200, {
         id: "11",
         requesterEmail: "student@ucsb.edu",
@@ -134,7 +148,9 @@ describe("RecommendationRequestEditPage tests", () => {
       const dateNeededField = screen.getByLabelText("Date Needed (ISO)");
       const doneField = screen.getByLabelText("Done");
 
-      const submitButton = screen.getAllByTestId("RecommendationRequestForm-submit");
+      const submitButton = screen.getAllByTestId(
+        "RecommendationRequestForm-submit",
+      );
 
       expect(idField).toHaveValue("11");
       expect(codeField).toHaveValue("CMPSC 156");
@@ -172,7 +188,9 @@ describe("RecommendationRequestEditPage tests", () => {
       expect(idField).toHaveValue("11");
       expect(codeField).toHaveValue("CMPSC 156");
 
-      fireEvent.change(explanationField, { target: { value: "Fellowship recommendation" } });
+      fireEvent.change(explanationField, {
+        target: { value: "Fellowship recommendation" },
+      });
       fireEvent.change(dateRequestedField, { target: { value: "2022-03-15" } });
       fireEvent.change(dateNeededField, { target: { value: "2022-04-10" } });
       fireEvent.click(doneField); // toggle to true

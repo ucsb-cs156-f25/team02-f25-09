@@ -17,13 +17,13 @@ export const Empty = Template.bind({});
 Empty.parameters = {
   msw: [
     http.get("/api/currentUser", () =>
-      HttpResponse.json(apiCurrentUserFixtures.userOnly, { status: 200 })
+      HttpResponse.json(apiCurrentUserFixtures.userOnly, { status: 200 }),
     ),
     http.get("/api/systemInfo", () =>
-      HttpResponse.json(systemInfoFixtures.showingNeither, { status: 200 })
+      HttpResponse.json(systemInfoFixtures.showingNeither, { status: 200 }),
     ),
     http.get("/api/recommendationrequests/all", () =>
-      HttpResponse.json([], { status: 200 })
+      HttpResponse.json([], { status: 200 }),
     ),
   ],
 };
@@ -32,13 +32,13 @@ export const ThreeItemsOrdinaryUser = Template.bind({});
 ThreeItemsOrdinaryUser.parameters = {
   msw: [
     http.get("/api/currentUser", () =>
-      HttpResponse.json(apiCurrentUserFixtures.userOnly)
+      HttpResponse.json(apiCurrentUserFixtures.userOnly),
     ),
     http.get("/api/systemInfo", () =>
-      HttpResponse.json(systemInfoFixtures.showingNeither)
+      HttpResponse.json(systemInfoFixtures.showingNeither),
     ),
     http.get("/api/recommendationrequests/all", () =>
-      HttpResponse.json(recommendationRequestsFixtures.threeRequests)
+      HttpResponse.json(recommendationRequestsFixtures.threeRequests),
     ),
   ],
 };
@@ -47,16 +47,16 @@ export const ThreeItemsAdminUser = Template.bind({});
 ThreeItemsAdminUser.parameters = {
   msw: [
     http.get("/api/currentUser", () =>
-      HttpResponse.json(apiCurrentUserFixtures.adminUser)
+      HttpResponse.json(apiCurrentUserFixtures.adminUser),
     ),
     http.get("/api/systemInfo", () =>
-      HttpResponse.json(systemInfoFixtures.showingNeither)
+      HttpResponse.json(systemInfoFixtures.showingNeither),
     ),
     http.get("/api/recommendationrequests/all", () =>
-      HttpResponse.json(recommendationRequestsFixtures.threeRequests)
+      HttpResponse.json(recommendationRequestsFixtures.threeRequests),
     ),
     http.delete("/api/recommendationrequests", () =>
-      HttpResponse.json({}, { status: 200 })
+      HttpResponse.json({}, { status: 200 }),
     ),
   ],
 };

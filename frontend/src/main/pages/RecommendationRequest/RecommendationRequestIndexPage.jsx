@@ -39,7 +39,10 @@ export default function RecommendationRequestIndexPage() {
       <div className="pt-2">
         {createButton()}
         <h1>RecommendationRequests</h1>
-        <RecommendationRequestsTable requests={requests} currentUser={currentUser} />
+        <RecommendationRequestsTable
+          requests={requests}
+          currentUser={currentUser}
+        />
       </div>
     </BasicLayout>
   );
