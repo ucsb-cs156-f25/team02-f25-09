@@ -15,6 +15,11 @@ import RestaurantIndexPage from "main/pages/Restaurants/RestaurantIndexPage";
 import RestaurantCreatePage from "main/pages/Restaurants/RestaurantCreatePage";
 import RestaurantEditPage from "main/pages/Restaurants/RestaurantEditPage";
 
+import UCSBDiningCommonsIndexPage from "main/pages/UCSBDiningCommons/UCSBDiningCommonsIndexPage";
+import UCSBDiningCommonsCreatePage from "main/pages/UCSBDiningCommons/UCSBDiningCommonsCreatePage";
+import UCSBDiningCommonsEditPage from "main/pages/UCSBDiningCommons/UCSBDiningCommonsEditPage";
+
+
 import UCSBOrganizationIndexPage from "main/pages/UCSBOrganization/UCSBOrganizationIndexPage";
 import UCSBOrganizationCreatePage from "main/pages/UCSBOrganization/UCSBOrganizationCreatePage";
 import UCSBOrganizationEditPage from "main/pages/UCSBOrganization/UCSBOrganizationEditPage";
@@ -223,6 +228,30 @@ function App() {
             exact
             path="/ucsbdiningcommonsmenuitems/create"
             element={<UCSBDiningCommonsMenuItemsCreatePage />}
+          />
+        </>
+      )}
+      
+      {hasRole(currentUser, "ROLE_USER") && (
+        <>
+          <Route
+            exact
+            path="/ucsbdiningcommons"
+            element={<UCSBDiningCommonsIndexPage />}
+          />
+        </>
+      )}
+      {hasRole(currentUser, "ROLE_ADMIN") && (
+        <>
+          <Route
+            exact
+            path="/ucsbdiningcommons/edit/:id"
+            element={<UCSBDiningCommonsEditPage />}
+          />
+          <Route
+            exact
+            path="/ucsbdiningcommons/create"
+            element={<UCSBDiningCommonsCreatePage />}
           />
         </>
       )}
