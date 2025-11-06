@@ -5,23 +5,26 @@ import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
 export default function RecommendationRequestCreatePage({ storybook = false }) {
+  // const addZ = (string) => string + "Z";
+
   const objectToAxiosParams = (recommendationRequest) => ({
     url: "/api/recommendationrequests/post",
     method: "POST",
     params: {
-      id: recommendationRequest.id,
       code: recommendationRequest.code,
       requesterEmail: recommendationRequest.requesterEmail,
       professorEmail: recommendationRequest.professorEmail,
       explanation: recommendationRequest.explanation,
-      dateRequested: recommendationRequest.dateRequested,
-      dateNeeded: recommendationRequest.dateNeeded,
+      dateRequested: recommendationRequest.dateRequested + "Z",
+      dateNeeded: recommendationRequest.dateNeeded + "Z",
       done: recommendationRequest.done,
     },
   });
 
   const onSuccess = (recommendationRequest) => {
-    toast(`New Recommendation Request Created - id: ${recommendationRequest.id} code: ${recommendationRequest.code}`);
+    toast(
+      `New Recommendation Request Created - id: ${recommendationRequest.id} requester email: ${recommendationRequest.requesterEmail}`,
+    );
   };
 
   const mutation = useBackendMutation(

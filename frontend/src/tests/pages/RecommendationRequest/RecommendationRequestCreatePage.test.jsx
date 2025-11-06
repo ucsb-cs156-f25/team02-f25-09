@@ -1,10 +1,11 @@
-import { render, waitFor, fireEvent, screen } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import RecommendationRequestCreatePage from "main/pages/RecommendationRequest/RecommendationRequestCreatePage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
@@ -18,13 +19,21 @@ vi.mock("react-toastify", async (importOriginal) => {
 });
 
 const mockNavigate = vi.fn();
+
 vi.mock("react-router", async (importOriginal) => {
-  const originalModule = await importOriginal();
+  const actual = await importOriginal();
   return {
-    ...originalModule,
-    Navigate: vi.fn((x) => {
-      mockNavigate(x);
-      return null;
+    ...actual,
+    // Provide a simple Link that renders an anchor so Navbar.Brand as={Link} works.
+    Link: ({ to, children, ...rest }) => (
+      <a href={typeof to === "string" ? to : "#"} {...rest}>
+        {children}
+      </a>
+    ),
+    // Intercept Navigate to assert redirects
+    Navigate: vi.fn((props) => {
+      mockNavigate(props);
+      return null; // don’t actually render anything
     }),
   };
 });
@@ -33,6 +42,7 @@ describe("RecommendationRequestCreatePage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
   beforeEach(() => {
+    vi.clearAllMocks();
     axiosMock.reset();
     axiosMock.resetHistory();
     axiosMock
@@ -43,8 +53,8 @@ describe("RecommendationRequestCreatePage tests", () => {
       .reply(200, systemInfoFixtures.showingNeither);
   });
 
+  const queryClient = new QueryClient();
   test("renders without crashing", async () => {
-    const queryClient = new QueryClient();
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
@@ -53,28 +63,25 @@ describe("RecommendationRequestCreatePage tests", () => {
       </QueryClientProvider>,
     );
 
- 
     await waitFor(() => {
-      expect(screen.getByLabelText("Code")).toBeInTheDocument();
+      expect(screen.getByLabelText("Requester Email")).toBeInTheDocument();
     });
-
   });
 
-  test("when you fill in the form and hit submit, it makes a request to the backend", async () => {
+  test("on submit, makes request to backend, and redirects to /recommendationrequests", async () => {
     const queryClient = new QueryClient();
-    const recommendationRequest = {
-
+    const created = {
       id: 11,
-      code: "karenchorr",
-      requesterEmail: "karencho@ucsb.edu",
-      professorEmail: "laurencho@ucsb.edu",
-      explanation: "request for recommendation request for college application",
-      dateRequested: "2022-01-02T00:00",
-      dateNeeded: "2022-02-02T00:00",
+      code: "laurenchorr",
+      requesterEmail: "laurencho@ucsb.edu",
+      professorEmail: "pconrad@ucsb.edu",
+      explanation: "Please write me a recommendation.",
+      dateRequested: "2025-01-01T12:00Z",
+      dateNeeded: "2025-01-10T12:00Z",
       done: false,
     };
 
-    axiosMock.onPost("/api/recommendationrequests/post").reply(202, recommendationRequest);
+    axiosMock.onPost("/api/recommendationrequests/post").reply(202, created);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -85,45 +92,66 @@ describe("RecommendationRequestCreatePage tests", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByLabelText("Code")).toBeInTheDocument();
+      expect(screen.getByLabelText("Requester Email")).toBeInTheDocument();
     });
 
-    const code = screen.getByLabelText("Code");
-    const requesterEmail = screen.getByLabelText("Requester Email");
-    const professorEmail = screen.getByLabelText("Professor Email");
-    const explanation = screen.getByLabelText("Explanation");
-    const dateRequested = screen.getByLabelText("Date Requested (ISO)");
-    const dateNeeded = screen.getByLabelText("Date Needed (ISO)");
-    const done = screen.getByLabelText("Done");
+    const codeInput = screen.getByLabelText("Code");
+    expect(codeInput).toBeInTheDocument();
 
-    const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
+    const requesterEmailInput = screen.getByLabelText("Requester Email");
+    expect(requesterEmailInput).toBeInTheDocument();
 
-    fireEvent.change(code, { target: { value: "karenchorr" } });
-    fireEvent.change(requesterEmail, { target: { value: "karencho@ucsb.edu" } });
-    fireEvent.change(professorEmail, { target: { value: "laurencho@ucsb.edu" } });
-    fireEvent.change(explanation, { target: { value: "request for recommendation request for college application" } });
-    fireEvent.change(dateRequested, { target: { value: "2022-01-02T00:00" } });
-    fireEvent.change(dateNeeded, { target: { value: "2022-02-02T00:00" } });
-    fireEvent.change(done, { target: { value: "false" } });
+    const professorEmailInput = screen.getByLabelText("Professor Email");
+    expect(professorEmailInput).toBeInTheDocument();
 
-    expect(submitButton).toBeInTheDocument();
+    const explanationInput = screen.getByLabelText("Explanation");
+    expect(explanationInput).toBeInTheDocument();
 
-    fireEvent.click(submitButton);
+    const dateRequestedInput = screen.getByLabelText("Date Requested (ISO)");
+    expect(dateRequestedInput).toBeInTheDocument();
+
+    const dateNeededInput = screen.getByLabelText("Date Needed (ISO)");
+    expect(dateNeededInput).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText("Code"), {
+      target: { value: "laurenchorr" },
+    });
+    fireEvent.change(screen.getByLabelText("Requester Email"), {
+      target: { value: "laurencho@ucsb.edu" },
+    });
+    fireEvent.change(screen.getByLabelText("Professor Email"), {
+      target: { value: "pconrad@ucsb.edu" },
+    });
+    fireEvent.change(screen.getByLabelText("Explanation"), {
+      target: { value: "Please write me a recommendation." },
+    });
+    fireEvent.change(screen.getByLabelText("Date Requested (ISO)"), {
+      target: { value: "2025-01-01T12:00" },
+    });
+    fireEvent.change(screen.getByLabelText("Date Needed (ISO)"), {
+      target: { value: "2025-01-10T12:00" },
+    });
+
+    const createButton = screen.getByText("Create");
+    expect(createButton).toBeInTheDocument();
+
+    fireEvent.click(createButton);
 
     await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
     expect(axiosMock.history.post[0].params).toEqual({
-      code: "karenchorr",
-      requesterEmail: "karencho@ucsb.edu",
-      professorEmail: "laurencho@ucsb.edu",
-      explanation: "request for recommendation request for college application",
-      dateRequested: "2022-01-02T00:00",
-      dateNeeded: "2022-02-02T00:00",
+      code: "laurenchorr",
+      requesterEmail: "laurencho@ucsb.edu",
+      professorEmail: "pconrad@ucsb.edu",
+      explanation: "Please write me a recommendation.",
+      dateRequested: "2025-01-01T12:00Z",
+      dateNeeded: "2025-01-10T12:00Z",
       done: false,
     });
 
+    // assert - check that the toast was called with the expected message
     expect(mockToast).toBeCalledWith(
-      "New Recommendation Request Created - id: 11 code: karenchorr",
+      "New Recommendation Request Created - id: 11 requester email: laurencho@ucsb.edu",
     );
     expect(mockNavigate).toBeCalledWith({ to: "/recommendationrequests" });
   });
