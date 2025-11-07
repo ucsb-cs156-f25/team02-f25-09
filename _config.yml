@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f25/team02-f25-09
 owner: ucsb-cs156-f25
 repo_name: team02-f25-09
-pull_requests: [{"author":{"id":"U_kgDOCvDUhw","is_bot":false,"login":"oyararbas","name":""},"headRefName":"oy-team03-MIRE2E","number":149,"title":"End to end testing for MenuItemReview","url":"https://github.com/ucsb-cs156-f25/team02-f25-09/pull/149"},{"author":{"id":"U_kgDOCvDUhw","is_bot":false,"login":"oyararbas","name":""},"headRefName":"oy-team03-MIRIT","number":148,"title":"Added integration tests for MenuItemReview","url":"https://github.com/ucsb-cs156-f25/team02-f25-09/pull/148"}]
+pull_requests: [{"author":{"id":"U_kgDOCvDUhw","is_bot":false,"login":"oyararbas","name":""},"headRefName":"oy-team03-MIRE2E","number":149,"title":"End to end testing for MenuItemReview","url":"https://github.com/ucsb-cs156-f25/team02-f25-09/pull/149"}]
