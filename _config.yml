@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f25/team02-f25-09
 owner: ucsb-cs156-f25
 repo_name: team02-f25-09
-pull_requests: [{"author":{"id":"U_kgDOCFV2Vw","is_bot":false,"login":"laurenc06","name":"Lauren Cho"},"headRefName":"lc-RecommendationRequest-web","number":154,"title":"lc - End 2 End Tests for RecommendationRequest","url":"https://github.com/ucsb-cs156-f25/team02-f25-09/pull/154"},{"author":{"id":"U_kgDOCNoTQw","is_bot":false,"login":"dkim876","name":""},"headRefName":"dk-HelpRequests-e2e-tests","number":153,"title":"add e2e tests for HelpRequests","url":"https://github.com/ucsb-cs156-f25/team02-f25-09/pull/153"}]
+pull_requests: [{"author":{"id":"U_kgDOCNoTQw","is_bot":false,"login":"dkim876","name":""},"headRefName":"dk-HelpRequests-e2e-tests","number":153,"title":"add e2e tests for HelpRequests","url":"https://github.com/ucsb-cs156-f25/team02-f25-09/pull/153"}]
