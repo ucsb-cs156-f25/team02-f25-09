@@ -28,10 +28,11 @@ function RecommendationRequestForm({
         {initialContents && (
           <Col>
             <Form.Group className="mb-3">
-              <Form.Label htmlFor="id">Id</Form.Label>
+              <Form.Label htmlFor="id">id</Form.Label>
               <Form.Control
                 data-testid="RecommendationRequestForm-id"
                 id="id"
+                name="id"
                 type="text"
                 {...register("id")}
                 value={initialContents.id}

@@ -35,7 +35,7 @@ public class UCSBDiningCommonsControllerTests extends ControllerTestCase {
 
   @MockitoBean UserRepository userRepository;
 
-  // Authorization tests for /api/ucsbdiningcommons/admin/all
+  // Authorization tests for /api/UCSBDiningCommonsMenuItems/admin/all
 
   @Test
   public void logged_out_users_cannot_get_all() throws Exception {
@@ -57,7 +57,7 @@ public class UCSBDiningCommonsControllerTests extends ControllerTestCase {
         .andExpect(status().is(403)); // logged out users can't get by id
   }
 
-  // Authorization tests for /api/ucsbdiningcommons/post
+  // Authorization tests for /api/UCSBDiningCommonsMenuItems/post
   // (Perhaps should also have these for put and delete)
 
   @Test
