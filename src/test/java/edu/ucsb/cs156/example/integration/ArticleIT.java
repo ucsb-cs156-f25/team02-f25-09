@@ -54,11 +54,11 @@ public class ArticleIT {
 
     Article article =
         Article.builder()
-            .title("Test Article")
-            .url("http://example.com")
-            .explanation("This is a test article")
-            .email("test@example.com")
-            .dateAdded(LocalDateTime.parse("2022-01-02T12:00:00"))
+            .title("All the right notes: the ENO's 'Dead Man Walking'")
+            .url("https://www.thearticle.com/all-the-right-notes-the-enos-dead-man-walking")
+            .explanation("This harrowing opera is based")
+            .email("markronan@gmail.com")
+            .dateAdded(LocalDateTime.parse("2025-11-03T19:25:00"))
             .build();
 
     articleRepository.save(article);
@@ -81,18 +81,19 @@ public class ArticleIT {
     Article article1 =
         Article.builder()
             .id(1L)
-            .title("Test Article")
-            .url("http://example.com")
-            .explanation("This is a test article")
-            .email("test@example.com")
-            .dateAdded(LocalDateTime.parse("2022-01-02T12:00:00"))
+            .title("Christopher Marlowe: the muses' darling")
+            .url("https://www.thearticle.com/christopher-marlowe-the-muses-darling")
+            .explanation(
+                "Many fascinating secrets and mysteries surround the life of Christopher Marlowe")
+            .email("jefreymayers@gmail.com")
+            .dateAdded(LocalDateTime.parse("2003-11-03T19:25:00"))
             .build();
 
     // act
     MvcResult response =
         mockMvc
             .perform(
-                post("/api/articles/post?title=Test Article&url=http://example.com&explanation=This is a test article&email=test@example.com&dateAdded=2022-01-02T12:00:00")
+                post("/api/articles/post?title=Christopher Marlowe: the muses' darling&url=https://www.thearticle.com/christopher-marlowe-the-muses-darling&explanation=Many fascinating secrets and mysteries surround the life of Christopher Marlowe&email=jefreymayers@gmail.com&dateAdded=2003-11-03T19:25:00")
                     .with(csrf()))
             .andExpect(status().isOk())
             .andReturn();

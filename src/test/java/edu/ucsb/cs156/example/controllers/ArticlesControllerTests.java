@@ -34,7 +34,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @WebMvcTest(controllers = ArticlesController.class)
 @Import(TestConfig.class)
 public class ArticlesControllerTests extends ControllerTestCase {
-  @MockBean ArticleRepository articlesRepository;
+  @MockBean ArticleRepository articleRepository;
 
   @MockBean UserRepository userRepository;
 
@@ -74,32 +74,33 @@ public class ArticlesControllerTests extends ControllerTestCase {
   public void logged_in_user_can_get_all_articles() throws Exception {
 
     // arrange
-    LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
+    LocalDateTime ldt1 = LocalDateTime.parse("2025-11-03T19:25:00");
 
     Article article1 =
         Article.builder()
-            .title("Test Article 1")
-            .url("http://example.com/article1")
-            .explanation("This is a test article 1")
-            .email("example@example.com")
-            .dateAdded(LocalDateTime.parse("2022-01-01T10:00:00"))
+            .title("All the right notes: the ENO's 'Dead Man Walking'")
+            .url("https://www.thearticle.com/all-the-right-notes-the-enos-dead-man-walking")
+            .explanation("This harrowing opera is based")
+            .email("markronan@gmail.com")
+            .dateAdded(ldt1)
             .build();
 
-    LocalDateTime ldt2 = LocalDateTime.parse("2022-03-11T00:00:00");
+    LocalDateTime ldt2 = LocalDateTime.parse("2003-11-03T19:25:00");
 
     Article article2 =
         Article.builder()
-            .title("Test Article 2")
-            .url("http://example.com/article2")
-            .explanation("This is a test article 2")
-            .email("example@example.com")
+            .title("Christopher Marlowe: the muses' darling")
+            .url("https://www.thearticle.com/christopher-marlowe-the-muses-darling")
+            .explanation(
+                "Many fascinating secrets and mysteries surround the life of Christopher Marlowe")
+            .email("jefreymayers@gmail.com")
             .dateAdded(ldt2)
             .build();
 
     ArrayList<Article> expectedArticles = new ArrayList<>();
     expectedArticles.addAll(Arrays.asList(article1, article2));
 
-    when(articlesRepository.findAll()).thenReturn(expectedArticles);
+    when(articleRepository.findAll()).thenReturn(expectedArticles);
 
     // act
     MvcResult response =
@@ -107,7 +108,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
 
     // assert
 
-    verify(articlesRepository, times(1)).findAll();
+    verify(articleRepository, times(1)).findAll();
     String expectedJson = mapper.writeValueAsString(expectedArticles);
     String responseString = response.getResponse().getContentAsString();
     assertEquals(expectedJson, responseString);
@@ -118,30 +119,33 @@ public class ArticlesControllerTests extends ControllerTestCase {
   public void an_admin_user_can_post_a_new_article() throws Exception {
     // arrange
 
-    LocalDateTime ldt1 = LocalDateTime.parse("2022-07-14T16:32:09");
+    LocalDateTime ldt1 = LocalDateTime.parse("2003-10-05T19:15:00");
 
     Article article1 =
         Article.builder()
-            .title("firstDayOfClasses")
-            .url("http://example.com/article1")
-            .explanation("This is a test article 1")
-            .email("example@example.com")
+            .title(
+                "MSC CRUISES SERVES AS TITLE SPONSOR FOR AUSTIN 2025 GRAND PRIX™, ANNOUNCES CONTINUED PARTNERSHIP WITH FORMULA 1® FOR 2026 SEASON")
+            .url(
+                "https://www.multivu.com/msc-cruises/9301852-en-msc-cruises-title-sponsor-of-austin-grand-prix-2025-2026")
+            .explanation(
+                "One month ahead from the start of year-round sailings from Galveston, MSC Cruises served as title sponsor of FORMULA 1 MSC CRUISES UNITED STATES GRAND PRIX 2025 in Austin")
+            .email("msdc@cruise.com")
             .dateAdded(ldt1)
             .build();
 
-    when(articlesRepository.save(eq(article1))).thenReturn(article1);
+    when(articleRepository.save(eq(article1))).thenReturn(article1);
 
     // act
     MvcResult response =
         mockMvc
             .perform(
-                post("/api/articles/post?title=firstDayOfClasses&url=http://example.com/article1&explanation=This is a test article 1&email=example@example.com&dateAdded=2022-07-14T16:32:09")
+                post("/api/articles/post?title=MSC CRUISES SERVES AS TITLE SPONSOR FOR AUSTIN 2025 GRAND PRIX™, ANNOUNCES CONTINUED PARTNERSHIP WITH FORMULA 1® FOR 2026 SEASON&url=https://www.multivu.com/msc-cruises/9301852-en-msc-cruises-title-sponsor-of-austin-grand-prix-2025-2026&explanation=One month ahead from the start of year-round sailings from Galveston, MSC Cruises served as title sponsor of FORMULA 1 MSC CRUISES UNITED STATES GRAND PRIX 2025 in Austin&email=msdc@cruise.com&dateAdded=2003-10-05T19:15:00")
                     .with(csrf()))
             .andExpect(status().isOk())
             .andReturn();
 
     // assert
-    verify(articlesRepository, times(1)).save(eq(article1));
+    verify(articleRepository, times(1)).save(eq(article1));
     String expectedJson = mapper.writeValueAsString(article1);
     String responseString = response.getResponse().getContentAsString();
     assertEquals(expectedJson, responseString);
@@ -154,18 +158,18 @@ public class ArticlesControllerTests extends ControllerTestCase {
   public void test_that_logged_in_user_can_get_by_id_when_the_id_exists() throws Exception {
 
     // arrange
-    LocalDateTime ldt = LocalDateTime.parse("2022-01-03T00:00:00");
+    LocalDateTime ldt = LocalDateTime.parse("2025-11-03T19:25:00");
 
     Article article =
         Article.builder()
-            .title("firstDayOfClasses")
-            .url("http://example.com/article1")
-            .explanation("This is a test article 1")
-            .email("example@example.com")
+            .title("All the right notes: the ENO's 'Dead Man Walking'")
+            .url("https://www.thearticle.com/all-the-right-notes-the-enos-dead-man-walking")
+            .explanation("This harrowing opera is based")
+            .email("markronan@gmail.com")
             .dateAdded(ldt)
             .build();
 
-    when(articlesRepository.findById(eq(7L))).thenReturn(Optional.of(article));
+    when(articleRepository.findById(eq(7L))).thenReturn(Optional.of(article));
 
     // act
     MvcResult response =
@@ -173,7 +177,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
 
     // assert
 
-    verify(articlesRepository, times(1)).findById(eq(7L));
+    verify(articleRepository, times(1)).findById(eq(7L));
     String expectedJson = mapper.writeValueAsString(article);
     String responseString = response.getResponse().getContentAsString();
     assertEquals(expectedJson, responseString);
@@ -185,7 +189,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
 
     // arrange
 
-    when(articlesRepository.findById(eq(7L))).thenReturn(Optional.empty());
+    when(articleRepository.findById(eq(7L))).thenReturn(Optional.empty());
 
     // act
     MvcResult response =
@@ -193,7 +197,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
 
     // assert
 
-    verify(articlesRepository, times(1)).findById(eq(7L));
+    verify(articleRepository, times(1)).findById(eq(7L));
     Map<String, Object> json = responseToJson(response);
     assertEquals("EntityNotFoundException", json.get("type"));
     assertEquals("Article with id 7 not found", json.get("message"));
@@ -204,18 +208,19 @@ public class ArticlesControllerTests extends ControllerTestCase {
   public void admin_can_delete_an_article() throws Exception {
     // arrange
 
-    LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
+    LocalDateTime ldt1 = LocalDateTime.parse("2003-11-03T19:25:00");
 
     Article article1 =
         Article.builder()
-            .title("firstDayOfClasses")
-            .url("http://example.com/article1")
-            .explanation("This is a test article 1")
-            .email("example@example.com")
+            .title("Christopher Marlowe: the muses' darling")
+            .url("https://www.thearticle.com/christopher-marlowe-the-muses-darling")
+            .explanation(
+                "Many fascinating secrets and mysteries surround the life of Christopher Marlowe")
+            .email("jefreymayers@gmail.com")
             .dateAdded(ldt1)
             .build();
 
-    when(articlesRepository.findById(eq(15L))).thenReturn(Optional.of(article1));
+    when(articleRepository.findById(eq(15L))).thenReturn(Optional.of(article1));
 
     // act
     MvcResult response =
@@ -225,8 +230,8 @@ public class ArticlesControllerTests extends ControllerTestCase {
             .andReturn();
 
     // assert
-    verify(articlesRepository, times(1)).findById(15L);
-    verify(articlesRepository, times(1)).delete(any());
+    verify(articleRepository, times(1)).findById(15L);
+    verify(articleRepository, times(1)).delete(any());
 
     Map<String, Object> json = responseToJson(response);
     assertEquals("Article with id 15 deleted", json.get("message"));
@@ -238,7 +243,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
       throws Exception {
     // arrange
 
-    when(articlesRepository.findById(eq(15L))).thenReturn(Optional.empty());
+    when(articleRepository.findById(eq(15L))).thenReturn(Optional.empty());
 
     // act
     MvcResult response =
@@ -248,7 +253,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
             .andReturn();
 
     // assert
-    verify(articlesRepository, times(1)).findById(15L);
+    verify(articleRepository, times(1)).findById(15L);
     Map<String, Object> json = responseToJson(response);
     assertEquals("Article with id 15 not found", json.get("message"));
   }
@@ -258,30 +263,33 @@ public class ArticlesControllerTests extends ControllerTestCase {
   public void admin_can_edit_an_existing_article() throws Exception {
     // arrange
 
-    LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
-    LocalDateTime ldt2 = LocalDateTime.parse("2023-01-03T00:00:00");
+    LocalDateTime ldt1 = LocalDateTime.parse("2025-11-03T19:25:00");
+    LocalDateTime ldt2 = LocalDateTime.parse("2003-10-05T19:15:00");
 
     Article article =
         Article.builder()
-            .title("firstDayOfClasses")
-            .url("http://example.com/article1")
-            .explanation("This is a test article 1")
-            .email("example@example.com")
+            .title("All the right notes: the ENO's 'Dead Man Walking'")
+            .url("https://www.thearticle.com/all-the-right-notes-the-enos-dead-man-walking")
+            .explanation("This harrowing opera is based")
+            .email("markronan@gmail.com")
             .dateAdded(ldt1)
             .build();
 
     Article articleEdited =
         Article.builder()
-            .title("firstDayOfFestivus")
-            .url("http://example.com/article1-edited")
-            .explanation("This is a test article 1 - edited")
-            .email("example-1@example.com")
+            .title(
+                "MSC CRUISES SERVES AS TITLE SPONSOR FOR AUSTIN 2025 GRAND PRIX™, ANNOUNCES CONTINUED PARTNERSHIP WITH FORMULA 1® FOR 2026 SEASON")
+            .url(
+                "https://www.multivu.com/msc-cruises/9301852-en-msc-cruises-title-sponsor-of-austin-grand-prix-2025-2026")
+            .explanation(
+                "One month ahead from the start of year-round sailings from Galveston, MSC Cruises served as title sponsor of FORMULA 1 MSC CRUISES UNITED STATES GRAND PRIX 2025 in Austin")
+            .email("msdc@cruise.com")
             .dateAdded(ldt2)
             .build();
 
     String requestBody = mapper.writeValueAsString(articleEdited);
 
-    when(articlesRepository.findById(eq(67L))).thenReturn(Optional.of(article));
+    when(articleRepository.findById(eq(67L))).thenReturn(Optional.of(article));
 
     // act
     MvcResult response =
@@ -296,8 +304,8 @@ public class ArticlesControllerTests extends ControllerTestCase {
             .andReturn();
 
     // assert
-    verify(articlesRepository, times(1)).findById(67L);
-    verify(articlesRepository, times(1)).save(articleEdited); // should be saved with correct user
+    verify(articleRepository, times(1)).findById(67L);
+    verify(articleRepository, times(1)).save(articleEdited); // should be saved with correct user
     String responseString = response.getResponse().getContentAsString();
     assertEquals(requestBody, responseString);
   }
@@ -307,20 +315,21 @@ public class ArticlesControllerTests extends ControllerTestCase {
   public void admin_cannot_edit_article_that_does_not_exist() throws Exception {
     // arrange
 
-    LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
+    LocalDateTime ldt1 = LocalDateTime.parse("2003-11-03T19:25:00");
 
     Article editedArticle =
         Article.builder()
-            .title("firstDayOfClasses")
-            .url("http://example.com/article1")
-            .explanation("This is a test article 1")
-            .email("example@example.com")
+            .title("Christopher Marlowe: the muses' darling")
+            .url("https://www.thearticle.com/christopher-marlowe-the-muses-darling")
+            .explanation(
+                "Many fascinating secrets and mysteries surround the life of Christopher Marlowe")
+            .email("jefreymayers@gmail.com")
             .dateAdded(ldt1)
             .build();
 
     String requestBody = mapper.writeValueAsString(editedArticle);
 
-    when(articlesRepository.findById(eq(67L))).thenReturn(Optional.empty());
+    when(articleRepository.findById(eq(67L))).thenReturn(Optional.empty());
 
     // act
     MvcResult response =
@@ -335,7 +344,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
             .andReturn();
 
     // assert
-    verify(articlesRepository, times(1)).findById(67L);
+    verify(articleRepository, times(1)).findById(67L);
     Map<String, Object> json = responseToJson(response);
     assertEquals("Article with id 67 not found", json.get("message"));
   }
