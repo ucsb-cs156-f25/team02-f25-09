@@ -40,7 +40,7 @@ describe("RecommendationRequestForm tests", () => {
       </Router>,
     );
     await screen.findByTestId(/RecommendationRequestForm-id/);
-    expect(screen.getByText(/Id/)).toBeInTheDocument();
+    expect(screen.getByText(/id/)).toBeInTheDocument();
     expect(screen.getByTestId(/RecommendationRequestForm-id/)).toHaveValue("1");
   });
 

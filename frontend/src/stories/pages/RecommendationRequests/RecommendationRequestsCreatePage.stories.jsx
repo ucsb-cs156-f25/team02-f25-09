@@ -3,17 +3,14 @@ import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { http, HttpResponse } from "msw";
 
-import UCSBDiningCommonsMenuItemsCreatePage from "main/pages/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsCreatePage";
+import RecommendationRequestCreatePage from "main/pages/RecommendationRequest/RecommendationRequestCreatePage";
 
 export default {
-  title:
-    "pages/UCSBDiningCommonsMenuItems/UCSBDiningCommonsMenuItemsCreatePage",
-  component: UCSBDiningCommonsMenuItemsCreatePage,
+  title: "pages/RecommendationRequest/RecommendationRequestCreatePage",
+  component: RecommendationRequestCreatePage,
 };
 
-const Template = () => (
-  <UCSBDiningCommonsMenuItemsCreatePage storybook={true} />
-);
+const Template = () => <RecommendationRequestCreatePage storybook={true} />;
 
 export const Default = Template.bind({});
 Default.parameters = {
@@ -28,7 +25,7 @@ Default.parameters = {
         status: 200,
       });
     }),
-    http.post("/api/ucsbdiningcommonsmenuitems/post", () => {
+    http.post("/api/recommendationrequests/post", () => {
       return HttpResponse.json({}, { status: 200 });
     }),
   ],
