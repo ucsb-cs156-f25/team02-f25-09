@@ -51,17 +51,21 @@ public class UCSBDiningCommonsMenuItemsIT {
   public void test_that_logged_in_user_can_get_by_id_when_the_id_exists() throws Exception {
     // arrange
 
-    UCSBDiningCommonsMenuItems UCSBDiningCommonsMenuItems1 = UCSBDiningCommonsMenuItems.builder()
-        .diningCommonsCode("ortega")
-        .name("pasta")
-        .station("italian")
-        .build();
+    UCSBDiningCommonsMenuItems UCSBDiningCommonsMenuItems1 =
+        UCSBDiningCommonsMenuItems.builder()
+            .diningCommonsCode("ortega")
+            .name("pasta")
+            .station("italian")
+            .build();
 
     UCSBDiningCommonsMenuItemsRepository.save(UCSBDiningCommonsMenuItems1);
 
     // act
     MvcResult response =
-        mockMvc.perform(get("/api/ucsbdiningcommonsmenuitems?id=1")).andExpect(status().isOk()).andReturn();
+        mockMvc
+            .perform(get("/api/ucsbdiningcommonsmenuitems?id=1"))
+            .andExpect(status().isOk())
+            .andReturn();
 
     // assert
     String expectedJson = mapper.writeValueAsString(UCSBDiningCommonsMenuItems1);
@@ -82,11 +86,12 @@ public class UCSBDiningCommonsMenuItemsIT {
             .station("italian")
             .build();
 
-
     // act
     MvcResult response =
         mockMvc
-            .perform(post("/api/ucsbdiningcommonsmenuitems/post?diningCommonsCode=ortega&name=pasta&station=italian").with(csrf()))
+            .perform(
+                post("/api/ucsbdiningcommonsmenuitems/post?diningCommonsCode=ortega&name=pasta&station=italian")
+                    .with(csrf()))
             .andExpect(status().isOk())
             .andReturn();
 
