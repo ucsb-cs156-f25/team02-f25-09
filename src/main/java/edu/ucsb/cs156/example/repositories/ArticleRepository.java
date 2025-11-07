@@ -6,4 +6,4 @@ import org.springframework.stereotype.Repository;
 
 /** The ArticlesRepository is a repository for Articles entities. */
 @Repository
-public interface ArticlesRepository extends CrudRepository<Article, Long> {}
+public interface ArticleRepository extends CrudRepository<Article, Long> {}

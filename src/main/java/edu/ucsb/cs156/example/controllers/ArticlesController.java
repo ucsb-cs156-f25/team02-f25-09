@@ -3,7 +3,7 @@ package edu.ucsb.cs156.example.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.ucsb.cs156.example.entities.Article;
 import edu.ucsb.cs156.example.errors.EntityNotFoundException;
-import edu.ucsb.cs156.example.repositories.ArticlesRepository;
+import edu.ucsb.cs156.example.repositories.ArticleRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ArticlesController extends ApiController {
 
-  @Autowired ArticlesRepository articlesRepository;
+  @Autowired ArticleRepository articlesRepository;
 
   /**
    * List all Articles
