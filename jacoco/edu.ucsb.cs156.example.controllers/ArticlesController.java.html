@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 <span class="fc" id="L29">@Slf4j</span>
 <span class="fc" id="L30">public class ArticlesController extends ApiController {</span>
 
-  @Autowired ArticleRepository articlesRepository;
+  @Autowired ArticleRepository articleRepository;
 
   /**
    * List all Articles
@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
   @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
   @GetMapping(&quot;/all&quot;)
   public Iterable&lt;Article&gt; allArticles() {
-<span class="fc" id="L43">    Iterable&lt;Article&gt; articles = articlesRepository.findAll();</span>
+<span class="fc" id="L43">    Iterable&lt;Article&gt; articles = articleRepository.findAll();</span>
 <span class="fc" id="L44">    return articles;</span>
   }
 
@@ -55,7 +55,7 @@ import org.springframework.web.bind.annotation.RestController;
   @GetMapping(&quot;&quot;)
   public Article getById(@Parameter(name = &quot;id&quot;) @RequestParam Long id) {
 <span class="fc" id="L57">    Article article =</span>
-        articlesRepository
+        articleRepository
 <span class="fc" id="L59">            .findById(id)</span>
 <span class="fc" id="L60">            .orElseThrow(() -&gt; new EntityNotFoundException(Article.class, id));</span>
 
@@ -93,7 +93,7 @@ import org.springframework.web.bind.annotation.RestController;
 <span class="fc" id="L93">    article.setEmail(email);</span>
 <span class="fc" id="L94">    article.setDateAdded(dateAdded);</span>
 
-<span class="fc" id="L96">    Article savedArticle = articlesRepository.save(article);</span>
+<span class="fc" id="L96">    Article savedArticle = articleRepository.save(article);</span>
 
 <span class="fc" id="L98">    return savedArticle;</span>
   }
@@ -109,11 +109,11 @@ import org.springframework.web.bind.annotation.RestController;
   @DeleteMapping(&quot;&quot;)
   public Object deleteArticle(@Parameter(name = &quot;id&quot;) @RequestParam Long id) {
 <span class="fc" id="L111">    Article article =</span>
-        articlesRepository
+        articleRepository
 <span class="fc" id="L113">            .findById(id)</span>
 <span class="fc" id="L114">            .orElseThrow(() -&gt; new EntityNotFoundException(Article.class, id));</span>
 
-<span class="fc" id="L116">    articlesRepository.delete(article);</span>
+<span class="fc" id="L116">    articleRepository.delete(article);</span>
 <span class="fc" id="L117">    return genericMessage(&quot;Article with id %s deleted&quot;.formatted(id));</span>
   }
 
@@ -131,7 +131,7 @@ import org.springframework.web.bind.annotation.RestController;
       @Parameter(name = &quot;id&quot;) @RequestParam Long id, @RequestBody @Valid Article incoming) {
 
 <span class="fc" id="L133">    Article article =</span>
-        articlesRepository
+        articleRepository
 <span class="fc" id="L135">            .findById(id)</span>
 <span class="fc" id="L136">            .orElseThrow(() -&gt; new EntityNotFoundException(Article.class, id));</span>
 
@@ -141,7 +141,7 @@ import org.springframework.web.bind.annotation.RestController;
 <span class="fc" id="L141">    article.setEmail(incoming.getEmail());</span>
 <span class="fc" id="L142">    article.setDateAdded(incoming.getDateAdded());</span>
 
-<span class="fc" id="L144">    articlesRepository.save(article);</span>
+<span class="fc" id="L144">    articleRepository.save(article);</span>
 
 <span class="fc" id="L146">    return article;</span>
   }
