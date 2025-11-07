@@ -3,7 +3,7 @@ package edu.ucsb.cs156.example.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.ucsb.cs156.example.entities.Article;
 import edu.ucsb.cs156.example.errors.EntityNotFoundException;
-import edu.ucsb.cs156.example.repositories.ArticlesRepository;
+import edu.ucsb.cs156.example.repositories.ArticleRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ArticlesController extends ApiController {
 
-  @Autowired ArticlesRepository articlesRepository;
+  @Autowired ArticleRepository articleRepository;
 
   /**
    * List all Articles
@@ -40,7 +40,7 @@ public class ArticlesController extends ApiController {
   @PreAuthorize("hasRole('ROLE_USER')")
   @GetMapping("/all")
   public Iterable<Article> allArticles() {
-    Iterable<Article> articles = articlesRepository.findAll();
+    Iterable<Article> articles = articleRepository.findAll();
     return articles;
   }
 
@@ -55,7 +55,7 @@ public class ArticlesController extends ApiController {
   @GetMapping("")
   public Article getById(@Parameter(name = "id") @RequestParam Long id) {
     Article article =
-        articlesRepository
+        articleRepository
             .findById(id)
             .orElseThrow(() -> new EntityNotFoundException(Article.class, id));
 
@@ -93,7 +93,7 @@ public class ArticlesController extends ApiController {
     article.setEmail(email);
     article.setDateAdded(dateAdded);
 
-    Article savedArticle = articlesRepository.save(article);
+    Article savedArticle = articleRepository.save(article);
 
     return savedArticle;
   }
@@ -109,11 +109,11 @@ public class ArticlesController extends ApiController {
   @DeleteMapping("")
   public Object deleteArticle(@Parameter(name = "id") @RequestParam Long id) {
     Article article =
-        articlesRepository
+        articleRepository
             .findById(id)
             .orElseThrow(() -> new EntityNotFoundException(Article.class, id));
 
-    articlesRepository.delete(article);
+    articleRepository.delete(article);
     return genericMessage("Article with id %s deleted".formatted(id));
   }
 
@@ -131,7 +131,7 @@ public class ArticlesController extends ApiController {
       @Parameter(name = "id") @RequestParam Long id, @RequestBody @Valid Article incoming) {
 
     Article article =
-        articlesRepository
+        articleRepository
             .findById(id)
             .orElseThrow(() -> new EntityNotFoundException(Article.class, id));
 
@@ -141,7 +141,7 @@ public class ArticlesController extends ApiController {
     article.setEmail(incoming.getEmail());
     article.setDateAdded(incoming.getDateAdded());
 
-    articlesRepository.save(article);
+    articleRepository.save(article);
 
     return article;
   }
