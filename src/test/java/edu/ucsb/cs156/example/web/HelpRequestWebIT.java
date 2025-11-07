@@ -17,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class HelpRequestWebIT extends WebTestCase {
   @Test
-  public void admin_user_can_create_edit_delete_restaurant() throws Exception {
+  public void admin_user_can_create_edit_delete_helprequest() throws Exception {
     setupUser(true);
 
     page.getByText("Help Requests").click();
@@ -57,7 +57,7 @@ public class HelpRequestWebIT extends WebTestCase {
   }
 
   @Test
-  public void admin_user_can_see_create_request_button() throws Exception {
+  public void admin_user_can_see_create_helprequest_button() throws Exception {
     setupUser(true);
 
     page.getByText("Help Requests").click();
