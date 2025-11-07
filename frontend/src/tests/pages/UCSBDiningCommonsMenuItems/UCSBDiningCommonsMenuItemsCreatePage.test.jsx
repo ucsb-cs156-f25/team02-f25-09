@@ -53,7 +53,9 @@ describe("UCSBDiningCommonsMenuItemsCreatePage tests", () => {
       </QueryClientProvider>,
     );
     await waitFor(() => {
-      expect(screen.getByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode")).toBeInTheDocument();
+      expect(
+        screen.getByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode"),
+      ).toBeInTheDocument();
     });
   });
 
@@ -77,7 +79,9 @@ describe("UCSBDiningCommonsMenuItemsCreatePage tests", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode")).toBeInTheDocument();
+      expect(
+        screen.getByTestId("UCSBDiningCommonsMenuItemsForm-diningCommonsCode"),
+      ).toBeInTheDocument();
     });
 
     const diningCommonsCodeField = screen.getByTestId(
@@ -89,7 +93,7 @@ describe("UCSBDiningCommonsMenuItemsCreatePage tests", () => {
     const stationField = screen.getByTestId(
       "UCSBDiningCommonsMenuItemsForm-station",
     );
-    
+
     const submitButton = screen.getByTestId(
       "UCSBDiningCommonsMenuItemsForm-submit",
     );

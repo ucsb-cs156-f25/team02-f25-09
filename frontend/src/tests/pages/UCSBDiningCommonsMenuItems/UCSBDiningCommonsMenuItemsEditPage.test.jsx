@@ -215,7 +215,9 @@ describe("UCSBDiningCommonsMenuItemsEditPage tests", () => {
       expect(mockToast).toBeCalledWith(
         "UCSBDiningCommonsMenuItems Updated - id: 17 name: pasta",
       );
-      expect(mockNavigate).toBeCalledWith({ to: "/ucsbdiningcommonsmenuitems" });
+      expect(mockNavigate).toBeCalledWith({
+        to: "/ucsbdiningcommonsmenuitems",
+      });
 
       expect(axiosMock.history.put.length).toBe(1); // times called
       expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
