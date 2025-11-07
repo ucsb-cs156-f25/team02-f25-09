@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f25/team02-f25-09
 owner: ucsb-cs156-f25
 repo_name: team02-f25-09
-pull_requests: [{"author":{"id":"U_kgDOCNoTQw","is_bot":false,"login":"dkim876","name":""},"headRefName":"dk-HelpRequests-e2e-tests","number":153,"title":"add e2e tests for HelpRequests","url":"https://github.com/ucsb-cs156-f25/team02-f25-09/pull/153"}]
+pull_requests: [{"author":{"id":"U_kgDOBsZdzQ","is_bot":false,"login":"samc005","name":""},"headRefName":"sc-e2e","number":155,"title":"added e2e tests","url":"https://github.com/ucsb-cs156-f25/team02-f25-09/pull/155"},{"author":{"id":"U_kgDOCNoTQw","is_bot":false,"login":"dkim876","name":""},"headRefName":"dk-HelpRequests-e2e-tests","number":153,"title":"add e2e tests for HelpRequests","url":"https://github.com/ucsb-cs156-f25/team02-f25-09/pull/153"}]
