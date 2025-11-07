@@ -176,7 +176,9 @@ describe("UserTable tests", () => {
     fireEvent.click(editButton);
 
     await waitFor(() =>
-      expect(mockedNavigate).toHaveBeenCalledWith("/ucsbdiningcommonsmenuitems/edit/1"),
+      expect(mockedNavigate).toHaveBeenCalledWith(
+        "/ucsbdiningcommonsmenuitems/edit/1",
+      ),
     );
   });
 
@@ -220,7 +222,9 @@ describe("UserTable tests", () => {
     // assert - check that the delete endpoint was called
 
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
-    expect(axiosMock.history.delete[0].url).toBe("/api/ucsbdiningcommonsmenuitems");
+    expect(axiosMock.history.delete[0].url).toBe(
+      "/api/ucsbdiningcommonsmenuitems",
+    );
     expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
   });
 
